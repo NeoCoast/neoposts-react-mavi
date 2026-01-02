@@ -1,0 +1,5 @@
+@use '../../constants/styles.scss' as *;
+
+p {
+    color: $color-text;
+}
