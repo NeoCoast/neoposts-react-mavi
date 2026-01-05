@@ -35,6 +35,30 @@ const Signup = () => {
     (watch('confirmPassword') || '').trim() !== ''
   );
 
+  const onSubmit = async (data: any) => {
+    if (typeof signUp !== 'function') {
+      notify.success('Successfully signed up!');
+      navigate(ROUTES.HOME);
+      return;
+    }
+    try {
+      const res = await signUp(data);
+      if (res.status === 200) {
+        notify.success('Successfully signed up!');
+        navigate(ROUTES.HOME);
+      }
+    } catch (err) {
+      notify.error('Signup failed', { id: 'form_error' });
+      setValue('password', '');
+      setValue('confirmPassword', '');
+    }
+  };
+
+  const onError = () => {
+    setValue('password', '');
+    setValue('confirmPassword', '');
+  };
+
   return (
     <main className="signup">
       <div className="signup__register-container">
@@ -45,30 +69,7 @@ const Signup = () => {
             <Header />
           </div>
           <form
-            onSubmit={handleSubmit(
-              async (data) => {
-                if (typeof signUp !== 'function') {
-                  notify.success('Successfully signed up!');
-                  navigate(ROUTES.HOME);
-                  return;
-                }
-                try {
-                  const res = await signUp(data);
-                  if (res.status === 200) {
-                    notify.success('Successfully signed up!');
-                    navigate(ROUTES.HOME);
-                  }
-                } catch (err) {
-                  notify.error('Signup failed', { id: 'form_error' });
-                  setValue('password', '');
-                  setValue('confirmPassword', '');
-                }
-              },
-              () => {
-                setValue('password', '');
-                setValue('confirmPassword', '');
-              }
-            )}
+            onSubmit={handleSubmit(onSubmit, onError)}
             aria-label="Sign up form"
             noValidate
             className='signup__register-container-form'
