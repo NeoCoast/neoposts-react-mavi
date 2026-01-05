@@ -1,10 +1,15 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 
+const apiBaseUrl = process.env.API_URL;
+if (!apiBaseUrl) {
+  throw new Error('Environment variable API_URL must be defined');
+}
+
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.API_URL,
+    baseUrl: apiBaseUrl,
   }),
   tagTypes: ['Post'],
   endpoints: (builder) => ({
@@ -15,4 +20,4 @@ export const api = createApi({
   }),
 });
 
-export const { useGetPostsQuery } = api
+export const { useGetPostsQuery } = api;
