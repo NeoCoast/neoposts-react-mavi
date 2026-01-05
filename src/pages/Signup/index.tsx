@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import cn from 'classnames';
 
 import { notify } from '@/components/Toaster/notify';
 import { signupSchema } from '@/utils/validationSchemas';
@@ -113,7 +114,10 @@ const Signup = () => {
             <Button
               type="submit"
               title="Sign Up"
-              className={`form__btn signup__register-container-form-btnSignUp ${!allFilled ? 'signup__register-container-form-btnSignUp-disabled' : ''}`}
+              className={cn('form__btn', {
+                'signup__register-container-form-btnSignUp': allFilled,
+                'signup__register-container-form-btnSignUp-disabled': !allFilled,
+              })}
               disabled={!allFilled}
               variant="primary"
             />

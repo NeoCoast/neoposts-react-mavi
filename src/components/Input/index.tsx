@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { FieldError, UseFormRegister } from 'react-hook-form';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import type { IconType } from 'react-icons';
+import cn from 'classnames';
 
 import './styles.scss';
 
@@ -31,7 +32,12 @@ const Input: React.FC<InputProps> = ({
     <div style={{ position: 'relative' }}>
       <input
         id={inputName}
-        className={`${className} ${errors ? `${className}-error` : `${className}-normal`}`}
+        className={cn(
+          className,
+          {
+            [`${className}--error`]: errors,
+          }
+        )}
         {...(register ? register(inputName) : {})}
         type={type === 'password' && showPassword ? 'text' : type}
         name={inputName}

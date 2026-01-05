@@ -1,5 +1,6 @@
 import { FC, ReactNode, MouseEventHandler } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
+import cn from 'classnames';
 
 import './styles.scss';
 
@@ -25,7 +26,7 @@ const Button: FC<ButtonProps> = ({
   <button
     onClick={onClick}
     type={type}
-    className={`btn ${variant} ${className}`}
+    className={cn('btn', variant, className)}
     disabled={disabled || loading}
   >
     {loading ? (
