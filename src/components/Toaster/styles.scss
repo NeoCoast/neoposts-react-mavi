@@ -1,20 +1,18 @@
-@use '../../constants/styles.scss' as *;
-
 .app-toaster-container {
-    z-index: 9999;
+  z-index: 9999;
 }
 
 .app-toast {
-    background: $color-white;
-    color: $color-text;
-    border: 1px solid $border-color-light;
-    box-shadow: $shadow-elevation-1;
+  background: $color-white;
+  color: $color-text;
+  border: 1px solid $border-color-light;
+  box-shadow: $shadow-elevation-1;
 }
 
 .app-toast svg {
-    color: $color-error;
+  color: $color-error;
 }
 
 .app-toast>div {
-    align-items: center;
+  align-items: center;
 }
