@@ -76,9 +76,8 @@ const Signup = () => {
                             inputName="name"
                             type="text"
                             register={register}
-                            required={true}
+                            required
                             errors={errors?.name}
-                            className="input__form"
                             placeholder="Name"
                         />
 
@@ -86,9 +85,8 @@ const Signup = () => {
                             inputName="email"
                             type="email"
                             register={register}
-                            required={true}
+                            required
                             errors={errors?.email}
-                            className="input__form"
                             placeholder="Email"
                         />
 
@@ -96,9 +94,8 @@ const Signup = () => {
                             inputName="password"
                             type="password"
                             register={register}
-                            required={true}
+                            required
                             errors={errors?.password}
-                            className="input__form"
                             placeholder="Password"
                         />
 
@@ -106,9 +103,8 @@ const Signup = () => {
                             inputName="confirmPassword"
                             type="password"
                             register={register}
-                            required={true}
+                            required
                             errors={errors?.confirmPassword}
-                            className="input__form"
                             placeholder="Password confirmation"
                         />
 

@@ -25,4 +25,3 @@ export const signupSchema = z
         path: ['confirmPassword'],
         message: 'Passwords do not match',
     });
-

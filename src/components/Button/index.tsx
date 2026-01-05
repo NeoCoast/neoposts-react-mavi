@@ -3,7 +3,7 @@ import './styles.scss';
 import { FC, ReactNode, MouseEventHandler } from 'react';
 
 type ButtonProps = {
-    isLoading?: boolean;
+    loading?: boolean;
     variant: string;
     title: string | ReactNode;
     onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -14,7 +14,7 @@ type ButtonProps = {
 
 const Button: FC<ButtonProps> = ({
     disabled = false,
-    isLoading = false,
+    loading = false,
     title,
     onClick = () => { },
     type = 'button',
@@ -25,9 +25,9 @@ const Button: FC<ButtonProps> = ({
         onClick={onClick}
         type={type}
         className={`btn ${variant} ${className}`}
-        disabled={disabled || isLoading}
+        disabled={disabled || loading}
     >
-        {isLoading ? (
+        {loading ? (
             <ThreeDots
                 visible={true}
                 height="40"
