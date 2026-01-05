@@ -2,14 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { notify } from '@/components/Toaster/notify';
-import { signupSchema } from '@/utils/string';
+import { signupSchema } from '@/utils/validationSchemas';
 import './styles.scss';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import { ROUTES } from '@/constants/routes';
 const registerBackground = new URL('@/assets/Background/RegisterBackground.png', import.meta.url).href;
-const neoPostIncon = new URL('@/assets/Icons/NeoPost.svg', import.meta.url).href;
+const neoPostIcon = new URL('@/assets/Icons/NeoPost.svg', import.meta.url).href;
 
 declare const signUp: (data: any) => Promise<{ status: number }>;
 
@@ -40,7 +40,7 @@ const Signup = () => {
                 <div className="signup__register-container-content">
 
                     <div className="signup__register-container-header">
-                        <img src={neoPostIncon} alt="neopostIcon" decoding="async" />
+                        <img src={neoPostIcon} alt="neopostIcon" decoding="async" />
                         <Header />
                     </div>
                     <form
