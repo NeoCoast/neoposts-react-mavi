@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { setAuthHeaders } from '@/utils/setHeaders';
