@@ -42,7 +42,19 @@ const Input: React.FC<InputProps> = ({
                 spellCheck={false}
             />
             {type === 'password' && (
-                <Icon className="input__password-eye" onClick={() => setShowPassword((show) => !show)} />
+                <button
+                    type="button"
+                    className="input__password-toggle"
+                    onClick={() => setShowPassword((show) => !show)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    aria-pressed={showPassword}
+                >
+                    <Icon
+                        className="input__password-eye"
+                        aria-hidden="true"
+                        focusable="false"
+                    />
+                </button>
             )}
             <div className={errors ? 'input__error' : 'input__error--hidden'}>{errors?.message as string}</div>
         </div>
