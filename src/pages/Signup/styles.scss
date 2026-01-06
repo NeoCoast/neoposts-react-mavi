@@ -20,15 +20,18 @@
 
      &-header {
        display: flex;
-       width: 100%;
-       align-items: center;
        justify-content: start;
-       color: $title-color;
-       gap: 30px;
+       align-items: center;
+       color: $color-primary;
+       font-size: 30px;
+       gap: 20px;
+       transform: scale(0.70);
+       transform-origin: left top;
+       margin-bottom: -30px;
 
        img {
-         width: 40px;
-         height: 40px;
+         width: 52.32px;
+         height: 52.32px;
        }
      }
 
