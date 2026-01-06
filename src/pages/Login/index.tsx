@@ -28,13 +28,16 @@ const LogIn = () => {
 
   const onSubmit = async (formData: any) => {
     try {
-      const { meta } = await logIn(formData).unwrap();
-      const headers = meta?.response?.headers;
+      const { data: result } = await logIn(formData) as any;
+      const headers = result?.meta?.response?.headers;
+
       setResponseHeaders(headers);
       notify.success('Successfully logged in!');
+
       navigate(ROUTES.HOME, { replace: true });
     } catch (err) {
       notify.error('Incorrect email or password. Please check your credentials.');
+      
       setValue('email', '');
       setValue('password', '');
     }

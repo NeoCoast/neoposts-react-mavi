@@ -24,6 +24,10 @@ export const api = createApi({
         method: 'POST',
         url: 'users/sign_in'
       }),
+      transformResponse: (response: any, meta) => {
+        const headers = meta?.response?.headers;
+        return { data: response, meta: { response: { headers } } };
+      }
     }),
   }),
 });
