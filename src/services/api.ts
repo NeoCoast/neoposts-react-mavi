@@ -1,4 +1,3 @@
-/// <reference types="vite/client" />
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { setAuthHeaders } from '@/utils/setHeaders';
@@ -57,6 +56,18 @@ export const api = createApi({
         const headers = ['uid', 'access-token', 'client', 'expiry'].reduce((prev, curr) => ({ ...prev, [curr]: meta?.response?.headers?.get(curr) }), {});
         return { data: response, meta: { response: { headers } } };
       }
+    }),
+    signup: builder.mutation({
+      invalidatesTags: ['User'],
+      query: (post) => ({
+        body: post,
+        method: 'POST',
+        url: 'users'
+      }),
+      transformResponse: (response, meta) => ({
+        meta,
+        response
+      })
     }),
   }),
 });
