@@ -5,20 +5,22 @@ import cn from 'classnames';
 
 import { notify } from '@/components/Toaster/notify';
 import { signupSchema } from '@/utils/validationSchemas';
+import { ROUTES } from '@/constants/routes';
+import { useSignupMutation } from '@/services/api';
+
 import Header from '@/components/Header';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
-import { ROUTES } from '@/constants/routes';
+
 import './styles.scss';
 const registerBackground = new URL('@/assets/Background/RegisterBackground.png', import.meta.url).href;
 const neoPostIcon = new URL('@/assets/Icons/NeoPost.svg', import.meta.url).href;
 
-declare const signUp: (data: any) => Promise<{ status: number }>;
-
 const Signup = () => {
   const navigate = useNavigate();
+  const [signUp, { isLoading }] = useSignupMutation();
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
+  const { register, handleSubmit, watch, setError, setValue, formState: { errors } } = useForm({
     mode: 'onBlur',
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -36,20 +38,27 @@ const Signup = () => {
     (watch('confirmPassword') || '').trim() !== ''
   );
 
-  const onSubmit = async (data: any) => {
-    if (typeof signUp !== 'function') {
-      notify.success('Successfully signed up!');
-      navigate(ROUTES.HOME);
-      return;
-    }
+  const onSubmit = async (formData: any) => {
     try {
-      const res = await signUp(data);
-      if (res.status === 200) {
-        notify.success('Successfully signed up!');
-        navigate(ROUTES.HOME);
-      }
-    } catch (err) {
-      notify.error('Signup failed', { id: 'form_error' });
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      };
+      await signUp(payload).unwrap();
+      notify.success('Successfully signed up!');
+      navigate(ROUTES.HOME, { replace: true });
+
+    } catch (err: any) {
+      const serverMessage =
+        err?.data?.errors?.full_messages?.[0] ||
+        err?.data?.message ||
+        'Signup failed. Please try again.';
+      const errorField = serverMessage.toLowerCase().includes('name') ? 'name' : 'email';
+      setError(errorField, {
+        message: serverMessage,
+        type: 'server',
+      });
       setValue('password', '');
       setValue('confirmPassword', '');
     }
@@ -59,6 +68,7 @@ const Signup = () => {
     setValue('password', '');
     setValue('confirmPassword', '');
   };
+
 
   return (
     <main className="signup">
@@ -118,7 +128,7 @@ const Signup = () => {
                 'signup__register-container-form-btnSignUp': allFilled,
                 'signup__register-container-form-btnSignUp-disabled': !allFilled,
               })}
-              disabled={!allFilled}
+              disabled={!allFilled || isLoading}
               variant="primary"
             />
 

@@ -1,4 +1,3 @@
-/// <reference types="vite/client" />
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 
@@ -12,13 +11,25 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: apiBaseUrl,
   }),
-  tagTypes: ['Post'],
+  tagTypes: ['Post', 'User'],
   endpoints: (builder) => ({
     getPosts: builder.query({
       query: () => 'posts',
       providesTags: ['Post'],
     }),
+    signup: builder.mutation({
+      invalidatesTags: ['User'],
+      query: (post) => ({
+        body: post,
+        method: 'POST',
+        url: 'users'
+      }),
+      transformResponse: (response, meta) => ({
+        meta,
+        response
+      })
+    }),
   }),
 });
 
-export const { useGetPostsQuery } = api;
+export const { useGetPostsQuery, useSignupMutation } = api;
