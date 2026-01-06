@@ -21,33 +21,27 @@ const LogIn = () => {
   const navigate = useNavigate();
   const [logIn, { isLoading }] = useLogInMutation();
 
-  const { register, handleSubmit, setError, setValue, formState: { errors, isValid } } = useForm({
-    mode: 'onBlur',
+  const { register, handleSubmit, setValue, formState: { errors, isValid } } = useForm({
+    mode: 'onChange',
     resolver: zodResolver(logInSchema),
   });
 
   const onSubmit = async (formData: any) => {
     try {
-      const result = await logIn(formData).unwrap();
-      setResponseHeaders(result?.meta?.response?.headers);
+      const { meta } = await logIn(formData).unwrap();
+      const headers = meta?.response?.headers;
+      setResponseHeaders(headers);
       notify.success('Successfully logged in!');
       navigate(ROUTES.HOME, { replace: true });
-    } catch (err: any) {
-      const serverMessage =
-        err?.data?.errors?.full_messages?.[0] ||
-        err?.data?.message ||
-        'Login failed. Please try again.';
-      const errorField = serverMessage.toLowerCase().includes('email') ? 'email' : 'password';
-      setError(errorField, {
-        message: serverMessage,
-        type: 'server',
-      });
-
+    } catch (err) {
+      notify.error('Incorrect email or password. Please check your credentials.');
+      setValue('email', '');
       setValue('password', '');
     }
   };
 
   const onError = () => {
+    setValue('email', '');
     setValue('password', '');
   };
 
@@ -63,7 +57,6 @@ const LogIn = () => {
           <form
             onSubmit={handleSubmit(onSubmit, onError)}
             aria-label="Log in form"
-            noValidate
             className='login__register-container-form'
           >
             <Input
