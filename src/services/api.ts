@@ -58,16 +58,19 @@ export const api = createApi({
       }
     }),
     signup: builder.mutation({
-      invalidatesTags: ['User'],
-      query: (post) => ({
-        body: post,
+      query: (formData) => ({
+        url: 'users',
         method: 'POST',
-        url: 'users'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          password_confirmation: formData.confirmPassword,
+        },
       }),
-      transformResponse: (response, meta) => ({
-        meta,
-        response
-      })
     }),
   }),
 });

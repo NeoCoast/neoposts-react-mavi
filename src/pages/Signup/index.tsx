@@ -65,6 +65,7 @@ const Signup = () => {
         message: serverMessage,
         type: 'server',
       });
+
       setValue('password', '');
       setValue('confirmPassword', '');
     }
