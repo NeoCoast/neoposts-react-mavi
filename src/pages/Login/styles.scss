@@ -11,6 +11,7 @@
      justify-content: center;
      padding: 40px 60px;
      font-family: Arial;
+     margin-left: 0;
 
      &-content {
        width: 100%;
@@ -32,12 +33,13 @@
          width: 52.32px;
          height: 52.32px;
        }
+
      }
 
      &-text {
-       font-size: 25px;
-       font-weight: 600;
-       color: $color-primary;
+       font-size: 30px;
+       font-weight: 300;
+       color: $title-color;
        line-height: 36px;
      }
 

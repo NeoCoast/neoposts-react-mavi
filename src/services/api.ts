@@ -3,6 +3,7 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { setAuthHeaders } from '@/utils/setHeaders';
 
 const apiBaseUrl = import.meta.env.VITE_API_URL;
+
 if (!apiBaseUrl) {
   throw new Error('Environment variable VITE_API_URL must be defined');
 }
@@ -61,12 +62,24 @@ export const api = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+    logIn: builder.mutation({
+      query: (post) => ({
+        body: post,
+        method: 'POST',
+        url: 'users/sign_in'
+      }),
+      transformResponse: (response, meta) => ({
+        meta,
+        response
+      }),
+    }),
   }),
 });
 
 export const {
   useGetPostsQuery,
   useGetMeQuery,
+  useLogInMutation,
   useLogOutMutation,
   useLogInMutation,
   useSignupMutation,
