@@ -31,17 +31,14 @@ const Signup = () => {
       notify.success('Successfully signed up!');
       navigate(ROUTES.HOME, { replace: true });
     } catch (err: any) {
-      const messages =
-        err?.data?.errors?.full_messages ??
-        [err?.data?.message ?? 'Signup failed'];
-
-      messages.forEach((msg: string) => {
-        if (msg.toLowerCase().includes('email')) {
-          setError('email', { type: 'server', message: msg });
-        }
-        if (msg.toLowerCase().includes('name')) {
-          setError('name', { type: 'server', message: msg });
-        }
+      const serverMessage =
+        err?.data?.errors?.full_messages?.[0] ||
+        err?.data?.message ||
+        'Signup failed. Please try again.';
+      const errorField = serverMessage.toLowerCase().includes('name') ? 'name' : 'email';
+      setError(errorField, {
+        message: serverMessage,
+        type: 'server',
       });
 
       setValue('password', '');
