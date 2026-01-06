@@ -20,49 +20,35 @@ const Signup = () => {
   const navigate = useNavigate();
   const [signUp, { isLoading }] = useSignupMutation();
 
-  const { register, handleSubmit, watch, setError, setValue, formState: { errors } } = useForm({
+  const { register, handleSubmit, setError, setValue, formState: { errors, isValid } } = useForm({
     mode: 'onBlur',
     resolver: zodResolver(signupSchema),
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
-    }
   });
-
-  const allFilled = (
-    (watch('name') || '').trim() !== '' &&
-    (watch('email') || '').trim() !== '' &&
-    (watch('password') || '').trim() !== '' &&
-    (watch('confirmPassword') || '').trim() !== ''
-  );
 
   const onSubmit = async (formData: any) => {
     try {
-      const payload = {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      };
-      await signUp(payload).unwrap();
+      await signUp(formData).unwrap();
       notify.success('Successfully signed up!');
       navigate(ROUTES.HOME, { replace: true });
-
     } catch (err: any) {
-      const serverMessage =
-        err?.data?.errors?.full_messages?.[0] ||
-        err?.data?.message ||
-        'Signup failed. Please try again.';
-      const errorField = serverMessage.toLowerCase().includes('name') ? 'name' : 'email';
-      setError(errorField, {
-        message: serverMessage,
-        type: 'server',
+      const messages =
+        err?.data?.errors?.full_messages ??
+        [err?.data?.message ?? 'Signup failed'];
+
+      messages.forEach((msg: string) => {
+        if (msg.toLowerCase().includes('email')) {
+          setError('email', { type: 'server', message: msg });
+        }
+        if (msg.toLowerCase().includes('name')) {
+          setError('name', { type: 'server', message: msg });
+        }
       });
+
       setValue('password', '');
       setValue('confirmPassword', '');
     }
   };
+
 
   const onError = () => {
     setValue('password', '');
@@ -125,10 +111,10 @@ const Signup = () => {
               type="submit"
               title="Sign Up"
               className={cn('form__btn', {
-                'signup__register-container-form-btnSignUp': allFilled,
-                'signup__register-container-form-btnSignUp-disabled': !allFilled,
+                'signup__register-container-form-btnSignUp': isValid,
+                'signup__register-container-form-btnSignUp-disabled': !isValid,
               })}
-              disabled={!allFilled || isLoading}
+              disabled={!isValid || isLoading}
               variant="primary"
             />
 
