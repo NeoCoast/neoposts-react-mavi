@@ -29,22 +29,6 @@ export const api = createApi({
         method: 'DELETE',
         url: 'users/sign_out',
       }),
-    logIn: builder.mutation({
-      query: (body) => ({
-        url: 'users/sign_in',
-        method: 'POST',
-        body,
-      }),
-      transformResponse: (response: any, meta) => {
-        const headers = ['uid', 'access-token', 'client', 'expiry'].reduce(
-          (acc, key) => ({
-            ...acc,
-            [key]: meta?.response?.headers?.get(key),
-          }),
-          {}
-        );
-        return { data: response, headers };
-      },
     }),
     signup: builder.mutation({
       query: ({ name, email, password, confirmPassword }) => ({
@@ -68,6 +52,10 @@ export const api = createApi({
         method: 'POST',
         url: 'users/sign_in'
       }),
+      transformResponse: (response: any, meta) => {
+        const headers = ['uid', 'access-token', 'client', 'expiry'].reduce((prev, curr) => ({ ...prev, [curr]: meta?.response?.headers?.get(curr) }), {});
+        return { data: response, meta: { response: { headers } } };
+      }
     }),
   }),
 });
@@ -75,7 +63,6 @@ export const api = createApi({
 export const {
   useGetPostsQuery,
   useGetMeQuery,
-  useLogInMutation,
   useLogOutMutation,
   useLogInMutation,
   useSignupMutation,
