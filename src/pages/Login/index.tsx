@@ -7,6 +7,7 @@ import { notify } from '@/components/Toaster/notify';
 import { logInSchema } from '@/utils/validationSchemas';
 import { ROUTES } from '@/constants/routes';
 import { useLogInMutation } from '@/services/api';
+import { LoginFormData } from '@/ts/interfaces/interfaces';
 import { setResponseHeaders } from '@/utils/responseHeaderHandler';
 
 import Header from '@/components/Header';
@@ -21,12 +22,12 @@ const LogIn = () => {
   const navigate = useNavigate();
   const [logIn, { isLoading }] = useLogInMutation();
 
-  const { register, handleSubmit, setValue, formState: { errors, isValid } } = useForm({
+  const { register, handleSubmit, setValue, formState: { errors, isValid } } = useForm<LoginFormData>({
     mode: 'onChange',
     resolver: zodResolver(logInSchema),
   });
 
-  const onSubmit = async (formData: any) => {
+  const onSubmit = async (formData: LoginFormData) => {
     const response = await logIn(formData);
 
     if (response.error) {
@@ -42,11 +43,6 @@ const LogIn = () => {
     navigate(ROUTES.HOME, { replace: true });
   };
 
-  const onError = () => {
-    setValue('email', '');
-    setValue('password', '');
-  };
-
   return (
     <main className="login">
       <div className="login__register-container">
@@ -57,7 +53,7 @@ const LogIn = () => {
           </div>
           <span className="login__register-container-text">Stay informed 🤓</span>
           <form
-            onSubmit={handleSubmit(onSubmit, onError)}
+            onSubmit={handleSubmit(onSubmit)}
             aria-label="Log in form"
             className='login__register-container-form'
           >
@@ -79,7 +75,7 @@ const LogIn = () => {
             />
             <Button
               type="submit"
-              title="Log In"
+              title="Log in"
               className={cn('form__btn', {
                 'login__register-container-form-btnLogIn': isValid,
                 'login__register-container-form-btnLogIn-disabled': !isValid,
