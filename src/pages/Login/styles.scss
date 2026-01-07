@@ -23,10 +23,10 @@
        align-items: center;
        color: $color-primary;
        font-size: 30px;
-       gap: 20px;
+       gap: 35px;
        transform: scale(0.70);
        transform-origin: left top;
-       margin-bottom: -30px;
+       margin-bottom: -40px;
 
        img {
          width: 52.32px;
@@ -35,7 +35,7 @@
      }
 
      &-text {
-       font-size: 30px;
+       font-size: 25px;
        font-weight: 600;
        color: $color-primary;
        line-height: 36px;

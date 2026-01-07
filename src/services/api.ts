@@ -25,7 +25,7 @@ export const api = createApi({
         url: 'users/sign_in'
       }),
       transformResponse: (response: any, meta) => {
-        const headers = meta?.response?.headers;
+        const headers = ['uid', 'access-token', 'client', 'expiry'].reduce((prev, curr) => ({ ...prev, [curr]: meta?.response?.headers?.get(curr) }), {});
         return { data: response, meta: { response: { headers } } };
       }
     }),
