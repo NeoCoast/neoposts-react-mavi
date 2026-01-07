@@ -7,6 +7,8 @@ import { notify } from '@/components/Toaster/notify';
 import { signupSchema } from '@/utils/validationSchemas';
 import { ROUTES } from '@/constants/routes';
 import { useSignupMutation } from '@/services/api';
+import { SignupFormData } from '@/ts/interfaces/interfaces';
+import { ApiErrorResponse } from '@/ts/types/errors';
 
 import Header from '@/components/Header';
 import Input from '@/components/Input';
@@ -20,22 +22,44 @@ const Signup = () => {
   const navigate = useNavigate();
   const [signUp, { isLoading }] = useSignupMutation();
 
-  const { register, handleSubmit, setError, setValue, formState: { errors, isValid } } = useForm({
+  const { register, handleSubmit, setError, setValue, formState: { errors, isValid } } = useForm<SignupFormData>({
     mode: 'onChange',
     resolver: zodResolver(signupSchema),
   });
 
-  const onSubmit = async (formData: any) => {
+  const getApiErrorMessage = (
+    err: unknown,
+    fallback = 'Signup failed. Please try again.'
+  ): string => {
+    if (typeof err === 'object' && err !== null && 'data' in err) {
+      const apiError = err as ApiErrorResponse;
+
+      return (
+        apiError.data?.errors?.full_messages?.[0] ||
+        apiError.data?.message ||
+        fallback
+      );
+    }
+
+    return fallback;
+  };
+
+  const getSignupErrorField = (
+    message: string
+  ): keyof SignupFormData => {
+    return message.toLowerCase().includes('name') ? 'name' : 'email';
+  };
+
+  const onSubmit = async (formData: SignupFormData) => {
     try {
       await signUp(formData).unwrap();
+
       notify.success('Successfully signed up!');
       navigate(ROUTES.HOME, { replace: true });
-    } catch (err: any) {
-      const serverMessage =
-        err?.data?.errors?.full_messages?.[0] ||
-        err?.data?.message ||
-        'Signup failed. Please try again.';
-      const errorField = serverMessage.toLowerCase().includes('name') ? 'name' : 'email';
+    } catch (err: unknown) {
+      const serverMessage = getApiErrorMessage(err);
+      const errorField = getSignupErrorField(serverMessage);
+
       setError(errorField, {
         message: serverMessage,
         type: 'server',
@@ -45,13 +69,6 @@ const Signup = () => {
       setValue('confirmPassword', '');
     }
   };
-
-
-  const onError = () => {
-    setValue('password', '');
-    setValue('confirmPassword', '');
-  };
-
 
   return (
     <main className="signup">
@@ -63,7 +80,7 @@ const Signup = () => {
             <Header />
           </div>
           <form
-            onSubmit={handleSubmit(onSubmit, onError)}
+            onSubmit={handleSubmit(onSubmit)}
             aria-label="Sign up form"
             noValidate
             className='signup__register-container-form'
