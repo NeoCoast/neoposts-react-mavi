@@ -31,6 +31,7 @@ export const api = createApi({
           password_confirmation: formData.confirmPassword,
         },
       }),
+      invalidatesTags: ['User'],
     }),
   }),
 });

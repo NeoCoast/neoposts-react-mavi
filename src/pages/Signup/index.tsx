@@ -21,7 +21,7 @@ const Signup = () => {
   const [signUp, { isLoading }] = useSignupMutation();
 
   const { register, handleSubmit, setError, setValue, formState: { errors, isValid } } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     resolver: zodResolver(signupSchema),
   });
 
