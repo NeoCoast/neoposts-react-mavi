@@ -1,7 +1,9 @@
 import { FC } from 'react';
 import { LuLogOut } from 'react-icons/lu';
-import Button from '@/components/Button';
 import { FaPlus } from "react-icons/fa";
+
+import Button from '@/components/Button';
+import LogOut from '../LogOut';
 
 import './styles.scss';
 
@@ -20,6 +22,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
   following,
   followers
 }) => {
+
   return (
     <aside className="profile__sidebar" aria-label="Profile sidebar">
       <div className="profile__sidebar-card">
@@ -27,7 +30,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
 
         <div className="profile__sidebar-card-info">
           <h3 className="profile__sidebar-card-info-name">{name}</h3>
-          <p className="profile__sidebar-email" title={email}>{email}</p>
+          <p className="profile__sidebar-card-info-email" title={email}>{email}</p>
         </div>
 
         <Button
@@ -45,20 +48,19 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
             <span className="profile__sidebar-card-stats-stat-span">Posts</span>
             <span className="profile__sidebar-card-stats-stat-value">{posts}</span>
           </div>
-          <div className="profile__sidebar-card-stats">
+          <div className="profile__sidebar-card-stats-stat">
             <span className="profile__sidebar-card-stats-stat-span">Following</span>
             <span className="profile__sidebar-card-stats-stat-value">{following}</span>
           </div>
-          <div className="profile__sidebar-card-stats">
+          <div className="profile__sidebar-card-stats-stat">
             <span className="profile__sidebar-card-stats-stat-span">Followers</span>
             <span className="profile__sidebar-card-stats-stat-value">{followers}</span>
           </div>
         </div>
 
-        <button className="profile__sidebar-card-logout">
-          <LuLogOut className="profile__sidebar-card-logout-icon" />
-          <span>Sign Out</span>
-        </button>
+        <div className="profile__sidebar-card-logout">
+          <LogOut />
+        </div>
       </div>
     </aside>
   );

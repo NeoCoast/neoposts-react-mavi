@@ -16,6 +16,7 @@ const App = () => {
     <>
       <AppToaster position="top-center" />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route element={<Layout redirectPath={ROUTES.LOGIN} />}>
           <Route path="/" element={<Home />} />
         </Route>
