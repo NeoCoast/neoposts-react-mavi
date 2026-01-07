@@ -13,9 +13,9 @@ const App = () => {
     <>
       <AppToaster position="top-center" />
       <Routes>
-        <Route path={ROUTES.HOME} element={<Home />} />
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.SIGNUP} element={<Signup />} />
+        <Route path={ROUTES.HOME} element={<Home />} />
       </Routes>
     </>
   );
