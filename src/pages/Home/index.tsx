@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/constants/routes';
-
+import { Toaster } from 'react-hot-toast';
 
 import Navbar from '@/components/Navbar';
+import ProfileSideBar from '@/components/ProfileSideBar';
 
 import './styles.scss';
 
@@ -11,9 +11,15 @@ const Home = () => {
   return (
     <div className="home">
       <Navbar />
-      <div style={{ display: 'flex', gap: '8px' }}>
-        <button onClick={() => navigate(ROUTES.LOGIN)}>Ir a Login</button>
-        <button onClick={() => navigate(ROUTES.SIGNUP)}>Ir a Signup</button>
+      <Toaster position="top-center" />
+      <div className="layout__sidebar">
+        <ProfileSideBar
+          name="Victoria Rivao  "
+          email="victoria.rivao@neocoast.com"
+          posts={34}
+          following={128}
+          followers={256}
+        />
       </div>
     </div>
   );
