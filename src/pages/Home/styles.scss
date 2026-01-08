@@ -1,0 +1,7 @@
+.home {
+  .layout__sidebar {
+    @media (width <=600px) {
+      display: none;
+    }
+  }
+}
