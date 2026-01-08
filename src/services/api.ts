@@ -17,6 +17,26 @@ export const api = createApi({
       query: () => 'posts',
       providesTags: ['Post'],
     }),
+
+    logIn: builder.mutation({
+      query: (body) => ({
+        url: 'users/sign_in',
+        method: 'POST',
+        body,
+      }),
+      transformResponse: (response: any, meta) => {
+        const headers = ['uid', 'access-token', 'client', 'expiry'].reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: meta?.response?.headers?.get(key),
+          }),
+          {}
+        );
+
+        return { data: response, headers };
+      },
+    }),
+
     signup: builder.mutation({
       query: ({ name, email, password, confirmPassword }) => ({
         url: 'users',
@@ -36,4 +56,8 @@ export const api = createApi({
   }),
 });
 
-export const { useGetPostsQuery, useSignupMutation } = api;
+export const {
+  useGetPostsQuery,
+  useLogInMutation,
+  useSignupMutation,
+} = api;
