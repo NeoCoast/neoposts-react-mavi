@@ -1,22 +1,42 @@
-import { useState } from 'react';
 import { MdLogout } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
-import SignoutModal from '@/components/LogOutModal';
+import { ROUTES } from '@/constants/routes';
+import { api, useLogOutMutation } from '@/services/api';
+import { deleteUserInformation } from '@/utils/responseHeaderHandler';
+import { notify } from '@/components/Toaster/notify';
+import { useDispatch } from 'react-redux';
 
 import './styles.scss';
 
 const LogOut = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const [logOut, { isLoading }] = useLogOutMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logOut().unwrap();
+    } catch (err: any) {
+      if (err?.status !== 404) {
+        notify.error('Error logging out. Please try again.');
+      }
+    } finally {
+      deleteUserInformation();
+      navigate(ROUTES.LOGIN, { replace: true });
+    }
+  };
 
   return (
-    <>
-      <button onClick={openModal} className="btn-logout" aria-label="Log out">
-        <MdLogout /> Sign Out
-      </button>
-      <SignoutModal isOpen={isModalOpen} closeModal={closeModal} />
-    </>
+    <button
+      onClick={handleLogout}
+      className="btn-logout"
+      aria-label="Log out"
+      disabled={isLoading}
+      aria-busy={isLoading}
+    >
+      <MdLogout /> Sign Out
+    </button>
   );
 };
 

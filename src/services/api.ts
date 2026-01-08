@@ -7,38 +7,49 @@ if (!apiBaseUrl) {
 }
 
 export const api = createApi({
-  reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: apiBaseUrl,
+    baseUrl: import.meta.env.VITE_API_URL,
     prepareHeaders: (headers) => {
-      const accessToken = localStorage.getItem('access-token');
-      const client = localStorage.getItem('client');
-      const uid = localStorage.getItem('uid');
+      const token = localStorage.getItem('access-token');
       const tokenType = localStorage.getItem('token-type');
+      const client = localStorage.getItem('client');
+      const expiry = localStorage.getItem('expiry');
+      const uid = localStorage.getItem('uid');
 
-      if (accessToken) headers.set('access-token', accessToken);
-      if (client) headers.set('client', client);
-      if (uid) headers.set('uid', uid);
-      if (tokenType) headers.set('token-type', tokenType);
+      if (token) {
+        headers.set('access-token', token);
+      }
+
+      if (tokenType) {
+        headers.set('token-type', tokenType);
+      }
+
+      if (client) {
+        headers.set('client', client);
+      }
+
+      if (expiry) {
+        headers.set('expiry', expiry);
+      }
+
+      if (uid) {
+        headers.set('uid', uid);
+      }
 
       return headers;
-    },
+    }
   }),
   tagTypes: ['Post'],
   endpoints: (builder) => ({
-    getPosts: builder.query({
+    getPosts: builder.query<any[], void>({
       query: () => 'posts',
       providesTags: ['Post'],
     }),
-    logOut: builder.mutation({
+    logOut: builder.mutation<void, void>({
       query: () => ({
         method: 'DELETE',
-        url: 'users/sign_out'
+        url: 'users/sign_out',
       }),
-      transformResponse: (response, meta) => ({
-        meta,
-        response
-      })
     }),
   }),
 });

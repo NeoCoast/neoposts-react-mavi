@@ -46,21 +46,21 @@
           max-width: 140px;
           margin: 0 auto;
           color: $color-text-subtle;
-          font-size: 13px;
+          font-size: 12px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          margin-bottom: 10px;
         }
       }
 
       &-newPost {
         width: 200px;
-        height: 48px;
+        height: 40px;
         border-radius: 8px;
         background: $color-primary;
         color: $color-white;
         margin-bottom: 8px;
-        font-weight: 700;
         font-size: 20px;
 
         &:enabled:hover {
