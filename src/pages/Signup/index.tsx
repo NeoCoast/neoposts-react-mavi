@@ -5,59 +5,70 @@ import cn from 'classnames';
 
 import { notify } from '@/components/Toaster/notify';
 import { signupSchema } from '@/utils/validationSchemas';
+import { useSignupMutation } from '@/services/api';
+import { SignupFormData } from '@/ts/interfaces/interfaces';
+import { ApiErrorResponse } from '@/ts/types/errors';
+
 import Header from '@/components/Header';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import { ROUTES } from '@/constants/routes';
+
 import './styles.scss';
+
 const registerBackground = new URL('@/assets/Background/RegisterBackground.png', import.meta.url).href;
 const neoPostIcon = new URL('@/assets/Icons/NeoPost.svg', import.meta.url).href;
 
-declare const signUp: (data: any) => Promise<{ status: number }>;
-
 const Signup = () => {
   const navigate = useNavigate();
+  const [signUp, { isLoading }] = useSignupMutation();
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
-    mode: 'onBlur',
+  const { register, handleSubmit, setError, setValue, formState: { errors, isValid } } = useForm<SignupFormData>({
+    mode: 'onChange',
     resolver: zodResolver(signupSchema),
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
-    }
   });
 
-  const allFilled = (
-    (watch('name') || '').trim() !== '' &&
-    (watch('email') || '').trim() !== '' &&
-    (watch('password') || '').trim() !== '' &&
-    (watch('confirmPassword') || '').trim() !== ''
-  );
+  const getApiErrorMessage = (
+    err: unknown,
+    fallback = 'Signup failed. Please try again.'
+  ): string => {
+    if (typeof err === 'object' && err !== null && 'data' in err) {
+      const apiError = err as ApiErrorResponse;
 
-  const onSubmit = async (data: any) => {
-    if (typeof signUp !== 'function') {
-      notify.success('Successfully signed up!');
-      navigate(ROUTES.HOME);
-      return;
+      return (
+        apiError.data?.errors?.full_messages?.[0] ||
+        apiError.data?.message ||
+        fallback
+      );
     }
+
+    return fallback;
+  };
+
+  const getSignupErrorField = (
+    message: string
+  ): keyof SignupFormData => {
+    return message.toLowerCase().includes('name') ? 'name' : 'email';
+  };
+
+  const onSubmit = async (formData: SignupFormData) => {
     try {
-      const res = await signUp(data);
-      if (res.status === 200) {
-        notify.success('Successfully signed up!');
-        navigate(ROUTES.HOME);
-      }
-    } catch (err) {
-      notify.error('Signup failed', { id: 'form_error' });
+      await signUp(formData).unwrap();
+
+      notify.success('Successfully signed up!');
+      navigate(ROUTES.LOGIN, { replace: true });
+    } catch (err: unknown) {
+      const serverMessage = getApiErrorMessage(err);
+      const errorField = getSignupErrorField(serverMessage);
+
+      setError(errorField, {
+        message: serverMessage,
+        type: 'server',
+      });
+
       setValue('password', '');
       setValue('confirmPassword', '');
     }
-  };
-
-  const onError = () => {
-    setValue('password', '');
-    setValue('confirmPassword', '');
   };
 
   return (
@@ -70,7 +81,7 @@ const Signup = () => {
             <Header />
           </div>
           <form
-            onSubmit={handleSubmit(onSubmit, onError)}
+            onSubmit={handleSubmit(onSubmit)}
             aria-label="Sign up form"
             noValidate
             className='signup__register-container-form'
@@ -115,10 +126,10 @@ const Signup = () => {
               type="submit"
               title="Sign Up"
               className={cn('form__btn', {
-                'signup__register-container-form-btnSignUp': allFilled,
-                'signup__register-container-form-btnSignUp-disabled': !allFilled,
+                'signup__register-container-form-btnSignUp': isValid,
+                'signup__register-container-form-btnSignUp-disabled': !isValid,
               })}
-              disabled={!allFilled}
+              disabled={!isValid || isLoading}
               variant="primary"
             />
 
