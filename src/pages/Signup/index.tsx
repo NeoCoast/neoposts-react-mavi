@@ -5,7 +5,6 @@ import cn from 'classnames';
 
 import { notify } from '@/components/Toaster/notify';
 import { signupSchema } from '@/utils/validationSchemas';
-import { ROUTES } from '@/constants/routes';
 import { useSignupMutation } from '@/services/api';
 import { SignupFormData } from '@/ts/interfaces/interfaces';
 import { ApiErrorResponse } from '@/ts/types/errors';
@@ -13,8 +12,10 @@ import { ApiErrorResponse } from '@/ts/types/errors';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
+import { ROUTES } from '@/constants/routes';
 
 import './styles.scss';
+
 const registerBackground = new URL('@/assets/Background/RegisterBackground.png', import.meta.url).href;
 const neoPostIcon = new URL('@/assets/Icons/NeoPost.svg', import.meta.url).href;
 
@@ -55,7 +56,7 @@ const Signup = () => {
       await signUp(formData).unwrap();
 
       notify.success('Successfully signed up!');
-      navigate(ROUTES.HOME, { replace: true });
+      navigate(ROUTES.LOGIN, { replace: true });
     } catch (err: unknown) {
       const serverMessage = getApiErrorMessage(err);
       const errorField = getSignupErrorField(serverMessage);
