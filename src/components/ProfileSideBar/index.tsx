@@ -1,7 +1,5 @@
 import { FC } from 'react';
-import { LuLogOut } from 'react-icons/lu';
 import { FaPlus } from "react-icons/fa";
-
 import Button from '@/components/Button';
 import LogOut from '../LogOut';
 
