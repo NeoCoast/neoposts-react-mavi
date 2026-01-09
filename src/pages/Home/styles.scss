@@ -1,0 +1,7 @@
+.home {
+  .layout__sidebar {
+    @include maxDisplay(600px) {
+      display: none;
+    }
+  }
+}

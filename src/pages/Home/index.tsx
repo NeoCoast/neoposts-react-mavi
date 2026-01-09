@@ -1,13 +1,17 @@
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/constants/routes';
+import Navbar from '@/components/Navbar';
+import UserBar from '@/components/UserBar';
+import Toaster from '@/components/Toaster';
+
+import './styles.scss';
 
 const Home = () => {
-  const navigate = useNavigate();
+
   return (
-    <div>
-      <div style={{ display: 'flex', gap: '8px' }}>
-        <button onClick={() => navigate(ROUTES.LOGIN)}>Ir a Login</button>
-        <button onClick={() => navigate(ROUTES.SIGNUP)}>Ir a Signup</button>
+    <div className="home">
+      <Navbar />
+      <Toaster position="top-center" />
+      <div className="layout__sidebar">
+        <UserBar />
       </div>
     </div>
   );

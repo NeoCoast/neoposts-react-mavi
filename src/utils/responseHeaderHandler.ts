@@ -1,3 +1,11 @@
+const clearAuthTokens = () => {
+  localStorage.removeItem('access-token');
+  localStorage.removeItem('token-type');
+  localStorage.removeItem('client');
+  localStorage.removeItem('expiry');
+  localStorage.removeItem('uid');
+};
+
 const setResponseHeaders = (metaData: Record<string, string>) => {
   if (!metaData) return;
   localStorage.setItem('access-token', metaData['access-token'] || '');
@@ -7,4 +15,4 @@ const setResponseHeaders = (metaData: Record<string, string>) => {
   localStorage.setItem('uid', metaData.uid || '');
 };
 
-export { setResponseHeaders };
+export { setResponseHeaders, clearAuthTokens };
