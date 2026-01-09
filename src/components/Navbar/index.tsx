@@ -32,7 +32,7 @@ const Navbar = () => {
 
         {!menuOpen && (
           <div className="navbar__icons">
-            <button className="navbar__icons-iconBtn" aria-label="People">
+            <button className="navbar__icons-iconBtn navbar__icons-peopleBtn" aria-label="People">
               <GoPeople className="navbar__icons-iconBtn-icon" />
             </button>
             <button className="navbar__icons-hamburger" onClick={openMenu} aria-label="Open menu">
