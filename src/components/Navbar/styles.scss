@@ -23,7 +23,7 @@
     pointer-events: none;
   }
 
-  @media (width <=600px) {
+  @include maxDisplay(600px) {
     padding: 0 12px;
     height: 64px;
   }
@@ -46,7 +46,7 @@
       line-height: 30px;
       padding: 0;
 
-      @media (width <=600px) {
+      @include maxDisplay(600px) {
         font-size: 18px;
       }
 
@@ -58,7 +58,7 @@
         width: 28px;
         height: 28px;
 
-        @media (width <=600px) {
+        @include maxDisplay(600px) {
           width: 22px;
           height: 22px;
         }
@@ -72,7 +72,7 @@
     gap: 28px;
     color: $color-primary;
 
-    @media (width <=600px) {
+    @include maxDisplay(600px) {
       gap: 12px;
     }
 
@@ -91,7 +91,7 @@
         opacity: 0.7;
       }
 
-      @media (width <=600px) {
+      @include maxDisplay(600px) {
         display: inline-flex;
         font-size: 18px;
       }
@@ -111,7 +111,7 @@
       &-icon {
         font-size: 24px;
 
-        @media (width <=600px) {
+        @include maxDisplay(600px) {
           font-size: 18px;
         }
       }
@@ -120,7 +120,7 @@
   }
 
   &--menuOpen {
-    @media (width <=600px) {
+    @include maxDisplay(600px) {
       .navbar__icons {
         display: none;
       }

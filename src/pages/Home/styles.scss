@@ -1,6 +1,6 @@
 .home {
   .layout__sidebar {
-    @media (width <=600px) {
+    @include maxDisplay(600px) {
       display: none;
     }
   }
