@@ -36,7 +36,7 @@ const LogIn = () => {
       setValue('password', '');
       return;
     }
-    const headers = response.data?.meta?.response?.headers;
+    const headers = response.data.headers;
     setResponseHeaders(headers);
 
     notify.success('Successfully logged in!');
