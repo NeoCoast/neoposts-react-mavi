@@ -57,21 +57,6 @@ export const api = createApi({
         return { data: response, meta: { response: { headers } } };
       }
     }),
-    signup: builder.mutation({
-      query: ({ name, email, password, confirmPassword }) => ({
-        url: 'users',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: {
-          name,
-          email,
-          password,
-          password_confirmation: confirmPassword,
-        },
-      }),
-    }),
   }),
 });
 
