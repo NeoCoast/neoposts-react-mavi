@@ -77,7 +77,11 @@
     }
 
     &-peopleBtn {
-      display: none;
+      font-size: 16px;
+
+      @include maxDisplay(600px) {
+        display: none;
+      }
     }
 
     &-hamburger {
