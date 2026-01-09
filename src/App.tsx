@@ -19,7 +19,7 @@ const App = () => {
       <AppToaster position="top-center" />
       <Routes>
         <Route element={<Layout redirectPath={ROUTES.LOGIN} />}>
-          <Route path="/" element={<Home />} />
+          <Route path={ROUTES.HOME} element={<Home />} />
         </Route>
         <Route element={<AuthRedirect redirectPath={ROUTES.HOME} />}>
           <Route path={ROUTES.SIGNUP} element={<Signup />} />

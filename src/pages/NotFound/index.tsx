@@ -10,7 +10,8 @@ const NotFound = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate(ROUTES.HOME, { replace: true });
+      const isAuthenticated = Boolean(localStorage.getItem('access-token'));
+      navigate(isAuthenticated ? ROUTES.HOME : ROUTES.LOGIN, { replace: true });
     }, 3000);
     return () => clearTimeout(timer);
   }, [navigate]);
