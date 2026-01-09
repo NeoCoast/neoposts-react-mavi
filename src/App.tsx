@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+
 import { ROUTES } from '@/constants/routes';
 
 import AppToaster from '@/components/Toaster';
