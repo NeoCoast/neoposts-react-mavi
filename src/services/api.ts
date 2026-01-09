@@ -14,7 +14,7 @@ export const api = createApi({
       return setAuthHeaders(headers);
     },
   }),
-  tagTypes: ['Post'],
+  tagTypes: ['Post', 'User'],
   endpoints: (builder) => ({
     getPosts: builder.query<any[], void>({
       query: () => 'posts',
@@ -28,6 +28,38 @@ export const api = createApi({
         method: 'DELETE',
         url: 'users/sign_out',
       }),
+    logIn: builder.mutation({
+      query: (body) => ({
+        url: 'users/sign_in',
+        method: 'POST',
+        body,
+      }),
+      transformResponse: (response: any, meta) => {
+        const headers = ['uid', 'access-token', 'client', 'expiry'].reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: meta?.response?.headers?.get(key),
+          }),
+          {}
+        );
+        return { data: response, headers };
+      },
+    }),
+    signup: builder.mutation({
+      query: ({ name, email, password, confirmPassword }) => ({
+        url: 'users',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: {
+          name,
+          email,
+          password,
+          password_confirmation: confirmPassword,
+        },
+      }),
+      invalidatesTags: ['User'],
     }),
   }),
 });
@@ -36,4 +68,6 @@ export const {
   useGetPostsQuery,
   useGetMeQuery,
   useLogOutMutation,
+  useLogInMutation,
+  useSignupMutation,
 } = api;
