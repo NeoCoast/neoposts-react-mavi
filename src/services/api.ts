@@ -3,6 +3,7 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 import { setAuthHeaders } from '@/utils/setHeaders';
 
 const apiBaseUrl = import.meta.env.VITE_API_URL;
+
 if (!apiBaseUrl) {
   throw new Error('Environment variable VITE_API_URL must be defined');
 }
@@ -28,6 +29,7 @@ export const api = createApi({
         method: 'DELETE',
         url: 'users/sign_out',
       }),
+    }),
     logIn: builder.mutation({
       query: (body) => ({
         url: 'users/sign_in',
