@@ -39,9 +39,6 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
             <button className="mobileMenu__icons-navbar-iconBtn" aria-label="People">
               <GoPeople />
             </button>
-            <button className="mobileMenu__icons-navbar-iconBtn" aria-label="Inbox">
-              <MdOutlineMail />
-            </button>
           </div>
         </div>
         <div className="mobileMenu__content">

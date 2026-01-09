@@ -1,4 +1,4 @@
-const deleteUserInformation = () => {
+const clearAuthTokens = () => {
   localStorage.removeItem('access-token');
   localStorage.removeItem('token-type');
   localStorage.removeItem('client');
@@ -6,4 +6,4 @@ const deleteUserInformation = () => {
   localStorage.removeItem('uid');
 };
 
-export { deleteUserInformation };
+export { clearAuthTokens };

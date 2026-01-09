@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { ROUTES } from '@/constants/routes';
 import { api, useLogOutMutation } from '@/services/api';
-import { deleteUserInformation } from '@/utils/responseHeaderHandler';
+import { clearAuthTokens } from '@/utils/responseHeaderHandler';
 import { notify } from '@/components/Toaster/notify';
 
 import './styles.scss';
@@ -23,7 +23,7 @@ const LogOut = () => {
       }
     } finally {
       dispatch(api.util.resetApiState());
-      deleteUserInformation();
+      clearAuthTokens();
       navigate(ROUTES.LOGIN, { replace: true });
     }
   };

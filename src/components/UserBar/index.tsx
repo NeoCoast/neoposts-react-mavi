@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 
 import ProfileSideBar from '@/components/ProfileSideBar';
 import { useGetMeQuery } from '@/services/api';
-import { User, Profile } from '@/ts/interfaces/interfaces';
+import { User, Profile } from '@/ts/interfaces';
 
 const getCount = (value: unknown): number => {
   if (Array.isArray(value)) return value.length;
   if (typeof value === 'number') return value;
+
   return 0;
 };
 
@@ -42,13 +43,7 @@ const UserBar = () => {
   }, [meData]);
 
   return (
-    <ProfileSideBar
-      name={profile.name}
-      email={profile.email}
-      posts={profile.posts}
-      following={profile.following}
-      followers={profile.followers}
-    />
+    <ProfileSideBar {...profile} />
   );
 };
 
