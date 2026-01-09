@@ -3,12 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 
 import AppToaster from '@/components/Toaster';
-import Layout from '@/components/Layout';
-import AuthRedirect from '@/components/AuthRedirect';
 import Home from '@/pages/Home';
 import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
-import NotFound from '@/pages/NotFound';
 
 import './App.scss';
 
