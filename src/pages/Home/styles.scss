@@ -1,7 +1,15 @@
 .home {
-  .layout__sidebar {
-    @include maxDisplay(600px) {
+  &__layout-sidebar {
+    @include tablet {
       display: none;
     }
+  }
+
+  &__layout-posts {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 30px 60px;
+    margin-top: 64px;
   }
 }

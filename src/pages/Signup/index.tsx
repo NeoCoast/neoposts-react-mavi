@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { notify } from '@/components/Toaster/notify';
 import { signupSchema } from '@/utils/validationSchemas';
 import { useSignupMutation } from '@/services/api';
-import { SignupFormData } from '@/ts/interfaces/interfaces';
+import { SignupFormData } from '@/ts/interfaces';
 import { ApiErrorResponse } from '@/ts/types/errors';
 
 import Header from '@/components/Header';

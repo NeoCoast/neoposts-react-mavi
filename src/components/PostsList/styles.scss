@@ -1,14 +1,18 @@
-.posts-list {
-  position: absolute;
+.posts__list {
   background-color: $color-white;
   color: $color-text;
-  width: 752px;
-  height: 1372px;
-  top: 95px;
-  left: 500px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  width: 100%;
+  max-width: 752px;
+  margin: 0 auto;
+  border-radius: 25px;
   padding: 30px;
+  display: flex;
+  flex-direction: column;
   gap: 30px;
-  opacity: 1;
+
+  &-item {
+    padding: 1rem;
+    border: 1px solid $color-border-muted;
+    border-radius: 0.5rem;
+  }
 }

@@ -1,13 +1,7 @@
 .profile {
   &__sidebar {
-    position: relative;
-    margin-top: 73px;
-    padding-left: 170px;
-
-    @media (width <=600px) {
-      padding-left: 12px;
-      margin-top: 96px;
-    }
+    position: absolute;
+    left: 100px;
 
     &-card {
       width: 250px;

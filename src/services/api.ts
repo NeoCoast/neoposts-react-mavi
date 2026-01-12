@@ -17,8 +17,12 @@ export const api = createApi({
   }),
   tagTypes: ['Post', 'User'],
   endpoints: (builder) => ({
-    getPosts: builder.query<any[], void>({
+    getPosts: builder.query({
       query: () => 'posts',
+      providesTags: ['Post'],
+    }),
+    getFeed: builder.query({
+      query: () => 'feed',
       providesTags: ['Post'],
     }),
     getMe: builder.query<any, void>({
@@ -68,6 +72,7 @@ export const api = createApi({
 
 export const {
   useGetPostsQuery,
+  useGetFeedQuery,
   useGetMeQuery,
   useLogOutMutation,
   useLogInMutation,

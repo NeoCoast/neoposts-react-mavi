@@ -1,11 +1,14 @@
 import { FC } from 'react';
 import { FaPlus } from "react-icons/fa";
+import cn from 'classnames';
+
 import Button from '@/components/Button';
 import LogOut from '@/components/LogOut';
 
 import './styles.scss';
 
 export type ProfileSideBarProps = {
+  className?: string;
   name: string;
   email: string;
   posts: number;
@@ -14,6 +17,7 @@ export type ProfileSideBarProps = {
 };
 
 const ProfileSideBar: FC<ProfileSideBarProps> = ({
+  className = '',
   name,
   email,
   posts,
@@ -27,7 +31,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
   ];
 
   return (
-    <aside className="profile__sidebar" aria-label="Profile sidebar">
+    <aside className={cn("profile__sidebar", className)} aria-label="Profile sidebar">
       <div className="profile__sidebar-card">
         <div className="profile__sidebar-card-avatar" aria-hidden="true" />
 
