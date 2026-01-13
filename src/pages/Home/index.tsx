@@ -12,11 +12,11 @@ import './styles.scss';
 const Home = () => {
   const isAuthenticated = Boolean(localStorage.getItem('access-token'));
 
-  const feedQuery = useGetFeedQuery(undefined, { skip: !isAuthenticated, });
+  const feedQuery = useGetFeedQuery(undefined, { skip: isAuthenticated, });
 
-  const postsQuery = useGetPostsQuery(undefined, { skip: isAuthenticated, });
+  const postsQuery = useGetPostsQuery(undefined, { skip: !isAuthenticated, });
 
-  const data = isAuthenticated ? feedQuery.data?.posts : postsQuery.data?.posts;
+  const data = !isAuthenticated ? feedQuery.data?.posts : postsQuery.data?.posts;
 
   const isLoading = feedQuery.isLoading || postsQuery.isLoading;
   const error = feedQuery.error || postsQuery.error;
@@ -55,7 +55,7 @@ const Home = () => {
           )}
 
           {!isLoading && !error && data.length > 0 && (
-            <PostsList items={data} />
+            <PostsList items={data.slice(0, 15)} />
           )}
         </div>
       </div>

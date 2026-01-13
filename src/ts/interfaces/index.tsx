@@ -28,11 +28,22 @@ export interface SignupFormData {
   confirmPassword: string;
 }
 
+export interface PostComment {
+  id: string | number;
+  content: string;
+  publishedAt?: string;
+  likesCount?: number;
+  author: Author;
+}
+
 export interface Post {
   id: string | number;
   title: string;
   content: string;
   publishedAt: string;
+  likesCount?: number;
+  commentsCount?: number;
+  comments?: PostComment[];
 }
 
 export interface Author {
@@ -43,12 +54,16 @@ export interface Author {
   username?: string;
 }
 
-export interface PostListItem {
-  id: string | number;
-  title: string;
-  content: string;
-  publishedAt: string;
+export interface PostListItem extends Post {
   author: Author;
+}
+
+export interface PostDetailLocationState {
+  post?: PostListItem;
+}
+
+export interface PostDetailRouteParams extends Record<string, string | undefined> {
+  id?: string;
 }
 
 export interface PostProps {
