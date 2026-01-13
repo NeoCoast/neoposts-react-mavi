@@ -22,7 +22,7 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
   }, [location.pathname]);
 
   return (
-    <div className={`mobileMenu ${open ? 'mobileMenu--open' : ''}`} aria-hidden={!open}>
+    <div className={`mobileMenu ${open ? 'mobileMenu--open' : ''}`}>
       <div className="mobileMenu__backdrop" onClick={onClose} />
       <aside className="mobileMenu__panel" role="dialog" aria-modal="true">
         <div className="mobileMenu__panel-header">
@@ -42,7 +42,7 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
           </div>
         </div>
         <div className="mobileMenu__content">
-          <UserBar className={''} />
+          <UserBar className={'mobileMenu__profile profile__sidebar--static'} />
         </div>
       </aside>
     </div>
