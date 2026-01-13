@@ -1,7 +1,13 @@
 .profile {
   &__sidebar {
-    position: absolute;
+    position: fixed;
     left: 100px;
+    top: calc(64px + 12px);
+    z-index: 900;
+
+    @include tablet {
+      display: none;
+    }
 
     &-card {
       width: 250px;

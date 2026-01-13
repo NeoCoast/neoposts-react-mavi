@@ -2,7 +2,6 @@ import { Oval } from 'react-loader-spinner';
 
 import Navbar from '@/components/Navbar';
 import UserBar from '@/components/UserBar';
-import Toaster from '@/components/Toaster';
 import PostsList from '@/components/PostsList';
 
 import { useGetFeedQuery, useGetPostsQuery } from '@/services/api';
@@ -25,7 +24,6 @@ const Home = () => {
   return (
     <div className="home">
       <Navbar />
-      <Toaster position="top-center" />
 
       <UserBar className="home__layout-sidebar" />
 

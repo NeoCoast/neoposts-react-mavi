@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import cn from 'classnames';
 
-import { notify } from '@/components/Toaster/notify';
 import { signupSchema } from '@/utils/validationSchemas';
 import { useSignupMutation } from '@/services/api';
 import { SignupFormData } from '@/ts/interfaces';
@@ -11,6 +10,7 @@ import { ApiErrorResponse } from '@/ts/types/errors';
 
 import Header from '@/components/Header';
 import Input from '@/components/Input';
+import Toaster from '@/components/Toaster';
 import Button from '@/components/Button';
 import { ROUTES } from '@/constants/routes';
 
@@ -55,7 +55,7 @@ const Signup = () => {
     try {
       await signUp(formData).unwrap();
 
-      notify.success('Successfully signed up!');
+      <Toaster position="top-center" />
       navigate(ROUTES.LOGIN, { replace: true });
     } catch (err: unknown) {
       const serverMessage = getApiErrorMessage(err);

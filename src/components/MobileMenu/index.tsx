@@ -1,8 +1,8 @@
-import UserBar from '@/components/UserBar';
 import { GoPeople } from 'react-icons/go';
-import { MdOutlineMail } from 'react-icons/md';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
+import UserBar from '@/components/UserBar';
 
 import './styles.scss';
 
@@ -42,7 +42,7 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
           </div>
         </div>
         <div className="mobileMenu__content">
-          <UserBar />
+          <UserBar className={''} />
         </div>
       </aside>
     </div>
