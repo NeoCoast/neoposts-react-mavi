@@ -1,4 +1,6 @@
 .home {
+  color: $color-text;
+
   &__layout-sidebar {
     @include tablet {
       display: none;

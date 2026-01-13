@@ -1,3 +1,5 @@
+import { Oval } from 'react-loader-spinner';
+
 import Navbar from '@/components/Navbar';
 import UserBar from '@/components/UserBar';
 import Toaster from '@/components/Toaster';
@@ -29,7 +31,18 @@ const Home = () => {
 
       <div className="home__layout-posts">
         {isLoading && (
-          <div className="home__layout-postsList-loader">Loading posts…</div>
+          <div className="home__layout-postsList-loader">
+            <Oval
+              visible={true}
+              height="80"
+              width="80"
+              color="#0F31AA"
+              secondaryColor='#1445D8'
+              ariaLabel="oval-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+            />
+          </div>
         )}
 
         {!isLoading && error && (
