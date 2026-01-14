@@ -49,7 +49,7 @@ function PostDetail() {
   const renderMainContent = () => {
     if (isLoading) {
       return (
-        <div className="post-detail__loader">
+        <div className="post__detail-loader">
           <Oval
             visible={true}
             height="72"
@@ -64,7 +64,7 @@ function PostDetail() {
 
     if (hasError) {
       return (
-        <div className="post-detail__error">
+        <div className="post__detail-error">
           We couldn&apos;t load this post. Please try again later.
         </div>
       );
@@ -72,10 +72,10 @@ function PostDetail() {
 
     if (!post) {
       return (
-        <div className="post-detail__empty">
+        <div className="post__detail-empty">
           <p>The requested post does not exist.</p>
           <Button
-            className="post-detail__home"
+            className="post__detail-empty-home"
             variant="primary"
             title="Go to home"
             onClick={handleGoHome}
@@ -102,8 +102,8 @@ function PostDetail() {
       <Navbar />
 
       <div className="post__detail-layout">
-        <UserBar className="post__detail-sidebar" />
-        <div className="post__detail-sidebar-content">{renderMainContent()}</div>
+        <UserBar className="post__detail-layout-sidebar" />
+        <div className="post__detail-layout-sidebar-content">{renderMainContent()}</div>
       </div>
     </div>
   );
