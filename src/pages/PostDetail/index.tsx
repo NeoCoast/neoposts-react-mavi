@@ -29,7 +29,7 @@ function PostDetail() {
     likesCount,
     comments,
     commentsCount,
-    publishedAt,
+    publishedAtRaw,
     isLoading,
     hasError,
   } = usePostDetailData({ id, postFromState });
@@ -91,7 +91,7 @@ function PostDetail() {
         likesCount={likesCount}
         comments={comments}
         commentsCount={commentsCount}
-        publishedAt={publishedAt}
+        publishedAtRaw={publishedAtRaw}
         onBack={handleBack}
       />
     );

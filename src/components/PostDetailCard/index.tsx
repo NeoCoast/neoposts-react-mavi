@@ -1,7 +1,9 @@
 import { IoIosArrowBack, IoIosHeartEmpty } from 'react-icons/io';
 import { BiSolidComment } from 'react-icons/bi';
 
+import PostTitle from '@/components/PostTitle';
 import PostContent from '@/components/PostContent';
+import PostFooter from '@/components/PostFooter';
 import { PostComment, PostListItem } from '@/ts/interfaces';
 import {
   formatAuthorName,
@@ -20,7 +22,7 @@ type PostDetailCardProps = {
   likesCount: number;
   comments: PostComment[];
   commentsCount: number;
-  publishedAt: string;
+  publishedAtRaw: string;
   onBack: () => void;
 };
 
@@ -30,7 +32,7 @@ function PostDetailCard({
   likesCount,
   comments,
   commentsCount,
-  publishedAt,
+  publishedAtRaw,
   onBack,
 }: PostDetailCardProps) {
   const authorFullName = getFullName(post.author.name, post.author.lastName);
@@ -58,19 +60,14 @@ function PostDetailCard({
         </div>
       </header>
 
-      <h1 className="post__detail-card-title">{post.title}</h1>
+      <PostTitle title={post.title} />
       <PostContent content={postContent} />
 
-      <div className="post__detail-card-meta">
-        <time className="post__detail-card-meta-date" dateTime={post.publishedAt}>
-          {publishedAt}
-        </time>
-
-        <button type="button" className="post__detail-card-meta-like">
-          <IoIosHeartEmpty />
-          <span>{likesCount}</span>
-        </button>
-      </div>
+      <PostFooter
+        publishedAt={publishedAtRaw || post.publishedAt}
+        likesCount={likesCount}
+        commentsCount={commentsCount}
+      />
 
       <span className="post__detail-card-separator" />
 
@@ -131,5 +128,4 @@ function PostDetailCard({
   );
 }
 
-export { PostDetailCard };
 export default PostDetailCard;

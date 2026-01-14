@@ -22,6 +22,7 @@ const buildDefaultDetails = () => ({
   comments: [] as PostComment[],
   commentsCount: 0,
   publishedAt: '',
+  publishedAtRaw: '',
 });
 
 const usePostDetailData = ({ id, postFromState }: UsePostDetailDataParams) => {
@@ -50,6 +51,7 @@ const usePostDetailData = ({ id, postFromState }: UsePostDetailDataParams) => {
       comments: normalizedComments,
       commentsCount: getCommentsCount(post, normalizedComments),
       publishedAt: formatDate(post.publishedAt),
+      publishedAtRaw: post.publishedAt ?? '',
     };
   }, [post]);
 
