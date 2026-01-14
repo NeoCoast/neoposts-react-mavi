@@ -7,17 +7,18 @@ import Button from '@/components/Button';
 
 import './styles.scss';
 
-const PostFooter = ({ publishedAt, likesCount, commentsCount }: PostFooterProps) => {
+const PostFooter = ({ publishedAt, likesCount, commentsCount, label }: PostFooterProps) => {
   const parsedDate = new Date(publishedAt);
   const isValidDate = !Number.isNaN(parsedDate.getTime());
   const formattedDate = isValidDate ? parsedDate.toLocaleString() : publishedAt;
+  const displayDate = label ?? formattedDate;
   const hasLikes = typeof likesCount === 'number';
   const hasComments = typeof commentsCount === 'number';
 
   return (
     <footer className="post__footer">
       <time className="post__footer-date" dateTime={publishedAt}>
-        {formattedDate}
+        {displayDate}
       </time>
 
       <div className="post__footer-icons">

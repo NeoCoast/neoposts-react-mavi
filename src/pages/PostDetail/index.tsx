@@ -30,6 +30,7 @@ function PostDetail() {
     comments,
     commentsCount,
     publishedAtRaw,
+    publishedAt,
     isLoading,
     hasError,
   } = usePostDetailData({ id, postFromState });
@@ -92,6 +93,7 @@ function PostDetail() {
         comments={comments}
         commentsCount={commentsCount}
         publishedAtRaw={publishedAtRaw}
+        publishedAtLabel={publishedAt}
         onBack={handleBack}
       />
     );

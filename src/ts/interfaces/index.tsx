@@ -95,4 +95,5 @@ export interface PostFooterProps {
   publishedAt: string;
   likesCount?: number;
   commentsCount?: number;
+  label?: string;
 }

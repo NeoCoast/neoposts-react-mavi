@@ -23,6 +23,7 @@ type PostDetailCardProps = {
   comments: PostComment[];
   commentsCount: number;
   publishedAtRaw: string;
+  publishedAtLabel: string;
   onBack: () => void;
 };
 
@@ -33,6 +34,7 @@ function PostDetailCard({
   comments,
   commentsCount,
   publishedAtRaw,
+  publishedAtLabel,
   onBack,
 }: PostDetailCardProps) {
   const authorFullName = getFullName(post.author.name, post.author.lastName);
@@ -67,6 +69,7 @@ function PostDetailCard({
         publishedAt={publishedAtRaw || post.publishedAt}
         likesCount={likesCount}
         commentsCount={commentsCount}
+        label={publishedAtLabel}
       />
 
       <span className="post__detail-card-separator" />
