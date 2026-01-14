@@ -1,3 +1,6 @@
+import { UseFormRegister } from 'react-hook-form';
+import type { FieldError } from 'react-hook-form';
+
 export interface User {
   id: string | number;
   name: string;
@@ -97,3 +100,40 @@ export interface PostFooterProps {
   commentsCount?: number;
   label?: string;
 }
+
+export interface InputProps {
+  inputName: string;
+  type?: string;
+  register?: UseFormRegister<any>;
+  required?: boolean;
+  errors?: FieldError | { message?: string } | null;
+  className?: string;
+  placeholder?: string;
+};
+
+export interface TextProps {
+  inputName: string;
+  register: any;
+  required?: boolean;
+  placeholder?: string;
+  className?: string;
+}
+
+export interface ProfileSideBarProps {
+  className?: string;
+  name: string;
+  email: string;
+  posts: number;
+  following: number;
+  followers: number;
+};
+
+export interface CreateModalProps {
+  isOpen: boolean;
+  closeModal: () => void;
+};
+
+export interface CreatePostFormData {
+  title: string;
+  body: string;
+};

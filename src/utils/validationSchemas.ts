@@ -34,3 +34,8 @@ export const logInSchema = z.object({
     .email('Invalid email'),
   password: z.string().min(1, 'Password is required'),
 });
+
+export const createPostSchema = z.object({
+  title: z.string().min(1, 'Title is required').trim(),
+  body: z.string().min(1, 'Body is required').trim(),
+});

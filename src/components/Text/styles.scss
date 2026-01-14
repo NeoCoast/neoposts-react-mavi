@@ -1,0 +1,30 @@
+.text-area {
+  width: 400px;
+  min-height: 80px;
+  max-height: 304px;
+  padding: 10px;
+  border-radius: 12px;
+  border: solid 1px $color-text-subtle;
+  resize: vertical;
+  overflow-y: auto;
+  field-sizing: content;
+
+  &:active {
+    border: solid 1px $color-primary;
+  }
+
+  &::placeholder {
+    color: $color-text-subtle;
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  &__comment {
+    width: 450px;
+    min-height: 30px;
+    max-height: 50px;
+    border-radius: 10px;
+    border: solid 1px $color-text-subtle;
+    padding: 10px;
+  }
+}

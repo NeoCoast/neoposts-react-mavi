@@ -1,0 +1,137 @@
+.modal {
+  width: 100%;
+  max-width: 720px;
+  padding: 28px 36px;
+  position: relative;
+
+  background-color: $color-white;
+  color: $color-text;
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(29, 49, 91, 0.12);
+
+  &__background {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(18, 24, 40, 0.35);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+  }
+
+  &__close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 2px solid $color-text;
+    color: $color-text;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  &__title {
+    font-size: 26px;
+    font-weight: 700;
+    background-color: transparent;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  &__header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__main {
+    display: block;
+    align-items: stretch;
+    gap: 0;
+
+    &-photo {
+      width: 72px;
+      height: 72px;
+      flex: 0 0 72px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    &-content {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      &-input {
+        width: 90%;
+        padding: 16px 35px;
+        border-radius: 12px;
+        border: 1px solid $color-logOut-button;
+        background: $color-white;
+        font-size: 16px;
+        outline: none;
+        color: $color-text;
+      }
+
+      textarea {
+        min-height: 140px;
+        width: 90%;
+        resize: vertical;
+        padding: 35px;
+        background-color: transparent;
+        font-size: 20px;
+        border: 1px solid $color-logOut-button;
+        color: $color-text;
+      }
+
+      &-post {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 10px;
+
+        .modal__icon {
+          font-size: 22px;
+          color: $color-text-subtle;
+          margin-left: 6px;
+        }
+
+        &-btn {
+          padding: 12px 28px;
+          border-radius: 12px;
+          gap: 10px;
+          color: $color-white;
+          border: none;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 680px) {
+    padding: 20px;
+    border-radius: 18px;
+
+    &__main {
+      flex-direction: column;
+      gap: 12px;
+
+      &-photo {
+        width: 56px;
+        height: 56px;
+      }
+    }
+  }
+}
