@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { FiSave } from "react-icons/fi";
+import { FiSave } from 'react-icons/fi';
 import Modal from 'react-modal';
 
 import Input from '@/components/Input';
@@ -70,9 +70,9 @@ const NewPostModal: FC<ModalProps> = ({ isOpen, onRequestClose }) => {
 
           <div className="newpost__footer">
             <div className="newpost__left-actions">
-              <button type="button" className="newpost__icon-btn" aria-hidden>
+              <span className="newpost__icon-span" aria-hidden="true">
                 <FiSave />
-              </button>
+              </span>
             </div>
 
             <button

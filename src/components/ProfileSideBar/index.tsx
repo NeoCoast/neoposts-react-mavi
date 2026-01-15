@@ -1,12 +1,11 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
-import { useState } from 'react';
 import cn from 'classnames';
 
 import { ProfileSideBarProps } from '@/ts/interfaces';
 
 import Button from '@/components/Button';
-import NewPostModal from '@/components/CreatePost';
+import CreatePost from '@/components/CreatePost';
 import LogOut from '@/components/LogOut';
 
 import './styles.scss';
@@ -47,7 +46,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
           onClick={() => setIsOpen(true)}
         />
 
-        <NewPostModal
+        <CreatePost
           isOpen={isOpen}
           closeModal={() => setIsOpen(false)}
         />

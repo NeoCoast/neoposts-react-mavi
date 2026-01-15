@@ -149,6 +149,6 @@ export interface FormData {
 };
 
 export interface CreatePostProps {
-  isOpen?: boolean;
-  closeModal?: () => void;
+  isOpen: boolean;
+  closeModal: () => void;
 }

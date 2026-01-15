@@ -49,72 +49,70 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
   };
 
   return (
-    <div>
-      <Modal
-        isOpen={isOpen}
-        onRequestClose={closeModal}
-        contentLabel="Create new post!"
-        className="modal"
-        overlayClassName="modal__background"
-      >
-        <div className="modal__header">
-          <div className="modal__header-top">
-            <img
-              className="modal__header-top-photo"
-              src={userProfilePhoto}
-              alt="user profile"
+    <Modal
+      isOpen={isOpen}
+      onRequestClose={closeModal}
+      contentLabel="Create new post!"
+      className="modal"
+      overlayClassName="modal__background"
+    >
+      <div className="modal__header">
+        <div className="modal__header-top">
+          <img
+            className="modal__header-top-photo"
+            src={userProfilePhoto}
+            alt="user profile"
+          />
+          <span className="modal__header-top-title">New Post</span>
+        </div>
+
+        <button
+          className="modal__header-close"
+          onClick={() => {
+            reset();
+            closeModal();
+          }}
+        >
+          &times;
+        </button>
+      </div>
+
+      <div className="modal__main">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="modal__main-content"
+        >
+          <Input
+            inputName="title"
+            register={register}
+            required
+            className="modal__main-content-input"
+            placeholder="Title"
+          />
+
+          <Text
+            inputName="body"
+            register={register}
+            className="modal__main-content-textarea"
+            required
+            placeholder="Share something with your team!"
+          />
+
+          <div className="modal__main-content-post">
+            <FiSave className="modal__icon" />
+
+            <Button
+              type="submit"
+              title="Post"
+              loading={isLoading}
+              disabled={!isValid}
+              className="modal__main-content-post-btn"
+              variant="submit"
             />
-            <span className="modal__header-top-title">New Post</span>
           </div>
-
-          <button
-            className="modal__header-close"
-            onClick={() => {
-              reset();
-              closeModal();
-            }}
-          >
-            &times;
-          </button>
-        </div>
-
-        <div className="modal__main">
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="modal__main-content"
-          >
-            <Input
-              inputName="title"
-              register={register}
-              required
-              className="modal__main-content-input"
-              placeholder="Title"
-            />
-
-            <Text
-              inputName="body"
-              register={register}
-              className="modal__main-content-textarea"
-              required
-              placeholder="Share something with your team!"
-            />
-
-            <div className="modal__main-content-post">
-              <FiSave className="modal__icon" />
-
-              <Button
-                type="submit"
-                title="Post"
-                loading={isLoading}
-                disabled={!isValid}
-                className="modal__main-content-post-btn"
-                variant=""
-              />
-            </div>
-          </form>
-        </div>
-      </Modal>
-    </div>
+        </form>
+      </div>
+    </Modal>
   );
 };
 
