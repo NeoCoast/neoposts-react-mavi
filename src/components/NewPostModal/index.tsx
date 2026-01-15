@@ -11,14 +11,14 @@ import './styles.scss';
 
 const NewPostModal: FC<ModalProps> = ({ isOpen, onRequestClose }) => {
   const { register, handleSubmit, reset, watch } = useForm<FormData>({
-    defaultValues: { title: '', content: '' },
+    defaultValues: { title: '', body: '' },
   });
 
   const title = watch('title');
-  const content = watch('content');
+  const body = watch('body');
 
   const onSubmit = (data: FormData) => {
-    if (!data.content || data.content.trim() === '') return;
+    if (!data.body || data.body.trim() === '') return;
     reset();
     onRequestClose();
   };
@@ -62,7 +62,7 @@ const NewPostModal: FC<ModalProps> = ({ isOpen, onRequestClose }) => {
           </label>
 
           <textarea
-            {...register('content')}
+            {...register('body')}
             className="newpost__textarea big"
             placeholder="Share something with your team!"
             rows={6}
@@ -78,7 +78,7 @@ const NewPostModal: FC<ModalProps> = ({ isOpen, onRequestClose }) => {
             <button
               type="submit"
               className="newpost__post-btn"
-              disabled={!(title && title.trim()) || !(content && content.trim())}
+              disabled={!(title && title.trim()) || !(body && body.trim())}
             >
               Post
             </button>

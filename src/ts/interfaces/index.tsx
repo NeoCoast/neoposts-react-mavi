@@ -145,5 +145,5 @@ export interface ModalProps {
 
 export interface FormData {
   title?: string;
-  content: string;
+  body: string;
 };

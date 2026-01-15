@@ -3,7 +3,6 @@ import { FaPlus } from "react-icons/fa";
 import { useState } from 'react';
 import cn from 'classnames';
 
-
 import { ProfileSideBarProps } from '@/ts/interfaces';
 
 import Button from '@/components/Button';

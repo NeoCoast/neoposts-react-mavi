@@ -15,6 +15,7 @@ import Button from '@/components/Button';
 import Text from '@/components/Text';
 
 import './styles.scss';
+import { ApiErrorResponse } from '@/ts/types/errors';
 
 Modal.setAppElement('#root');
 
@@ -41,8 +42,9 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
       closeModal();
 
       notify.success('Post created successfully!');
-    } catch (err: any) {
-      notify.error(err?.data?.errors || 'Something went wrong. Please try again');
+    } catch (err: unknown) {
+      const apiError = err as ApiErrorResponse;
+      notify.error(apiError.data?.message || 'Something went wrong. Please try again');
     }
   };
 
