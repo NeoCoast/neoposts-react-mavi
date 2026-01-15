@@ -10,6 +10,7 @@ import Home from '@/pages/Home';
 import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
 import NotFound from '@/pages/NotFound';
+import PostDetail from '@/pages/PostDetail';
 
 import './App.scss';
 
@@ -21,6 +22,7 @@ const App = () => {
       <Routes>
         <Route element={<Layout redirectPath={ROUTES.LOGIN} />}>
           <Route path={ROUTES.HOME} element={<Home />} />
+          <Route path={ROUTES.POST} element={<PostDetail />} />
         </Route>
         <Route element={<AuthRedirect redirectPath={ROUTES.HOME} />}>
           <Route path={ROUTES.SIGNUP} element={<Signup />} />

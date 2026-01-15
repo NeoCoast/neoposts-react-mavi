@@ -19,7 +19,7 @@ const mapUserToProfile = (u: User): Profile => ({
   followers: getCount(u?.followers),
 });
 
-const UserBar = () => {
+const UserBar = ({ className }: { className: string }) => {
   const [profile, setProfile] = useState<Profile>({
     name: '-',
     email: '-',
@@ -43,7 +43,7 @@ const UserBar = () => {
   }, [meData]);
 
   return (
-    <ProfileSideBar {...profile} />
+    <ProfileSideBar className={className} {...profile} />
   );
 };
 

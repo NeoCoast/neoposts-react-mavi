@@ -1,16 +1,13 @@
 .profile {
   &__sidebar {
-    position: relative;
-    margin-top: 73px;
-    padding-left: 170px;
-
-    @media (width <=600px) {
-      padding-left: 12px;
-      margin-top: 96px;
-    }
+    position: sticky;
+    top: calc(64px + 12px);
+    align-self: start;
+    max-width: 250px;
+    margin-top: -20px;
 
     &-card {
-      width: 250px;
+      width: 100%;
       background: $color-white;
       border-radius: 0 0 28px 28px;
       box-shadow: $shadow-elevation-1;
@@ -123,6 +120,22 @@
           font-size: 24px;
         }
       }
+    }
+
+    &--static {
+      position: static;
+      top: auto;
+      max-width: none;
+    }
+
+    @include laptop {
+      top: calc(64px + 12px);
+    }
+
+    @include tablet {
+      position: static;
+      top: auto;
+      max-width: none;
     }
   }
 }

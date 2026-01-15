@@ -7,7 +7,7 @@ import { notify } from '@/components/Toaster/notify';
 import { logInSchema } from '@/utils/validationSchemas';
 import { ROUTES } from '@/constants/routes';
 import { useLogInMutation } from '@/services/api';
-import { LoginFormData } from '@/ts/interfaces/interfaces';
+import { LoginFormData } from '@/ts/interfaces';
 import { setResponseHeaders } from '@/utils/responseHeaderHandler';
 
 import Header from '@/components/Header';

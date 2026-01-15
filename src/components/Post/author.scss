@@ -1,0 +1,27 @@
+.post-author {
+  display: flex;
+  align-items: center;
+
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0.75rem;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__email {
+    font-size: 0.875rem;
+    color: $color-text-muted;
+  }
+}
