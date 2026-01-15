@@ -1,23 +1,15 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiSave } from "react-icons/fi";
-
 import Modal from 'react-modal';
-import toast from 'react-hot-toast';
+
+import Input from '@/components/Input';
+
+import { ModalProps, FormData } from '@/ts/interfaces';
 
 import './styles.scss';
 
-type Props = {
-  isOpen: boolean;
-  onRequestClose: () => void;
-};
-
-type FormData = {
-  title?: string;
-  content: string;
-};
-
-const NewPostModal: FC<Props> = ({ isOpen, onRequestClose }) => {
+const NewPostModal: FC<ModalProps> = ({ isOpen, onRequestClose }) => {
   const { register, handleSubmit, reset, watch } = useForm<FormData>({
     defaultValues: { title: '', content: '' },
   });
@@ -27,7 +19,6 @@ const NewPostModal: FC<Props> = ({ isOpen, onRequestClose }) => {
 
   const onSubmit = (data: FormData) => {
     if (!data.content || data.content.trim() === '') return;
-    toast.success('Post publicado');
     reset();
     onRequestClose();
   };
@@ -63,12 +54,10 @@ const NewPostModal: FC<Props> = ({ isOpen, onRequestClose }) => {
 
         <div className="newpost__right">
           <label className="newpost__title-label">
-            <input
-              {...register('title', { maxLength: 100 })}
+            <Input
+              inputName={''} {...register('title', { maxLength: 100 })}
               className="newpost__title-input"
-              placeholder="Title"
-              maxLength={100}
-            />
+              placeholder="Title" />
             <div className="newpost__counter">{(title?.length ?? 0)}/100</div>
           </label>
 

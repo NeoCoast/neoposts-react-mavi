@@ -2,12 +2,13 @@ import Modal from 'react-modal';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { toast, Toaster } from 'react-hot-toast';
 import { FiSave } from 'react-icons/fi';
 
 import { useCreatePostMutation } from '@/services/api';
 import { createPostSchema } from '@/utils/validationSchemas';
 import { CreateModalProps, CreatePostFormData } from '@/ts/interfaces';
+
+import { notify } from '@/components/Toaster/notify';
 
 import Input from '@/components/Input';
 import Button from '@/components/Button';
@@ -35,19 +36,18 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
   const onSubmit = async (info: CreatePostFormData) => {
     try {
       await createPost(info).unwrap();
+
       reset();
       closeModal();
+
+      notify.success('Post created successfully!');
     } catch (err: any) {
-      toast.error(
-        err?.data?.errors || 'Something went wrong. Please try again'
-      );
+      notify.error(err?.data?.errors || 'Something went wrong. Please try again');
     }
   };
 
   return (
     <div>
-      <Toaster position="top-center" />
-
       <Modal
         isOpen={isOpen}
         onRequestClose={closeModal}

@@ -137,3 +137,13 @@ export interface CreatePostFormData {
   title: string;
   body: string;
 };
+
+export interface ModalProps {
+  isOpen: boolean;
+  onRequestClose: () => void;
+};
+
+export interface FormData {
+  title?: string;
+  content: string;
+};
