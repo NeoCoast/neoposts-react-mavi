@@ -56,17 +56,17 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
         overlayClassName="modal__background"
       >
         <div className="modal__header">
-          <div className="modal__header-left">
+          <div className="modal__header-top">
             <img
-              className="modal__main-photo"
+              className="modal__header-top-photo"
               src={userProfilePhoto}
               alt="user profile"
             />
-            <span className="modal__title">New Post</span>
+            <span className="modal__header-top-title">New Post</span>
           </div>
 
           <button
-            className="modal__close"
+            className="modal__header-close"
             onClick={() => {
               reset();
               closeModal();
@@ -92,6 +92,7 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
             <Text
               inputName="body"
               register={register}
+              className="modal__main-content-textarea"
               required
               placeholder="Share something with your team!"
             />

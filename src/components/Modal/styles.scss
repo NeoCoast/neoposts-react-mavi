@@ -1,13 +1,17 @@
 .modal {
   width: 100%;
   max-width: 720px;
-  padding: 28px 36px;
-  position: relative;
+  max-height: 90vh;
 
+  padding: 28px 32px;
   background-color: $color-white;
   color: $color-text;
   border-radius: 28px;
   box-shadow: 0 20px 50px rgba(29, 49, 91, 0.12);
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 
   &__background {
     position: fixed;
@@ -21,116 +25,131 @@
     z-index: 1000;
   }
 
-  &__close {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 2px solid $color-text;
-    color: $color-text;
-    font-size: 20px;
-    line-height: 1;
-    cursor: pointer;
-  }
-
-  &__title {
-    font-size: 26px;
-    font-weight: 700;
-    background-color: transparent;
-  }
-
   &__header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 18px;
-  }
-
-  &__header-left {
-    display: flex;
     align-items: center;
-    gap: 16px;
+    margin-bottom: 20px;
+
+    &-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      &-photo {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      &-title {
+        font-size: 24px;
+        font-weight: 700;
+      }
+    }
+
+    &-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid $color-text;
+      background: transparent;
+      font-size: 20px;
+      color: $color-text;
+      cursor: pointer;
+    }
   }
 
   &__main {
-    display: block;
-    align-items: stretch;
-    gap: 0;
-
-    &-photo {
-      width: 72px;
-      height: 72px;
-      flex: 0 0 72px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
+    flex: 1;
+    display: flex;
 
     &-content {
-      flex: 1 1 auto;
+      width: 100%;
       display: flex;
       flex-direction: column;
       gap: 16px;
 
       &-input {
-        width: 90%;
-        padding: 16px 35px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 16px;
         border-radius: 12px;
         border: 1px solid $color-logOut-button;
-        background: $color-white;
         font-size: 16px;
-        outline: none;
         color: $color-text;
+        background: $color-white;
       }
 
-      textarea {
+      &-textarea {
+        width: 100%;
+        box-sizing: border-box;
         min-height: 140px;
-        width: 90%;
-        resize: vertical;
-        padding: 35px;
-        background-color: transparent;
-        font-size: 20px;
+        padding: 14px 16px;
+        border-radius: 12px;
         border: 1px solid $color-logOut-button;
+        font-size: 16px;
         color: $color-text;
+        resize: vertical;
+        background: $color-white;
       }
 
       &-post {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top: 10px;
-
-        .modal__icon {
-          font-size: 22px;
-          color: $color-text-subtle;
-          margin-left: 6px;
-        }
+        gap: 12px;
+        margin-top: 8px;
 
         &-btn {
           padding: 12px 28px;
           border-radius: 12px;
-          gap: 10px;
-          color: $color-white;
-          border: none;
-          cursor: pointer;
         }
       }
     }
+
+    &__icon {
+      font-size: 22px;
+      color: $color-text-subtle;
+    }
+
   }
 
-  @media (max-width: 680px) {
+  @include tablet {
+    max-width: 90vw;
     padding: 20px;
-    border-radius: 18px;
 
-    &__main {
+    &__header-top-photo {
+      width: 56px;
+      height: 56px;
+    }
+
+    &__header-top-title {
+      font-size: 22px;
+    }
+  }
+
+  @include mobile {
+    max-width: 95vw;
+    padding: 16px;
+    border-radius: 16px;
+
+    &__header-top-photo {
+      width: 48px;
+      height: 48px;
+    }
+
+    &__header-top-title {
+      font-size: 20px;
+    }
+
+    &__main-content-post {
       flex-direction: column;
-      gap: 12px;
+      align-items: stretch;
 
-      &-photo {
-        width: 56px;
-        height: 56px;
+      &-btn {
+        width: 100%;
       }
     }
   }
