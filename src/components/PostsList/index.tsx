@@ -8,7 +8,7 @@ import type { PostsListProps, PostListItem } from '@/ts/interfaces';
 
 import './styles.scss';
 
-const PostsList = ({ posts }: PostsListProps) => {
+const PostsList = ({ items }: PostsListProps) => {
   const navigate = useNavigate();
 
   const handlePostClick = useCallback((post: PostListItem) => {
@@ -17,7 +17,7 @@ const PostsList = ({ posts }: PostsListProps) => {
 
   return (
     <div className="posts__list">
-      {posts.map((post) => (
+      {items.map((post) => (
         <article
           key={post.id}
           className="posts__list-item"
