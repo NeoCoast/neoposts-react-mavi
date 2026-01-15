@@ -113,7 +113,7 @@ export interface InputProps {
 
 export interface TextProps {
   inputName: string;
-  register: any;
+  register?: UseFormRegister<any>;
   required?: boolean;
   placeholder?: string;
   className?: string;
@@ -147,3 +147,8 @@ export interface FormData {
   title?: string;
   body: string;
 };
+
+export interface CreatePostProps {
+  isOpen?: boolean;
+  closeModal?: () => void;
+}

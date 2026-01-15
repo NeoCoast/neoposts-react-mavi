@@ -1,32 +1,15 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
+
+import { CreatePostProps } from '@/ts/interfaces';
 
 import Modal from '@/components/Modal';
-import Button from '@/components/Button';
 
 import './styles.scss';
 
-export interface CreatePostProps {
-  isOpen?: boolean;
-  closeModal?: () => void;
-};
-
-const CreatePost: FC<CreatePostProps> = ({ isOpen: controlledIsOpen, closeModal }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const internalOpen = () => setIsModalOpen(true);
-  const internalClose = () => setIsModalOpen(false);
-
-  const isOpen = controlledIsOpen ?? isModalOpen;
-  const handleClose = () => (closeModal ? closeModal() : internalClose());
-
+const CreatePost: FC<CreatePostProps> = ({ isOpen = false, closeModal = () => { } }) => {
   return (
     <div>
-      {controlledIsOpen === undefined && (
-        <Button className="create-post" onClick={internalOpen} variant={''} title={'New Post'} />
-      )}
-      <div>
-        <Modal isOpen={isOpen} closeModal={handleClose} />
-      </div>
+      <Modal isOpen={isOpen} closeModal={closeModal} />
     </div>
   );
 };

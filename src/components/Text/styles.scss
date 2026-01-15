@@ -9,7 +9,7 @@
   overflow-y: auto;
   field-sizing: content;
 
-  &:active {
+  &:focus {
     border: solid 1px $color-primary;
   }
 

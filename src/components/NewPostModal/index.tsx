@@ -55,7 +55,7 @@ const NewPostModal: FC<ModalProps> = ({ isOpen, onRequestClose }) => {
         <div className="newpost__right">
           <label className="newpost__title-label">
             <Input
-              inputName={''} {...register('title', { maxLength: 100 })}
+              inputName={'title'} {...register('title', { maxLength: 100 })}
               className="newpost__title-input"
               placeholder="Title" />
             <div className="newpost__counter">{(title?.length ?? 0)}/100</div>

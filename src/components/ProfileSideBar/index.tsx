@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { FaPlus } from "react-icons/fa";
+import { FaPlus } from 'react-icons/fa';
 import { useState } from 'react';
 import cn from 'classnames';
 
