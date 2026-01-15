@@ -30,54 +30,53 @@ const NewPostModal: FC<ModalProps> = ({ isOpen, closeModal }) => {
         reset();
         closeModal();
       }}
-      className="newpost__modal-content"
+      className="newpost__modal"
       overlayClassName="newpost__modal-overlay"
       shouldCloseOnOverlayClick
       contentLabel="New Post"
     >
-      <div className="newpost__header simple">
+      <div className="newpost__modal-header simple">
         <h2>New Post</h2>
         <button
           aria-label="Close"
-          className="newpost__close-circle"
+          className="newpost__modal-header-close"
           onClick={() => {
             reset();
             closeModal();
           }}
         >
-          <span className="close-x">×</span>
+          <span className="newpost__modal-header-close-x">×</span>
         </button>
       </div>
 
-      <form className="newpost__body" onSubmit={handleSubmit(onSubmit)}>
-        <div className="newpost__avatar" />
+      <form className="newpost__modal-form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="newpost__modal-form-avatar" />
 
-        <div className="newpost__right">
-          <label className="newpost__title-label">
+        <div className="newpost__modal-form-right">
+          <label className="newpost__modal-form-right-label">
             <Input
               inputName={'title'} {...register('title', { maxLength: 100 })}
-              className="newpost__title-input"
+              className="newpost__modal-form-right-label-input"
               placeholder="Title" />
-            <div className="newpost__counter">{(title?.length ?? 0)}/100</div>
           </label>
 
           <textarea
             {...register('body')}
-            className="newpost__textarea big"
+            className="newpost__modal-form-right-textarea big"
             placeholder="Share something with your team!"
             rows={6}
           />
 
-          <div className="newpost__footer">
-            <div className="newpost__left-actions">
-              <span className="newpost__icon-span" aria-hidden="true">
+          <div className="newpost__modal-footer">
+            <div className="newpost__modal-footer-left">
+              <span className="newpost__modal-footer-left-icon" aria-hidden="true">
                 <FiSave />
               </span>
             </div>
 
             <button
               type="submit"
-              className="newpost__post-btn"
+              className="newpost__modal-footer-btn"
               disabled={!(title && title.trim()) || !(body && body.trim())}
             >
               Post
