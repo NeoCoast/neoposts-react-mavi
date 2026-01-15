@@ -9,7 +9,7 @@ import { ModalProps, FormData } from '@/ts/interfaces';
 
 import './styles.scss';
 
-const NewPostModal: FC<ModalProps> = ({ isOpen, onRequestClose }) => {
+const NewPostModal: FC<ModalProps> = ({ isOpen, closeModal }) => {
   const { register, handleSubmit, reset, watch } = useForm<FormData>({
     defaultValues: { title: '', body: '' },
   });
@@ -20,7 +20,7 @@ const NewPostModal: FC<ModalProps> = ({ isOpen, onRequestClose }) => {
   const onSubmit = (data: FormData) => {
     if (!data.body || data.body.trim() === '') return;
     reset();
-    onRequestClose();
+    closeModal();
   };
 
   return (
@@ -28,7 +28,7 @@ const NewPostModal: FC<ModalProps> = ({ isOpen, onRequestClose }) => {
       isOpen={isOpen}
       onRequestClose={() => {
         reset();
-        onRequestClose();
+        closeModal();
       }}
       className="newpost__modal-content"
       overlayClassName="newpost__modal-overlay"
@@ -42,7 +42,7 @@ const NewPostModal: FC<ModalProps> = ({ isOpen, onRequestClose }) => {
           className="newpost__close-circle"
           onClick={() => {
             reset();
-            onRequestClose();
+            closeModal();
           }}
         >
           <span className="close-x">×</span>

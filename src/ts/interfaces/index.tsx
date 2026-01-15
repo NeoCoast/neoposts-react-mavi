@@ -140,7 +140,7 @@ export interface CreatePostFormData {
 
 export interface ModalProps {
   isOpen: boolean;
-  onRequestClose: () => void;
+  closeModal: () => void;
 };
 
 export interface FormData {
