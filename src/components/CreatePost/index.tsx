@@ -1,5 +1,4 @@
 import { FC, useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
 
 import Modal from '@/components/Modal';
 import Button from '@/components/Button';
@@ -25,7 +24,6 @@ const CreatePost: FC<CreatePostProps> = ({ isOpen: controlledIsOpen, closeModal 
       {controlledIsOpen === undefined && (
         <Button className="create-post" onClick={internalOpen} variant={''} title={'New Post'} />
       )}
-      <FaPlus />
       <div>
         <Modal isOpen={isOpen} closeModal={handleClose} />
       </div>
