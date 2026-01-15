@@ -71,7 +71,7 @@ export interface PostProps {
 }
 
 export interface PostsListProps {
-  items: PostListItem[];
+  posts: PostListItem[];
 }
 
 export interface AuthorDetailsProps {

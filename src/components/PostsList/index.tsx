@@ -8,35 +8,35 @@ import type { PostsListProps, PostListItem } from '@/ts/interfaces';
 
 import './styles.scss';
 
-const PostsList = ({ items }: PostsListProps) => {
+const PostsList = ({ posts }: PostsListProps) => {
   const navigate = useNavigate();
 
-  const handlePostClick = useCallback((item: PostListItem) => () => {
-    navigate(`/posts/${item.id}`, { state: { post: item } });
+  const handlePostClick = useCallback((post: PostListItem) => {
+    navigate(`/posts/${post.id}`, { state: { post: post } });
   }, [navigate]);
 
   return (
     <div className="posts__list">
-      {items.map((item) => (
+      {posts.map((post) => (
         <article
-          key={item.id}
+          key={post.id}
           className="posts__list-item"
           role="button"
           tabIndex={0}
-          onClick={handlePostClick(item)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              handlePostClick(item)();
+          onClick={() => handlePostClick(post)}
+          onKeyDown={({ key }) => {
+            if (key === 'Enter' || key === ' ') {
+              handlePostClick(post);
             }
           }}
         >
           <AuthorDetails
-            name={item.author.name}
-            lastName={item.author.lastName}
-            email={item.author.email}
-            profilePhoto={item.author.profilePhoto}
+            name={post.author.name}
+            lastName={post.author.lastName}
+            email={post.author.email}
+            profilePhoto={post.author.profilePhoto}
           />
-          <Post post={item} />
+          <Post post={post} />
         </article>
       ))}
     </div>
