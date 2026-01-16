@@ -83,6 +83,13 @@ export const api = createApi({
       }),
       invalidatesTags: ['Post'],
     }),
+    getUsers: builder.query({
+      providesTags: ['User'],
+      query: () => ({
+        method: 'GET',
+        url: '/users',
+      }),
+    }),
   }),
 });
 
@@ -94,4 +101,5 @@ export const {
   useLogInMutation,
   useSignupMutation,
   useCreatePostMutation,
+  useGetUsersQuery,
 } = api;

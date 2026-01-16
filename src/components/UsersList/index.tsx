@@ -1,0 +1,39 @@
+import { User } from '@/ts/interfaces';
+import './styles.scss';
+import { FC } from 'react';
+
+const userProfilePhoto = new URL('@/assets/Icons/userProfilePhoto.svg', import.meta.url).href;
+
+const UsersList: FC<{ users: User[] }> = ({ users }) => {
+  return (
+    <div className="users-list">
+      {users.map((user) => (
+        <div key={user.id} className="users-list__item">
+          <div className="users-list__left">
+            <img
+              src={userProfilePhoto}
+              alt={`${user.name}'s avatar`}
+              className="users-list__avatar"
+            />
+            <div className="users-list__info">
+              <div className="users-list__name">{user.name}</div>
+              <div className="users-list__email">{user.email}</div>
+            </div>
+          </div>
+          <div className="users-list__action">
+            {typeof user.followed === 'boolean' ? (
+              <button
+                className={`users-list__follow-button ${user.followed ? 'users-list__follow-button--active' : ''
+                  }`}
+              >
+                {user.followed ? 'Following' : 'Follow'}
+              </button>
+            ) : null}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default UsersList;

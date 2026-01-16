@@ -1,0 +1,91 @@
+.users-list {
+  color: $color-text;
+  width: 80%;
+  max-width: 752px;
+  margin: 0 auto;
+  border-radius: 25px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border-bottom: 1px solid $color-text-muted;
+    background-color: $color-white;
+    cursor: pointer;
+    text-align: left;
+    box-shadow: none;
+    outline: none;
+    border-width: 1px;
+
+    &:focus-visible {
+      box-shadow: 0 0 0 2px rgba($color-primary, 0.2), $shadow-elevation-1;
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+.users-list__left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.users-list__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #e6e9ef;
+}
+
+.users-list__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.users-list__name {
+  font-weight: 600;
+}
+
+.users-list__email {
+  color: #67747a;
+  font-size: 13px;
+}
+
+.users-list__action {
+  min-width: 110px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.users-list__follow-button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid $color-primary;
+  background: $color-primary;
+  color: $color-white;
+  font-weight: 600;
+}
+
+.users-list__follow-button--active {
+  background: transparent;
+  color: $color-primary;
+}
+
+@media (max-width: 600px) {
+  .users-list__item {
+    padding: 12px 8px;
+  }
+
+  .users-list__action {
+    min-width: 80px;
+  }
+}
