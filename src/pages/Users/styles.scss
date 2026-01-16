@@ -32,13 +32,21 @@
 
       &-card {
         width: 100%;
-        max-width: 900px;
+        max-width: 920px;
         background-color: $color-white;
         border-radius: 16px;
         box-shadow: 0 12px 32px rgba(18, 44, 84, 0.12);
-        padding: 24px;
+        padding: 32px;
         display: flex;
         flex-direction: column;
+
+        @include tablet {
+          padding: 24px;
+        }
+
+        @include mobile {
+          padding: 16px;
+        }
       }
 
       &-header {
@@ -78,9 +86,17 @@
       }
 
       &-search {
-        margin: 0px 100px;
         width: 100%;
-        margin-left: 0;
+        max-width: 752px;
+        margin: 0 auto 24px;
+
+        @include tablet {
+          max-width: 100%;
+        }
+      }
+
+      &-search .input__form {
+        width: 100%;
       }
 
       &-error {
@@ -104,69 +120,65 @@
 
 }
 
-.users__list {
+.users-list {
   list-style: none;
   margin: 0;
   padding: 0;
 
-  .users__item {
+  &__item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 16px 8px;
     border-bottom: 1px solid $color-border-muted;
 
-    &-info {
+    &__left,
+    &-left {
       display: flex;
       align-items: center;
       gap: 12px;
       min-width: 0;
     }
   }
-}
 
-.users__avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.users__name {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.users__email {
-  font-size: 13px;
-  color: $color-border-muted;
-}
-
-.users__follow {
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: 1px solid $color-primary;
-  background: transparent;
-  font-weight: 500;
-
-  /* ensure button stays vertically centered in row */
-  align-self: center;
-
-  &--active {
-    color: $color-white;
+  &__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    flex-shrink: 0;
   }
-}
 
-@media (max-width: 600px) {
-  .users {
-    &__layout {
-      &-usersList {
-        padding: 16px;
+  &__info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
 
-        &-card {
-          padding: 16px;
-        }
-      }
+  &__name {
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__email {
+    font-size: 13px;
+    color: $color-border-muted;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__follow-button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid $color-primary;
+    font-weight: 500;
+    align-self: center;
+
+    &--active {
+      color: $color-white;
     }
   }
 }
