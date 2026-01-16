@@ -16,24 +16,24 @@ const UsersList: FC<{ users: User[] }> = ({ users }) => {
               className="users-list__avatar"
             />
             <div className="users-list__info">
-              <div className="users-list__name">{user.name}</div>
-              <div className="users-list__email">{user.email}</div>
+              <span className="users-list__name">{user.name}</span>
+              <span className="users-list__email">{user.email}</span>
             </div>
           </div>
-          <div className="users-list__action">
-            {typeof user.followed === 'boolean' ? (
-              <button
-                className={`users-list__follow-button ${user.followed ? 'users-list__follow-button--active' : ''
-                  }`}
-              >
-                {user.followed ? 'Following' : 'Follow'}
-              </button>
-            ) : null}
-          </div>
+
+          {typeof user.followed === 'boolean' && (
+            <button
+              className={`users-list__follow-button ${user.followed ? 'users-list__follow-button--active' : ''
+                }`}
+            >
+              {user.followed ? 'Following' : 'Follow'}
+            </button>
+          )}
         </div>
       ))}
     </div>
   );
-}
+};
+
 
 export default UsersList;

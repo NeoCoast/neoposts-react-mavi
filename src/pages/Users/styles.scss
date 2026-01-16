@@ -32,6 +32,7 @@
 
       &-card {
         width: 100%;
+        max-width: 900px;
         background-color: $color-white;
         border-radius: 16px;
         box-shadow: 0 12px 32px rgba(18, 44, 84, 0.12);
@@ -61,7 +62,7 @@
           border-radius: 0 !important;
           display: inline-flex !important;
           align-items: center;
-          margin: 10px;
+          margin: 0;
 
           &:enabled:hover {
             background: transparent !important;
@@ -72,14 +73,14 @@
           font-size: 22px;
           font-weight: 600;
           color: $title-color;
-          margin: 10px;
+          margin: 0;
         }
       }
 
       &-search {
-        margin-bottom: 16px;
+        margin: 0px 100px;
         width: 100%;
-        margin-left: 70px;
+        margin-left: 0;
       }
 
       &-error {
@@ -119,6 +120,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      min-width: 0;
     }
   }
 }
@@ -127,6 +129,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .users__name {
@@ -145,6 +148,9 @@
   border: 1px solid $color-primary;
   background: transparent;
   font-weight: 500;
+
+  /* ensure button stays vertically centered in row */
+  align-self: center;
 
   &--active {
     color: $color-white;
