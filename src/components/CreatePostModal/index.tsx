@@ -13,7 +13,7 @@ import { ApiErrorResponse } from '@/ts/types/errors';
 import { notify } from '@/components/Toaster/notify';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
-import Text from '@/components/Text';
+import TextArea from '@/components/TextArea';
 
 import './styles.scss';
 
@@ -90,7 +90,7 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
             placeholder="Title"
           />
 
-          <Text
+          <TextArea
             inputName="body"
             register={register}
             className="modal__main-content-textarea"

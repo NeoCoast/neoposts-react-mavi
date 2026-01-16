@@ -19,6 +19,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
   followers
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  
   const stats = [
     { title: 'Posts', value: posts },
     { title: 'Following', value: following },

@@ -14,7 +14,7 @@ const AppToaster: React.FC<AppToasterProps> = ({ position = 'top-center', toastO
     position={position}
     containerClassName="app-toaster-container"
     containerStyle={{
-      zIndex: 10000,
+      zIndex: 4000,
     }}
     toastOptions={{
       className: 'app-toast',
