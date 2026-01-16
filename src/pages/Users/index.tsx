@@ -53,7 +53,7 @@ const Users = () => {
                 className="users__layout-usersList-header-back"
                 onClick={() => navigate(ROUTES.HOME)}
                 variant=""
-                title="← Back"
+                title="<   Back"
               />
               <h2>Users</h2>
             </div>
