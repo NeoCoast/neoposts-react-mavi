@@ -6,16 +6,16 @@ import { FiSave } from 'react-icons/fi';
 
 import { useCreatePostMutation } from '@/services/api';
 import { createPostSchema } from '@/utils/validationSchemas';
+
 import { CreateModalProps, CreatePostFormData } from '@/ts/interfaces';
+import { ApiErrorResponse } from '@/ts/types/errors';
 
 import { notify } from '@/components/Toaster/notify';
-
 import Input from '@/components/Input';
 import Button from '@/components/Button';
 import Text from '@/components/Text';
 
 import './styles.scss';
-import { ApiErrorResponse } from '@/ts/types/errors';
 
 Modal.setAppElement('#root');
 

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { GoPeople } from 'react-icons/go';
-import { MdOutlineMail } from 'react-icons/md';
 import { RxHamburgerMenu } from "react-icons/rx";
 
 import { ROUTES } from '@/constants/routes';
