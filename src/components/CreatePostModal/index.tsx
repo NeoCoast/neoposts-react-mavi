@@ -36,7 +36,7 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
 
   const onSubmit = async (info: CreatePostFormData) => {
     try {
-      await createPost(info).unwrap();
+      await createPost(info);
 
       reset();
       closeModal();

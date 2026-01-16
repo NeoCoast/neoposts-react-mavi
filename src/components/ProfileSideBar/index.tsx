@@ -5,8 +5,8 @@ import cn from 'classnames';
 import { ProfileSideBarProps } from '@/ts/interfaces';
 
 import Button from '@/components/Button';
-import CreatePost from '@/components/CreatePost';
 import LogOut from '@/components/LogOut';
+import CreatePostModal from '@/components/CreatePostModal';
 
 import './styles.scss';
 
@@ -46,7 +46,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
           onClick={() => setIsOpen(true)}
         />
 
-        <CreatePost
+        <CreatePostModal
           isOpen={isOpen}
           closeModal={() => setIsOpen(false)}
         />
