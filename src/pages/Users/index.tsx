@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
+import { IoIosArrowBack } from 'react-icons/io';
 
 import { useGetUsersQuery } from '@/services/api';
 import { User } from '@/ts/interfaces';
@@ -49,12 +50,15 @@ const Users = () => {
         <div className="users__layout-usersList">
           <div className="users__layout-usersList-card">
             <div className="users__layout-usersList-header">
-              <Button
-                className="users__layout-usersList-header-back"
-                onClick={() => navigate(ROUTES.HOME)}
-                variant=""
-                title="<   Back"
-              />
+              <div className="users__layout-usersList-header-back">
+                <IoIosArrowBack />
+                <Button
+                  className="users__layout-usersList-header-button"
+                  onClick={() => navigate(ROUTES.HOME)}
+                  variant=""
+                  title=" Back"
+                />
+              </div>
               <h2>Users</h2>
             </div>
 

@@ -57,31 +57,34 @@
         margin-bottom: 18px;
 
         &-back {
+          display: flex;
+          align-items: center;
+          gap: 2px;
           font-weight: 600;
-          padding: 0;
-          font-size: 14px;
-          background: transparent !important;
-          border: none !important;
-          box-shadow: none !important;
-          color: $color-text !important;
-          width: auto !important;
-          height: auto !important;
-          min-width: 0 !important;
-          border-radius: 0 !important;
-          display: inline-flex !important;
+        }
+
+        &-button {
+          font-weight: 600;
+          padding: 4px;
+          font-size: 16px;
+          background: transparent;
+          border: none;
+          color: $color-text;
+          width: auto;
+          height: auto;
           align-items: center;
           margin: 0;
 
           &:enabled:hover {
-            background: transparent !important;
+            background: transparent;
           }
         }
 
         h2 {
-          font-size: 22px;
+          font-size: 24px;
           font-weight: 600;
           color: $title-color;
-          margin: 0;
+          margin-top: 20px;
         }
       }
 
