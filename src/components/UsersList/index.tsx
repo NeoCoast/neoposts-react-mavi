@@ -1,34 +1,40 @@
-import { User } from '@/ts/interfaces';
-import './styles.scss';
 import { FC } from 'react';
+import { GoPersonAdd } from 'react-icons/go';
+import { BsPersonCheck } from 'react-icons/bs';
+
+import { User } from '@/ts/interfaces';
+
+import './styles.scss';
 
 const userProfilePhoto = new URL('@/assets/Icons/userProfilePhoto.svg', import.meta.url).href;
 
 const UsersList: FC<{ users: User[] }> = ({ users }) => {
   return (
-    <div className="users-list">
+    <div className="users_list">
       {users.map((user) => (
-        <div key={user.id} className="users-list__item">
-          <div className="users-list__left">
+        <div key={user.id} className="users_list-item">
+          <div className="users_list-left">
             <img
               src={userProfilePhoto}
               alt={`${user.name}'s avatar`}
-              className="users-list__avatar"
+              className="users_list-avatar"
             />
-            <div className="users-list__info">
-              <span className="users-list__name">{user.name}</span>
-              <span className="users-list__email">{user.email}</span>
+            <div className="users_list-info">
+              <span className="users_list-name">{user.name}</span>
+              <span className="users_list-email">{user.email}</span>
             </div>
           </div>
 
           {typeof user.followed === 'boolean' && (
             <button
-              className={`users-list__follow-button ${user.followed ? 'users-list__follow-button--active' : ''
+              className={`users_list-follow-button ${user.followed ? 'users_list-follow-button--active' : ''
                 }`}
             >
+              {user.followed ? <BsPersonCheck /> : <GoPersonAdd />}
               {user.followed ? 'Following' : 'Follow'}
             </button>
           )}
+
         </div>
       ))}
     </div>

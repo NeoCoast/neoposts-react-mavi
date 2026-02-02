@@ -1,25 +1,24 @@
-.users-list {
+.users_list {
   width: 100%;
   display: flex;
   flex-direction: column;
 
-  &__item {
+  &-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    padding: 16px 8px;
+    padding: 12px 8px;
     border-bottom: 1px solid $color-border-muted;
   }
 
-  &__left {
+  &-left {
     display: flex;
     align-items: center;
     gap: 14px;
     min-width: 0;
   }
 
-  &__avatar {
+  &-avatar {
     width: 44px;
     height: 44px;
     border-radius: 50%;
@@ -27,18 +26,18 @@
     flex-shrink: 0;
   }
 
-  &__info {
+  &-info {
     display: flex;
     flex-direction: column;
     min-width: 0;
   }
 
-  &__name {
+  &-name {
     font-weight: 600;
     font-size: 14px;
   }
 
-  &__email {
+  &-email {
     font-size: 13px;
     color: $color-text-muted;
     white-space: nowrap;
@@ -46,18 +45,31 @@
     text-overflow: ellipsis;
   }
 
-  &__follow-button {
-    padding: 8px 16px;
-    border-radius: 8px;
+  &-follow-button {
+    width: 150px;
+    height: 36px;
+    padding: 10px 8px;
+    gap: 8px;
+    border-radius: 6px;
     border: 1px solid $color-primary;
     background: $color-primary;
     color: $color-white;
     font-weight: 600;
+    font-size: 14px;
     cursor: pointer;
+    opacity: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      font-size: 16px;
+    }
+
+    &--active {
+      background: transparent;
+      color: $color-primary;
+    }
   }
 
-  &__follow-button--active {
-    background: transparent;
-    color: $color-primary;
-  }
 }
