@@ -107,6 +107,13 @@
         }
       }
 
+      &-loader {
+        min-height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
       &-error {
         color: $color-error;
         font-weight: 500;
@@ -114,6 +121,20 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
+
+        &-content {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          align-items: center;
+          text-align: center;
+        }
+
+        &-retry {
+          margin-top: 8px;
+          padding: 8px 14px;
+        }
       }
 
       &-empty {

@@ -28,7 +28,7 @@ const Users = () => {
     return () => clearTimeout(t);
   }, [search]);
 
-  const { data, error, isLoading } = useGetUsersQuery({
+  const { data, error, isLoading, refetch } = useGetUsersQuery({
     search: debouncedSearch || undefined,
     page,
     per_page: perPage,
@@ -86,10 +86,15 @@ const Users = () => {
 
             {!isLoading && error && (
               <div className="users__layout-usersList-error">
-                {String(
-                  (error as ApiErrorResponse)?.data?.message ??
-                  'Failed to load users'
-                )}
+                <div className="users__layout-usersList-error-content">
+                  <p>Unable to load users. Please try again.</p>
+                  <Button
+                    title="Retry"
+                    onClick={() => refetch()}
+                    variant=""
+                    className="users__layout-usersList-error-retry"
+                  />
+                </div>
               </div>
             )}
 
