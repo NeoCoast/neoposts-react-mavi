@@ -6,7 +6,6 @@ import { FiSearch } from 'react-icons/fi';
 
 import { useGetUsersQuery } from '@/services/api';
 import { User } from '@/ts/interfaces';
-import { ApiErrorResponse } from '@/ts/types/errors';
 import { ROUTES } from '@/constants/routes';
 
 import Navbar from '@/components/Navbar';

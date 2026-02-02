@@ -10,6 +10,12 @@
     padding: 32px 60px 60px;
     margin-top: 64px;
 
+    &-sidebar {
+      @include tablet {
+        display: none;
+      }
+    }
+
     @include laptop {
       padding: 32px 40px 48px;
       column-gap: 28px;
@@ -29,6 +35,11 @@
       display: flex;
       justify-content: center;
       padding: 32px;
+
+      @include tablet {
+        padding: 0;
+        width: 100%;
+      }
 
       &-card {
         width: 100%;
@@ -104,6 +115,31 @@
         input {
           width: 95%;
           padding-left: 28px;
+          box-sizing: border-box;
+        }
+
+        @include tablet {
+          &-icon {
+            left: 6px;
+          }
+
+          input {
+            width: 100%;
+            padding-left: 32px;
+            box-sizing: border-box;
+          }
+        }
+
+        @include mobile {
+          &-icon {
+            left: 8px;
+          }
+
+          input {
+            width: 100%;
+            padding-left: 36px;
+            box-sizing: border-box;
+          }
         }
       }
 
@@ -146,5 +182,4 @@
       }
     }
   }
-
 }
