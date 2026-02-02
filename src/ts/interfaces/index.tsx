@@ -152,3 +152,8 @@ export interface CreatePostProps {
   isOpen: boolean;
   closeModal: () => void;
 }
+
+export interface MobileMenuProps {
+  open: boolean;
+  onClose: () => void;
+};

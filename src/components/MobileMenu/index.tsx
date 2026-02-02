@@ -1,20 +1,19 @@
 import { GoPeople } from 'react-icons/go';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import UserBar from '@/components/UserBar';
+import { ROUTES } from '@/constants/routes';
+import { MobileMenuProps } from '@/ts/interfaces';
 
 import './styles.scss';
 
 const neoPostIcon = new URL('@/assets/Icons/NeoPost.svg', import.meta.url).href;
 
-type MobileMenuProps = {
-  open: boolean;
-  onClose: () => void;
-};
-
 const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const goUsers = () => navigate(ROUTES.USERS);
 
   useEffect(() => {
     if (!open) return;
@@ -36,7 +35,7 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
         </div>
         <div className="mobileMenu__icons">
           <div className="mobileMenu__icons-navbar">
-            <button className="mobileMenu__icons-navbar-iconBtn" aria-label="People">
+            <button className="mobileMenu__icons-navbar-iconBtn" aria-label="People" onClick={goUsers}>
               <GoPeople />
             </button>
           </div>
