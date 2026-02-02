@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
 import { IoIosArrowBack } from 'react-icons/io';
+import { FiSearch } from 'react-icons/fi';
 
 import { useGetUsersQuery } from '@/services/api';
 import { User } from '@/ts/interfaces';
@@ -63,6 +64,7 @@ const Users = () => {
             </div>
 
             <div className="users__layout-usersList-search">
+              <FiSearch className="users__layout-usersList-search-icon" />
               <Input
                 placeholder="Search"
                 aria-label="Search users"
