@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
-import { IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { FiSearch } from 'react-icons/fi';
+import { RxCross1 } from 'react-icons/rx';
 
 import { useGetUsersQuery } from '@/services/api';
 import { User } from '@/ts/interfaces';
@@ -17,20 +18,25 @@ import Button from '@/components/Button';
 import './styles.scss';
 
 const Users = () => {
-  const [search] = useState('');
+  const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [page, setPage] = useState(1);
   const [perPage] = useState(25);
+  const perPageClamped = Math.min(Math.max(perPage, 25), 100);
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
 
   useEffect(() => {
-    const t = setTimeout(() => setDebouncedSearch(search), 400);
+    const t = setTimeout(() => setDebouncedSearch(search), 200);
     return () => clearTimeout(t);
   }, [search]);
 
   const { data, error, isLoading, refetch } = useGetUsersQuery({
     search: debouncedSearch || undefined,
     page,
-    per_page: perPage,
+    per_page: perPageClamped,
   });
 
   useEffect(() => {
@@ -38,7 +44,31 @@ const Users = () => {
   }, [debouncedSearch]);
 
   const users = (data?.users ?? []) as User[];
+  const meta = data?.meta;
+  const filterTerm = debouncedSearch?.trim().toLowerCase();
+  const filteredUsers = filterTerm
+    ? users.filter((u) => {
+      const name = (u.name || '').toLowerCase();
+      const email = (u.email || '').toLowerCase();
+      return name.includes(filterTerm) || email.includes(filterTerm);
+    })
+    : users;
+
+  const totalCount = meta?.total_count ?? filteredUsers.length;
+  const totalPages = meta?.total_pages ?? Math.max(1, Math.ceil(totalCount / perPageClamped));
+  const shouldShowPagination = totalPages > 1;
+  const startIndex = (page - 1) * perPageClamped;
+  const endIndex = startIndex + perPageClamped;
+  const displayedUsers = filteredUsers.slice(startIndex, endIndex);
   const navigate = useNavigate();
+
+  const handlePrevPage = () => {
+    if (page > 1) setPage(page - 1);
+  };
+
+  const handleNextPage = () => {
+    if (page < totalPages) setPage(page + 1);
+  };
 
   return (
     <div className="users">
@@ -68,7 +98,23 @@ const Users = () => {
                 placeholder="Search"
                 aria-label="Search users"
                 inputName="searchUsers"
+                value={search}
+                onChange={handleSearchChange}
               />
+              {search !== '' && (
+                <button
+                  type="button"
+                  className="users__layout-usersList-search-cross"
+                  aria-label="Clear search"
+                  onClick={() => {
+                    setSearch('');
+                    setDebouncedSearch('');
+                    setPage(1);
+                  }}
+                >
+                  <RxCross1 />
+                </button>
+              )}
             </div>
 
             {isLoading && (
@@ -97,14 +143,39 @@ const Users = () => {
               </div>
             )}
 
-            {!isLoading && !error && users.length === 0 && (
+            {!isLoading && !error && totalCount === 0 && (
               <div className="users__layout-usersList-empty">
                 No users found.
               </div>
             )}
 
-            {!isLoading && !error && users.length > 0 && (
-              <UsersList users={users} />
+            {!isLoading && !error && totalCount > 0 && (
+              <>
+                <UsersList users={displayedUsers} />
+                {shouldShowPagination && (
+                  <div className="users__layout-usersList-pagination">
+                    <Button
+                      className="users__layout-usersList-pagination-btn"
+                      onClick={handlePrevPage}
+                      disabled={page <= 1}
+                      variant="primary"
+                      title={<><IoIosArrowBack /> Previous</>}
+                    />
+
+                    <span className="users__layout-usersList-pagination-info">
+                      Page {page} of {totalPages}
+                    </span>
+
+                    <Button
+                      className="users__layout-usersList-pagination-btn"
+                      onClick={handleNextPage}
+                      disabled={page >= totalPages}
+                      variant="primary"
+                      title={<>Next <IoIosArrowForward /></>}
+                    />
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

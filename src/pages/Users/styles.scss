@@ -114,29 +114,103 @@
 
         input {
           width: 100%;
-          padding-left: 28px;
+          padding: 12px 16px 12px 40px;
           box-sizing: border-box;
+        }
+
+        &-cross {
+          position: absolute;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 18px;
+          pointer-events: auto;
+          background: transparent;
+          border: none;
+          padding: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          color: $color-text-muted;
         }
 
         @include tablet {
           &-icon {
-            left: 6px;
+            left: 12px;
           }
 
-          input {
-            padding-left: 32px;
-            box-sizing: border-box;
+          &-input {
+            padding-left: 40px;
           }
         }
 
         @include mobile {
           &-icon {
-            left: 8px;
+            left: 12px;
           }
 
-          input {
-            padding-left: 36px;
-            box-sizing: border-box;
+          &-input {
+            padding-left: 40px;
+          }
+        }
+      }
+
+      &-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid $color-text-muted;
+
+        &-btn {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 8px 16px;
+          font-size: 14px;
+          font-weight: 500;
+          background: $color-primary;
+          border: 1px solid $color-text-muted;
+          border-radius: 8px;
+          color: $color-white;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          width: auto;
+          height: auto;
+          margin: 0;
+
+          &:enabled:hover {
+            background: $color-primary-hover;
+            border-color: $color-primary;
+          }
+
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+
+        &-info {
+          font-size: 14px;
+          color: $color-text-muted;
+          min-width: 100px;
+          text-align: center;
+        }
+
+        @include mobile {
+          gap: 8px;
+
+          &-btn {
+            padding: 6px 12px;
+            font-size: 13px;
+          }
+
+          &-info {
+            font-size: 13px;
+            min-width: 80px;
           }
         }
       }

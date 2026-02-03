@@ -83,12 +83,19 @@ export const api = createApi({
       }),
       invalidatesTags: ['Post'],
     }),
-    getUsers: builder.query({
+    getUsers: builder.query<{ users: any[]; meta?: { current_page?: number; total_pages?: number; total_count?: number } }, { search?: string; page?: number; per_page?: number } | void>({
       providesTags: ['User'],
-      query: () => ({
-        method: 'GET',
-        url: '/users',
-      }),
+      query: (params) => {
+        const queryParams = new URLSearchParams();
+        if (params?.search) queryParams.append('search', params.search);
+        if (params?.page) queryParams.append('page', String(params.page));
+        if (params?.per_page) queryParams.append('per_page', String(params.per_page));
+        const queryString = queryParams.toString();
+        return {
+          method: 'GET',
+          url: queryString ? `/users?${queryString}` : '/users',
+        };
+      },
     }),
   }),
 });

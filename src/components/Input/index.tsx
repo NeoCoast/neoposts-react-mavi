@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import cn from 'classnames';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import type { IconType } from 'react-icons';
-import { InputProps } from '@/ts/interfaces';
 
-import cn from 'classnames';
+import { InputProps } from '@/ts/interfaces';
 
 import './styles.scss';
 
@@ -15,6 +15,7 @@ const Input: React.FC<InputProps> = ({
   errors,
   className = 'input__form',
   placeholder = '',
+  ...rest
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const Icon: IconType = showPassword ? IoEyeOffOutline : IoEyeOutline;
@@ -30,6 +31,7 @@ const Input: React.FC<InputProps> = ({
           }
         )}
         {...(register ? register(inputName) : {})}
+        {...rest}
         type={type === 'password' && showPassword ? 'text' : type}
         name={inputName}
         required={required}

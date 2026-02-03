@@ -108,6 +108,8 @@ export interface InputProps {
   required?: boolean;
   errors?: FieldError | { message?: string } | null;
   className?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
 };
 
