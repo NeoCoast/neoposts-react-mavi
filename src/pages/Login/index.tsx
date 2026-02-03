@@ -81,7 +81,6 @@ const LogIn = () => {
                 'login__register-container-form-btnLogIn-disabled': !isValid,
               })}
               disabled={!isValid || isLoading}
-              variant="primary"
             />
             <div className="login__register-container-form-separator">
               <hr className='login__register-container-form-separator-line' /> <span>or</span> <hr className='login__register-container-form-separator-line' />

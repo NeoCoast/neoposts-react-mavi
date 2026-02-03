@@ -37,7 +37,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
         </div>
 
         <Button
-          variant="profile__sidebar-card-newPost"
+          className="profile__sidebar-card-newPost"
           title={
             <span className="profile__sidebar-card-newPost-content">
               <FaPlus className="profile__sidebar-card-newPost-content-icon" />

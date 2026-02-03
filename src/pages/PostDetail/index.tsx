@@ -77,7 +77,6 @@ function PostDetail() {
           <p>The requested post does not exist.</p>
           <Button
             className="post__detail-empty-home"
-            variant="primary"
             title="Go to home"
             onClick={handleGoHome}
           />

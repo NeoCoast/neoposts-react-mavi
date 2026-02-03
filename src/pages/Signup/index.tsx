@@ -130,7 +130,6 @@ const Signup = () => {
                 'signup__register-container-form-btnSignUp-disabled': !isValid,
               })}
               disabled={!isValid || isLoading}
-              variant="primary"
             />
 
             <div className="signup__register-container-form-separator">

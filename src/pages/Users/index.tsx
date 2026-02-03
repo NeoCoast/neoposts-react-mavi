@@ -17,12 +17,12 @@ import Button from '@/components/Button';
 
 import './styles.scss';
 
+const PER_PAGE_DEFAULT = 25;
+
 const Users = () => {
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [page, setPage] = useState(1);
-  const [perPage] = useState(25);
-  const perPageClamped = Math.min(Math.max(perPage, 25), 100);
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -36,7 +36,7 @@ const Users = () => {
   const { data, error, isLoading, refetch } = useGetUsersQuery({
     search: debouncedSearch || undefined,
     page,
-    per_page: perPageClamped,
+    per_page: PER_PAGE_DEFAULT,
   });
 
   useEffect(() => {
@@ -55,10 +55,10 @@ const Users = () => {
     : users;
 
   const totalCount = meta?.total_count ?? filteredUsers.length;
-  const totalPages = meta?.total_pages ?? Math.max(1, Math.ceil(totalCount / perPageClamped));
+  const totalPages = meta?.total_pages ?? Math.max(1, Math.ceil(totalCount / PER_PAGE_DEFAULT));
   const shouldShowPagination = totalPages > 1;
-  const startIndex = (page - 1) * perPageClamped;
-  const endIndex = startIndex + perPageClamped;
+  const startIndex = (page - 1) * PER_PAGE_DEFAULT;
+  const endIndex = startIndex + PER_PAGE_DEFAULT;
   const displayedUsers = filteredUsers.slice(startIndex, endIndex);
   const navigate = useNavigate();
 
@@ -85,7 +85,6 @@ const Users = () => {
                 <Button
                   className="users__layout-usersList-header-button"
                   onClick={() => navigate(ROUTES.HOME)}
-                  variant=""
                   title=" Back"
                 />
               </div>
@@ -136,7 +135,6 @@ const Users = () => {
                   <Button
                     title="Retry"
                     onClick={() => refetch()}
-                    variant=""
                     className="users__layout-usersList-error-retry"
                   />
                 </div>
@@ -158,7 +156,6 @@ const Users = () => {
                       className="users__layout-usersList-pagination-btn"
                       onClick={handlePrevPage}
                       disabled={page <= 1}
-                      variant="primary"
                       title={<><IoIosArrowBack /> Previous</>}
                     />
 
@@ -170,7 +167,6 @@ const Users = () => {
                       className="users__layout-usersList-pagination-btn"
                       onClick={handleNextPage}
                       disabled={page >= totalPages}
-                      variant="primary"
                       title={<>Next <IoIosArrowForward /></>}
                     />
                   </div>
