@@ -169,3 +169,10 @@ export interface SearchBarProps {
   inputName?: string;
   wrapperClass?: string;
 }
+
+export interface PaginationProps {
+  page: number;
+  totalPages: number;
+  className?: string;
+  setPage: (page: number) => void;
+};

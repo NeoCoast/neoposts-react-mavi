@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IoIosArrowBack } from 'react-icons/io';
 import { Oval } from 'react-loader-spinner';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 import { useGetUsersQuery } from '@/services/api';
 import { User } from '@/ts/interfaces';
@@ -12,6 +12,7 @@ import UserBar from '@/components/UserBar';
 import UsersList from '@/components/UsersList';
 import SearchBar from '@/components/SearchInput';
 import Button from '@/components/Button';
+import Pagination from '@/components/Pagination';
 
 import './styles.scss';
 
@@ -59,14 +60,6 @@ const Users = () => {
   const endIndex = startIndex + PER_PAGE_DEFAULT;
   const displayedUsers = filteredUsers.slice(startIndex, endIndex);
   const navigate = useNavigate();
-
-  const handlePrevPage = () => {
-    if (page > 1) setPage(page - 1);
-  };
-
-  const handleNextPage = () => {
-    if (page < totalPages) setPage(page + 1);
-  };
 
   return (
     <div className="users">
@@ -129,34 +122,19 @@ const Users = () => {
             )}
 
             {!isLoading && !error && totalCount === 0 && (
-              <div className="users__layout-usersList-empty">
-                No users found.
-              </div>
+              <div className="users__layout-usersList-empty">No users found.</div>
             )}
 
             {!isLoading && !error && totalCount > 0 && (
               <>
                 <UsersList users={displayedUsers} />
                 {shouldShowPagination && (
-                  <div className="users__layout-usersList-pagination">
-                    <Button
-                      className="users__layout-usersList-pagination-btn"
-                      onClick={handlePrevPage}
-                      disabled={page <= 1}
-                      title={<><IoIosArrowBack /> Previous</>}
-                    />
-
-                    <span className="users__layout-usersList-pagination-info">
-                      Page {page} of {totalPages}
-                    </span>
-
-                    <Button
-                      className="users__layout-usersList-pagination-btn"
-                      onClick={handleNextPage}
-                      disabled={page >= totalPages}
-                      title={<>Next <IoIosArrowForward /></>}
-                    />
-                  </div>
+                  <Pagination
+                    className="users__layout-usersList-pagination"
+                    page={page}
+                    totalPages={totalPages}
+                    setPage={setPage}
+                  />
                 )}
               </>
             )}
