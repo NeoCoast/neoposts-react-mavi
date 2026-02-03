@@ -98,64 +98,6 @@
         }
       }
 
-      &-search {
-        position: relative;
-        width: 100%;
-        margin-bottom: 24px;
-
-        &-icon {
-          position: absolute;
-          left: 0;
-          top: 40%;
-          transform: translateY(-50%);
-          font-size: 18px;
-          pointer-events: none;
-        }
-
-        input {
-          width: 100%;
-          padding: 12px 16px 12px 40px;
-          box-sizing: border-box;
-        }
-
-        &-cross {
-          position: absolute;
-          right: 12px;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 18px;
-          pointer-events: auto;
-          background: transparent;
-          border: none;
-          padding: 6px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          color: $color-text-muted;
-        }
-
-        @include tablet {
-          &-icon {
-            left: 12px;
-          }
-
-          &-input {
-            padding-left: 40px;
-          }
-        }
-
-        @include mobile {
-          &-icon {
-            left: 12px;
-          }
-
-          &-input {
-            padding-left: 40px;
-          }
-        }
-      }
-
       &-pagination {
         display: flex;
         justify-content: center;

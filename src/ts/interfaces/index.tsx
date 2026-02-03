@@ -1,5 +1,5 @@
-import { UseFormRegister } from 'react-hook-form';
-import type { FieldError } from 'react-hook-form';
+import { ChangeEvent } from 'react';
+import { UseFormRegister, type FieldError } from 'react-hook-form';
 
 export interface User {
   id: string | number;
@@ -159,3 +159,13 @@ export interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
 };
+
+export interface SearchBarProps {
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onClear: () => void;
+  placeholder?: string;
+  ariaLabel?: string;
+  inputName?: string;
+  wrapperClass?: string;
+}

@@ -2,8 +2,6 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { FiSearch } from 'react-icons/fi';
-import { RxCross1 } from 'react-icons/rx';
 
 import { useGetUsersQuery } from '@/services/api';
 import { User } from '@/ts/interfaces';
@@ -12,7 +10,7 @@ import { ROUTES } from '@/constants/routes';
 import Navbar from '@/components/Navbar';
 import UserBar from '@/components/UserBar';
 import UsersList from '@/components/UsersList';
-import Input from '@/components/Input';
+import SearchBar from '@/components/SearchInput';
 import Button from '@/components/Button';
 
 import './styles.scss';
@@ -91,30 +89,19 @@ const Users = () => {
               <h2>Users</h2>
             </div>
 
-            <div className="users__layout-usersList-search">
-              <FiSearch className="users__layout-usersList-search-icon" />
-              <Input
-                placeholder="Search"
-                aria-label="Search users"
-                inputName="searchUsers"
-                value={search}
-                onChange={handleSearchChange}
-              />
-              {search !== '' && (
-                <button
-                  type="button"
-                  className="users__layout-usersList-search-cross"
-                  aria-label="Clear search"
-                  onClick={() => {
-                    setSearch('');
-                    setDebouncedSearch('');
-                    setPage(1);
-                  }}
-                >
-                  <RxCross1 />
-                </button>
-              )}
-            </div>
+            <SearchBar
+              value={search}
+              onChange={handleSearchChange}
+              onClear={() => {
+                setSearch('');
+                setDebouncedSearch('');
+                setPage(1);
+              }}
+              placeholder="Search"
+              ariaLabel="Search users"
+              inputName="searchUsers"
+              wrapperClass="users__layout-usersList-search"
+            />
 
             {isLoading && (
               <div className="users__layout-usersList-loader">
