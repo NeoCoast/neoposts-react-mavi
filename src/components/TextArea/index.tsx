@@ -4,7 +4,7 @@ import { TextProps } from '@/ts/interfaces';
 
 import './styles.scss';
 
-const Text = ({
+const TextArea = ({
   inputName,
   register,
   required = false,
@@ -30,4 +30,4 @@ const Text = ({
     </div>
   );
 };
-export default Text;
+export default TextArea;

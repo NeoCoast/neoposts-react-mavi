@@ -1,5 +1,4 @@
-import { UseFormRegister } from 'react-hook-form';
-import type { FieldError } from 'react-hook-form';
+import { UseFormRegister, type FieldError } from 'react-hook-form';
 
 export interface User {
   id: string | number;
