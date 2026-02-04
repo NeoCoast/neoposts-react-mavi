@@ -10,7 +10,7 @@ import { ROUTES } from '@/constants/routes';
 import Navbar from '@/components/Navbar';
 import UserBar from '@/components/UserBar';
 import UsersList from '@/components/UsersList';
-import SearchBar from '@/components/SearchInput';
+import SearchInput from '@/components/SearchInput';
 import Button from '@/components/Button';
 import Pagination from '@/components/Pagination';
 
@@ -71,7 +71,7 @@ const Users = () => {
               <h2>Users</h2>
             </div>
 
-            <SearchBar
+            <SearchInput
               value={search}
               onChange={handleSearchChange}
               onClear={handleClearSearch}
@@ -97,20 +97,18 @@ const Users = () => {
             )}
 
             {!isLoading && error && (
-              <div className="users__layout-usersList-error">
-                <div className="users__layout-usersList-error-content">
+              <div className="users__layout-usersList-loader">
+                <div>
                   <p>Unable to load users. Please try again.</p>
                   <Button
                     title="Retry"
                     onClick={() => refetch()}
-                    className="users__layout-usersList-error-retry"
                   />
                 </div>
               </div>
             )}
-
             {!isLoading && !error && totalCount === 0 && (
-              <div className="users__layout-usersList-empty">No users found.</div>
+              <div className="users__layout-usersList-loader">No users found.</div>
             )}
 
             {!isLoading && !error && totalCount > 0 && (
@@ -118,7 +116,6 @@ const Users = () => {
                 <UsersList users={displayedUsers} />
                 {shouldShowPagination && (
                   <Pagination
-                    className="users__layout-usersList-pagination"
                     page={page}
                     totalPages={totalPages}
                     setPage={setPage}

@@ -15,7 +15,7 @@ const mapUserToProfile = (u: User): Profile => ({
   name: u?.name ?? '-',
   email: u?.email ?? '-',
   posts: getCount(u?.posts),
-  following: getCount(u?.followees ?? u?.followed),
+  following: getCount(u?.following ?? u?.followed),
   followers: getCount(u?.followers),
 });
 

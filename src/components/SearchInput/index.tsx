@@ -7,7 +7,7 @@ import Input from '@/components/Input';
 
 import './styles.scss';
 
-const SearchBar = ({
+const SearchInput = ({
   value,
   onChange,
   onClear,
@@ -25,11 +25,11 @@ const SearchBar = ({
   useEffect(() => {
     const t = setTimeout(() => setDebouncedSearch?.(value), 200);
     return () => clearTimeout(t);
-  }, [value]);
+  }, [value, setDebouncedSearch]);
 
   useEffect(() => {
     setPage?.(1);
-  }, [debouncedSearch]);
+  }, [debouncedSearch, setPage]);
 
   return (
     <div className={wrapperClass}>
@@ -56,4 +56,4 @@ const SearchBar = ({
   );
 };
 
-export default SearchBar;
+export default SearchInput;

@@ -29,7 +29,7 @@ const UsersList: FC<{ users: User[] }> = ({ users }) => {
             </div>
           </div>
 
-          {typeof user.followed === 'boolean' && me?.id !== user.id && (
+          {user.followed !== undefined && me?.id !== user.id && (
             <Button
               title={
                 user.followed ? (<><BsPersonCheck /> Following</>)

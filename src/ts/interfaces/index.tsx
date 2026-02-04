@@ -7,7 +7,7 @@ export interface User {
   email: string;
   posts?: any[] | number;
   followers?: any[] | number;
-  followees?: any[] | number;
+  following?: any[] | number;
   followed?: any[] | number;
 }
 

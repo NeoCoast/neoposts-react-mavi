@@ -1,6 +1,8 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
+
 import { setAuthHeaders } from '@/utils/setHeaders';
+import { User } from '@/ts/interfaces';
 
 const apiBaseUrl = import.meta.env.VITE_API_URL;
 
@@ -83,7 +85,7 @@ export const api = createApi({
       }),
       invalidatesTags: ['Post'],
     }),
-    getUsers: builder.query<{ users: any[]; meta?: { current_page?: number; total_pages?: number; total_count?: number } }, { search?: string; page?: number; per_page?: number } | void>({
+    getUsers: builder.query<{ users: User[]; meta?: { current_page?: number; total_pages?: number; total_count?: number } }, { search?: string; page?: number; per_page?: number } | void>({
       providesTags: ['User'],
       query: (params) => {
         const queryParams = new URLSearchParams();
