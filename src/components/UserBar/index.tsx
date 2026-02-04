@@ -28,14 +28,7 @@ const UserBar = ({ className }: { className: string }) => {
     followers: 0,
   });
 
-  const hasAuthHeaders =
-    !!localStorage.getItem('access-token') &&
-    !!localStorage.getItem('uid') &&
-    !!localStorage.getItem('client');
-
-  const { data: meData } = useGetMeQuery(undefined, {
-    skip: !hasAuthHeaders,
-  });
+  const { data: meData } = useGetMeQuery();
 
   useEffect(() => {
     if (!meData) return;

@@ -22,7 +22,7 @@ const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, se
         className="pagination__btn"
         onClick={handlePrevPage}
         disabled={page <= 1}
-        title={<><IoIosArrowBack /></>}
+        title={<IoIosArrowBack />}
       />
       <span className="pagination__info">
         Page {page} of {totalPages}
@@ -32,7 +32,7 @@ const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, se
         className="pagination__btn"
         onClick={handleNextPage}
         disabled={page >= totalPages}
-        title={<><IoIosArrowForward /></>}
+        title={<IoIosArrowForward />}
       />
     </div>
   );
