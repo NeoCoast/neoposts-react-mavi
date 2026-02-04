@@ -2,15 +2,16 @@ import type { AuthorDetailsProps } from '@/ts/interfaces';
 
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 
+import './author.scss';
+
 const AuthorDetails = ({ name, lastName, email, profilePhoto }: AuthorDetailsProps) => {
-  const avatarSrc = userProfilePlaceholder;
 
   return (
-    <div className="post__author">
-      <img className="post__author-avatar" src={avatarSrc} alt={`${name} ${lastName}`} />
-      <div className="post__author-info">
-        <div className="post__author-name">{name} {lastName}</div>
-        {email && <div className="post__author-email">{email}</div>}
+    <div className="post-author">
+      <img className="post-author__avatar" src={userProfilePlaceholder} alt={`${name} ${lastName}`} />
+      <div className="post-author__info">
+        <div className="post-author__name">{name} {lastName}</div>
+        {email && <div className="post-author__email">{email}</div>}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { PostComment, PostListItem } from '@/ts/interfaces';
 
-const getLikesCount = (post: PostListItem): number => {
+export const getLikesCount = (post: PostListItem): number => {
   if (typeof post.likesCount === 'number') return post.likesCount;
 
   const raw = post as unknown as { likes_count?: number; likes?: unknown[] };
@@ -9,7 +9,7 @@ const getLikesCount = (post: PostListItem): number => {
   return 0;
 };
 
-const mapComment = (comment: any): PostComment => {
+export const mapComment = (comment: any): PostComment => {
   const author = comment?.author ?? comment?.user ?? {};
   const likes = comment?.likes;
   const likesCount =
@@ -41,7 +41,7 @@ const mapComment = (comment: any): PostComment => {
   } as PostComment;
 };
 
-const getComments = (post: PostListItem): PostComment[] => {
+export const getComments = (post: PostListItem): PostComment[] => {
   if (Array.isArray(post.comments)) return post.comments;
 
   const raw = post as unknown as { comments?: any[] };
@@ -50,14 +50,14 @@ const getComments = (post: PostListItem): PostComment[] => {
   return raw.comments.map((comment) => mapComment(comment));
 };
 
-const extractPosts = (data: unknown): PostListItem[] => {
+export const extractPosts = (data: unknown): PostListItem[] => {
   if (!data || typeof data !== 'object') return [];
 
   const posts = (data as { posts?: PostListItem[] }).posts;
   return Array.isArray(posts) ? posts : [];
 };
 
-const getCommentsCount = (post: PostListItem, comments: PostComment[]): number => {
+export const getCommentsCount = (post: PostListItem, comments: PostComment[]): number => {
   if (typeof post.commentsCount === 'number') return post.commentsCount;
 
   const raw = post as unknown as { comments_count?: number };
@@ -66,7 +66,7 @@ const getCommentsCount = (post: PostListItem, comments: PostComment[]): number =
   return comments.length;
 };
 
-const getPostContent = (post: PostListItem): string => {
+export const getPostContent = (post: PostListItem): string => {
   if (typeof post.content === 'string' && post.content.trim()) return post.content;
 
   const raw = post as unknown as {
@@ -106,7 +106,7 @@ const getPostContent = (post: PostListItem): string => {
   return '';
 };
 
-const formatDate = (value?: string) => {
+export const formatDate = (value?: string) => {
   if (!value) return '';
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return '';
@@ -119,7 +119,7 @@ const formatDate = (value?: string) => {
   });
 };
 
-const formatRelativeDate = (value?: string) => {
+export const formatRelativeDate = (value?: string) => {
   if (!value) return '';
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return '';
@@ -129,11 +129,11 @@ const formatRelativeDate = (value?: string) => {
   });
 };
 
-const getFullName = (name?: string | null, lastName?: string | null): string => {
+export const getFullName = (name?: string | null, lastName?: string | null): string => {
   return [name, lastName].filter(Boolean).join(' ').trim();
 };
 
-const formatAuthorName = (author: PostComment['author']): string => {
+export const formatAuthorName = (author: PostComment['author']): string => {
   const base = [author.name, author.lastName].filter(Boolean).join(' ').trim();
   if (base) return base;
   if (author.username) return author.username;
@@ -141,22 +141,8 @@ const formatAuthorName = (author: PostComment['author']): string => {
   return 'Unknown';
 };
 
-const formatMention = (author: PostComment['author']): string | null => {
+export const formatMention = (author: PostComment['author']): string | null => {
   if (author.username) return author.username;
   if (author.email) return author.email.split('@')[0];
   return null;
-};
-
-export {
-  extractPosts,
-  formatAuthorName,
-  formatDate,
-  formatMention,
-  formatRelativeDate,
-  getComments,
-  getCommentsCount,
-  getFullName,
-  getLikesCount,
-  getPostContent,
-  mapComment,
 };
