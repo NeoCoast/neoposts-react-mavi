@@ -2,6 +2,8 @@ import { FC } from 'react';
 import { GoPersonAdd } from 'react-icons/go';
 import { BsPersonCheck } from 'react-icons/bs';
 
+import Button from '@/components/Button';
+import { useGetMeQuery } from '@/services/api';
 import { User } from '@/ts/interfaces';
 
 import './styles.scss';
@@ -9,6 +11,8 @@ import './styles.scss';
 const userProfilePhoto = new URL('@/assets/Icons/userProfilePhoto.svg', import.meta.url).href;
 
 const UsersList: FC<{ users: User[] }> = ({ users }) => {
+  const { data: me } = useGetMeQuery();
+
   return (
     <div className="users_list">
       {users.map((user) => (
@@ -25,14 +29,13 @@ const UsersList: FC<{ users: User[] }> = ({ users }) => {
             </div>
           </div>
 
-          {typeof user.followed === 'boolean' && (
-            <button
-              className={`users_list-follow-button ${user.followed ? 'users_list-follow-button--active' : ''
-                }`}
-            >
-              {user.followed ? <BsPersonCheck /> : <GoPersonAdd />}
-              {user.followed ? 'Following' : 'Follow'}
-            </button>
+          {typeof user.followed === 'boolean' && me?.id !== user.id && (
+            <Button
+              title={
+                user.followed ? (<><BsPersonCheck /> Following</>)
+                  : (<><GoPersonAdd /> Follow</>)}
+              className={`users_list-follow-button ${user.followed ? 'users_list-follow-button--active' : ''}`}
+            />
           )}
 
         </div>
