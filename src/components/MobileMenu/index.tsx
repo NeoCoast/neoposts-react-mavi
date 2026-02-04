@@ -2,6 +2,8 @@ import { GoPeople } from 'react-icons/go';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import cn from 'classnames';
+
 import UserBar from '@/components/UserBar';
 import { ROUTES } from '@/constants/routes';
 import { MobileMenuProps } from '@/ts/interfaces';
@@ -21,7 +23,7 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
   }, [location.pathname]);
 
   return (
-    <div className={`mobileMenu ${open ? 'mobileMenu--open' : ''}`}>
+    <div className={cn('mobileMenu', { 'mobileMenu--open': open, })}>
       <div className="mobileMenu__backdrop" onClick={onClose} />
       <aside className="mobileMenu__panel" role="dialog" aria-modal="true">
         <div className="mobileMenu__panel-header">

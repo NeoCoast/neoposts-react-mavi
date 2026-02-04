@@ -15,7 +15,6 @@ export const api = createApi({
     baseUrl: apiBaseUrl,
     prepareHeaders: (headers) => {
       const header = setAuthHeaders(headers);
-
       const token = header.get('access-token');
 
       if (token) {
