@@ -168,6 +168,9 @@ export interface SearchBarProps {
   ariaLabel?: string;
   inputName?: string;
   wrapperClass?: string;
+  debouncedSearch?: string;
+  setDebouncedSearch?: (value: string) => void;
+  setPage?: (page: number) => void;
 }
 
 export interface PaginationProps {

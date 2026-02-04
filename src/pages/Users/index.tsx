@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Oval } from 'react-loader-spinner';
@@ -19,18 +19,11 @@ import './styles.scss';
 const PER_PAGE_DEFAULT = 25;
 
 const Users = () => {
+  const navigate = useNavigate();
+
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [page, setPage] = useState(1);
-
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-
-  useEffect(() => {
-    const t = setTimeout(() => setDebouncedSearch(search), 200);
-    return () => clearTimeout(t);
-  }, [search]);
 
   const { data, error, isLoading, refetch } = useGetUsersQuery({
     search: debouncedSearch || undefined,
@@ -38,28 +31,24 @@ const Users = () => {
     per_page: PER_PAGE_DEFAULT,
   });
 
-  useEffect(() => {
-    setPage(1);
-  }, [debouncedSearch]);
-
   const users = (data?.users ?? []) as User[];
   const meta = data?.meta;
-  const filterTerm = debouncedSearch?.trim().toLowerCase();
-  const filteredUsers = filterTerm
-    ? users.filter((u) => {
-      const name = (u.name || '').toLowerCase();
-      const email = (u.email || '').toLowerCase();
-      return name.includes(filterTerm) || email.includes(filterTerm);
-    })
-    : users;
-
-  const totalCount = meta?.total_count ?? filteredUsers.length;
+  const totalCount = meta?.total_count ?? users.length;
   const totalPages = meta?.total_pages ?? Math.max(1, Math.ceil(totalCount / PER_PAGE_DEFAULT));
   const shouldShowPagination = totalPages > 1;
   const startIndex = (page - 1) * PER_PAGE_DEFAULT;
   const endIndex = startIndex + PER_PAGE_DEFAULT;
-  const displayedUsers = filteredUsers.slice(startIndex, endIndex);
-  const navigate = useNavigate();
+  const displayedUsers = users.slice(startIndex, endIndex);
+
+  const handleClearSearch = () => {
+    setSearch('');
+    setDebouncedSearch('');
+    setPage(1);
+  };
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
 
   return (
     <div className="users">
@@ -85,15 +74,14 @@ const Users = () => {
             <SearchBar
               value={search}
               onChange={handleSearchChange}
-              onClear={() => {
-                setSearch('');
-                setDebouncedSearch('');
-                setPage(1);
-              }}
+              onClear={handleClearSearch}
               placeholder="Search"
               ariaLabel="Search users"
               inputName="searchUsers"
               wrapperClass="users__layout-usersList-search"
+              debouncedSearch={debouncedSearch}
+              setDebouncedSearch={setDebouncedSearch}
+              setPage={setPage}
             />
 
             {isLoading && (

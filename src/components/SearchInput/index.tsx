@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { RxCross1 } from 'react-icons/rx';
 
@@ -14,9 +15,21 @@ const SearchBar = ({
   ariaLabel = 'Search',
   inputName = 'search',
   wrapperClass = 'users__layout-usersList-search',
+  debouncedSearch,
+  setDebouncedSearch,
+  setPage,
 }: SearchBarProps) => {
   const iconClass = `${wrapperClass}-icon`;
   const crossClass = `${wrapperClass}-cross`;
+
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch?.(value), 200);
+    return () => clearTimeout(t);
+  }, [value]);
+
+  useEffect(() => {
+    setPage?.(1);
+  }, [debouncedSearch]);
 
   return (
     <div className={wrapperClass}>
