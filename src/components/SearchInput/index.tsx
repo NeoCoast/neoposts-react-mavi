@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { RxCross1 } from 'react-icons/rx';
+import cn from 'classnames';
 
 import { SearchBarProps } from '@/ts/interfaces';
 import Input from '@/components/Input';
+import Button from '@/components/Button';
 
 import './styles.scss';
 
@@ -14,13 +16,11 @@ const SearchInput = ({
   placeholder = 'Search',
   ariaLabel = 'Search',
   inputName = 'search',
-  wrapperClass = 'users__layout-usersList-search',
+  wrapperClass,
   debouncedSearch,
   setDebouncedSearch,
   setPage,
 }: SearchBarProps) => {
-  const iconClass = `${wrapperClass}-icon`;
-  const crossClass = `${wrapperClass}-cross`;
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedSearch?.(value), 200);
@@ -32,8 +32,8 @@ const SearchInput = ({
   }, [debouncedSearch, setPage]);
 
   return (
-    <div className={wrapperClass}>
-      <FiSearch className={iconClass} />
+    <div className={cn('search_input', wrapperClass)}>
+      <FiSearch className="search_input-icon" />
       <Input
         placeholder={placeholder}
         aria-label={ariaLabel}
@@ -42,15 +42,14 @@ const SearchInput = ({
         onChange={onChange}
       />
 
-      {value !== '' && (
-        <button
-          type="button"
-          className={crossClass}
-          aria-label="Clear search"
-          onClick={onClear}
-        >
-          <RxCross1 />
-        </button>
+      {!!value && (
+        <div>
+          <Button
+            className="search_input-cross"
+            onClick={onClear}
+            title={<RxCross1 />}
+          />
+        </div>
       )}
     </div>
   );

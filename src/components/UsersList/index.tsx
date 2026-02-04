@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import cn from 'classnames';
 import { GoPersonAdd } from 'react-icons/go';
 import { BsPersonCheck } from 'react-icons/bs';
 
@@ -15,34 +16,32 @@ const UsersList: FC<{ users: User[] }> = ({ users }) => {
 
   return (
     <div className="users_list">
-      {users.map((user) => (
-        <div key={user.id} className="users_list-item">
+      {users.map(({ id, name, email, followed }) => (
+        <div key={id} className="users_list-item">
           <div className="users_list-left">
             <img
               src={userProfilePhoto}
-              alt={`${user.name}'s avatar`}
+              alt={`${name}'s avatar`}
               className="users_list-avatar"
             />
             <div className="users_list-info">
-              <span className="users_list-name">{user.name}</span>
-              <span className="users_list-email">{user.email}</span>
+              <span className="users_list-name">{name}</span>
+              <span className="users_list-email">{email}</span>
             </div>
           </div>
 
-          {user.followed !== undefined && me?.id !== user.id && (
+          {followed !== undefined && me?.id !== id && (
             <Button
               title={
-                user.followed ? (<><BsPersonCheck /> Following</>)
+                followed ? (<><BsPersonCheck /> Following</>)
                   : (<><GoPersonAdd /> Follow</>)}
-              className={`users_list-follow-button ${user.followed ? 'users_list-follow-button--active' : ''}`}
+              className={cn('users_list-follow-button', { 'users_list-follow-button--active': followed })}
             />
           )}
-
         </div>
       ))}
     </div>
   );
 };
-
 
 export default UsersList;

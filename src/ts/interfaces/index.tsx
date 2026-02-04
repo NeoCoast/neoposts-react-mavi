@@ -155,11 +155,6 @@ export interface CreatePostProps {
   closeModal: () => void;
 }
 
-export interface MobileMenuProps {
-  open: boolean;
-  onClose: () => void;
-};
-
 export interface SearchBarProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -172,10 +167,3 @@ export interface SearchBarProps {
   setDebouncedSearch?: (value: string) => void;
   setPage?: (page: number) => void;
 }
-
-export interface PaginationProps {
-  page: number;
-  totalPages: number;
-  className?: string;
-  setPage: (page: number) => void;
-};
