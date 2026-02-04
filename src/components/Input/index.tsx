@@ -1,20 +1,11 @@
 import React, { useState } from 'react';
-import type { FieldError, UseFormRegister } from 'react-hook-form';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import type { IconType } from 'react-icons';
+import { InputProps } from '@/ts/interfaces';
+
 import cn from 'classnames';
 
 import './styles.scss';
-
-type InputProps = {
-  inputName: string;
-  type?: string;
-  register?: UseFormRegister<any>;
-  required?: boolean;
-  errors?: FieldError | { message?: string } | null;
-  className?: string;
-  placeholder?: string;
-};
 
 const Input: React.FC<InputProps> = ({
   inputName,

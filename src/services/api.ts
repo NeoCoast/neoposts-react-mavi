@@ -12,7 +12,14 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: apiBaseUrl,
     prepareHeaders: (headers) => {
-      return setAuthHeaders(headers);
+      const header = setAuthHeaders(headers);
+      const token = header.get('access-token');
+
+      if (token) {
+        header.set('Authorization', `Bearer ${token}`);
+      }
+
+      return header;
     },
   }),
   tagTypes: ['Post', 'User'],
@@ -67,6 +74,14 @@ export const api = createApi({
       }),
       invalidatesTags: ['User'],
     }),
+    createPost: builder.mutation({
+      query: (body) => ({
+        url: 'posts',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Post'],
+    }),
   }),
 });
 
@@ -77,4 +92,5 @@ export const {
   useLogOutMutation,
   useLogInMutation,
   useSignupMutation,
+  useCreatePostMutation,
 } = api;

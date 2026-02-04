@@ -1,20 +1,14 @@
-import { FC } from 'react';
-import { FaPlus } from "react-icons/fa";
+import { FC, useState } from 'react';
+import { FaPlus } from 'react-icons/fa';
 import cn from 'classnames';
+
+import { ProfileSideBarProps } from '@/ts/interfaces';
 
 import Button from '@/components/Button';
 import LogOut from '@/components/LogOut';
+import CreatePostModal from '@/components/CreatePostModal';
 
 import './styles.scss';
-
-export type ProfileSideBarProps = {
-  className?: string;
-  name: string;
-  email: string;
-  posts: number;
-  following: number;
-  followers: number;
-};
 
 const ProfileSideBar: FC<ProfileSideBarProps> = ({
   className = '',
@@ -24,6 +18,8 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
   following,
   followers
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  
   const stats = [
     { title: 'Posts', value: posts },
     { title: 'Following', value: following },
@@ -44,12 +40,17 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
           variant="profile__sidebar-card-newPost"
           title={
             <span className="profile__sidebar-card-newPost-content">
-              <FaPlus className='profile__sidebar-card-newPost-content-icon' />
+              <FaPlus className="profile__sidebar-card-newPost-content-icon" />
               <span>New Post</span>
             </span>
           }
+          onClick={() => setIsOpen(true)}
         />
 
+        <CreatePostModal
+          isOpen={isOpen}
+          closeModal={() => setIsOpen(false)}
+        />
         <div className="profile__sidebar-card-stats">
           {stats.map(({ title, value }) => (
             <div className="profile__sidebar-card-stats-stat" key={title}>
