@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { RootState, AppDispatch } from '@/services/store';
+import { openMobileMenu, closeMobileMenu } from '@/utils/sideBarSlice';
 import { GoPeople } from 'react-icons/go';
 import { RxHamburgerMenu } from "react-icons/rx";
 
@@ -12,12 +15,15 @@ const neoPostIcon = new URL('@/assets/Icons/NeoPost.svg', import.meta.url).href;
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [menuOpen, setMenuOpen] = useState(false);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const menuOpen = useSelector((state: RootState) => state.ui.mobileMenuOpen);
+
+  const openMenu = () => dispatch(openMobileMenu());
+  const closeMenu = () => dispatch(closeMobileMenu());
 
   const goHome = () => navigate(ROUTES.HOME);
   const goUsers = () => navigate(ROUTES.USERS);
-  const openMenu = () => setMenuOpen(true);
-  const closeMenu = () => setMenuOpen(false);
 
   return (
     <>

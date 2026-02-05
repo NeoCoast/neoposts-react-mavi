@@ -3,6 +3,11 @@ import Modal from 'react-modal';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import cn from 'classnames';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { AppDispatch } from '@/services/store';
+import { closeMobileMenu } from '@/utils/sideBarSlice';
 
 import { useCreatePostMutation } from '@/services/api';
 import { createPostSchema } from '@/utils/validationSchemas';
@@ -22,6 +27,11 @@ Modal.setAppElement('#root');
 const userProfilePhoto = new URL('@/assets/Icons/userProfilePhoto.svg', import.meta.url).href;
 
 const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (isOpen) dispatch(closeMobileMenu());
+  }, [isOpen]);
   const {
     register,
     handleSubmit,

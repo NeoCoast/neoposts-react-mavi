@@ -1,12 +1,14 @@
 import { FC, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 
 import { ProfileSideBarProps } from '@/ts/interfaces';
-
 import Button from '@/components/Button';
 import LogOut from '@/components/LogOut';
 import CreatePostModal from '@/components/CreatePostModal';
+import { AppDispatch } from '@/services/store';
+import { closeMobileMenu } from '@/utils/sideBarSlice';
 
 import './styles.scss';
 
@@ -19,7 +21,8 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
   followers
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  
+  const dispatch = useDispatch<AppDispatch>();
+
   const stats = [
     { title: 'Posts', value: posts },
     { title: 'Following', value: following },
@@ -44,7 +47,10 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
               <span>New Post</span>
             </span>
           }
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            setIsOpen(true);
+            dispatch(closeMobileMenu());
+          }}
         />
 
         <CreatePostModal
