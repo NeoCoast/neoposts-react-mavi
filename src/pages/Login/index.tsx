@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Oval } from 'react-loader-spinner';
 import cn from 'classnames';
 
 import { ROUTES } from '@/constants/routes';

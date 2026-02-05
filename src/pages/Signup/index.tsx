@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import cn from 'classnames';
 
-import { notify } from '@/components/Toaster/notify';
 import { signupSchema } from '@/utils/validationSchemas';
+import { setResponseHeaders } from '@/utils/responseHeaderHandler';
 import { useSignupMutation } from '@/services/api';
 import { SignupFormData } from '@/ts/interfaces';
 import { ApiErrorResponse } from '@/ts/types/errors';
@@ -53,9 +53,10 @@ const Signup = () => {
 
   const onSubmit = async (formData: SignupFormData) => {
     try {
-      await signUp(formData).unwrap();
+      const response = await signUp(formData).unwrap();
 
-      navigate(ROUTES.LOGIN, { replace: true });
+      setResponseHeaders(response.headers);
+      navigate(ROUTES.HOME, { replace: true });
     } catch (err: unknown) {
       const serverMessage = getApiErrorMessage(err);
       const errorField = getSignupErrorField(serverMessage);
