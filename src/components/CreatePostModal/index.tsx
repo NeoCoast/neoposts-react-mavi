@@ -2,7 +2,6 @@ import Modal from 'react-modal';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { FiSave } from 'react-icons/fi';
 import cn from 'classnames';
 
 import { useCreatePostMutation } from '@/services/api';
@@ -114,7 +113,6 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
           />
 
           <div className="modal__main-content-post">
-            <FiSave className="modal__icon" />
 
             <Button
               type="submit"

@@ -113,9 +113,9 @@
       &-post {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-end;
         gap: 12px;
-        margin-top: 8px;
+        margin-top: auto;
 
         &-btn {
           padding: 12px 28px;
