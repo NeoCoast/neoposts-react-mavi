@@ -32,7 +32,6 @@ const LogIn = () => {
 
     if (response.error) {
       notify.error('Incorrect email or password. Please check your credentials.');
-      setValue('email', '');
       setValue('password', '');
       return;
     }
