@@ -1,15 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Oval } from 'react-loader-spinner';
 import cn from 'classnames';
 
-import { notify } from '@/components/Toaster/notify';
-import { logInSchema } from '@/utils/validationSchemas';
 import { ROUTES } from '@/constants/routes';
 import { useLogInMutation } from '@/services/api';
 import { LoginFormData } from '@/ts/interfaces';
+import { logInSchema } from '@/utils/validationSchemas';
 import { setResponseHeaders } from '@/utils/responseHeaderHandler';
 
+import { notify } from '@/components/Toaster/notify';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
@@ -37,8 +38,6 @@ const LogIn = () => {
     }
     const headers = response.data.headers;
     setResponseHeaders(headers);
-
-    notify.success('Successfully logged in!');
     navigate(ROUTES.HOME, { replace: true });
   };
 
@@ -54,7 +53,7 @@ const LogIn = () => {
           <form
             onSubmit={handleSubmit(onSubmit)}
             aria-label="Log in form"
-            className='login__register-container-form'
+            className="login__register-container-form"
           >
             <Input
               inputName="email"
@@ -75,11 +74,12 @@ const LogIn = () => {
             <Button
               type="submit"
               title="Log in"
+              loading={isLoading}
+              disabled={!isValid}
               className={cn('form__btn', {
                 'login__register-container-form-btnLogIn': isValid,
                 'login__register-container-form-btnLogIn-disabled': !isValid,
               })}
-              disabled={!isValid || isLoading}
             />
             <div className="login__register-container-form-separator">
               <hr className='login__register-container-form-separator-line' /> <span>or</span> <hr className='login__register-container-form-separator-line' />

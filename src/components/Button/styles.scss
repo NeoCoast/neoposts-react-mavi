@@ -13,6 +13,18 @@
   align-items: center;
   display: inline-flex;
 
+  &__content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  &--loading {
+    cursor: not-allowed;
+  }
+
   &:active {
     opacity: 0.9;
   }

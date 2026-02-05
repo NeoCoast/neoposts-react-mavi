@@ -26,20 +26,24 @@ const Button: FC<ButtonProps> = ({
   <button
     onClick={onClick}
     type={type}
-    className={cn('btn', variant, className)}
+    className={cn('btn', variant, className, {
+      'btn--loading': loading,
+    })}
     disabled={disabled || loading}
   >
-    {loading ? (
-      <ThreeDots
-        visible={true}
-        height="40"
-        width="40"
-        radius="9"
-        ariaLabel="three-dots-loading"
-      />
-    ) : (
-      title
-    )}
+    <span className="btn__content">
+      {loading ? (
+        <ThreeDots
+          height="35"
+          width="35"
+          radius="8"
+          ariaLabel="button-loading"
+          color="#ffffff"
+        />
+      ) : (
+        title
+      )}
+    </span>
   </button>
 );
 
