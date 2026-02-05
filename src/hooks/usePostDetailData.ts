@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 
-import { useGetPostsQuery } from '@/services/api';
+import { useGetPostQuery } from '@/services/api';
 import { PostComment, PostListItem } from '@/ts/interfaces';
 import {
-  extractPosts,
   formatDate,
   getComments,
   getCommentsCount,
@@ -12,7 +11,7 @@ import {
 } from '@/utils/postUtils';
 
 type UsePostDetailDataParams = {
-  id: string;
+  id: number;
   postFromState?: PostListItem | null;
 };
 
@@ -25,20 +24,22 @@ const buildDefaultDetails = () => ({
   publishedAtRaw: '',
 });
 
-const usePostDetailData = ({ id, postFromState }: UsePostDetailDataParams) => {
-  const shouldSkipQuery = Boolean(postFromState);
+const usePostDetailData = ({ id }: UsePostDetailDataParams) => {
   const {
-    data: postsData,
+    data: postData,
     isLoading: queryLoading,
     error: queryError,
-  } = useGetPostsQuery(undefined, { skip: shouldSkipQuery });
+  } = useGetPostQuery(id, {});
 
   const post = useMemo(() => {
-    if (postFromState) return postFromState;
+    if (!postData || typeof postData !== 'object') return null;
 
-    const list = extractPosts(postsData);
-    return list.find((item) => String(item.id) === String(id));
-  }, [id, postFromState, postsData]);
+    const asAny = postData as any;
+    if (asAny.post) return asAny.post as PostListItem;
+    if (Array.isArray(asAny.posts)) return (asAny.posts as PostListItem[]).find((p) => String(p.id) === String(id)) ?? null;
+
+    return postData as PostListItem;
+  }, [id, postData]);
 
   const details = useMemo(() => {
     if (!post) return buildDefaultDetails();
@@ -55,8 +56,8 @@ const usePostDetailData = ({ id, postFromState }: UsePostDetailDataParams) => {
     };
   }, [post]);
 
-  const isLoading = queryLoading && !postFromState;
-  const hasError = Boolean(queryError) && !postFromState;
+  const isLoading = queryLoading;
+  const hasError = Boolean(queryError);
 
   return {
     post: post ?? null,

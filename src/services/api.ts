@@ -91,6 +91,13 @@ export const api = createApi({
       }),
       invalidatesTags: ['Post'],
     }),
+    getPost: builder.query({
+      query: (id: number) => ({
+        url: `posts/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Post'],
+    }),
     getUsers: builder.query<{ users: User[]; meta?: { current_page?: number; total_pages?: number; total_count?: number } }, { search?: string; page?: number; per_page?: number } | void>({
       providesTags: ['User'],
       query: (params) => {
@@ -113,6 +120,7 @@ export const api = createApi({
 
 export const {
   useGetPostsQuery,
+  useGetPostQuery,
   useGetFeedQuery,
   useGetMeQuery,
   useLogOutMutation,
