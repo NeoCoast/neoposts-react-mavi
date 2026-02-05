@@ -38,7 +38,7 @@ const Button: FC<ButtonProps> = ({
           width="35"
           radius="8"
           ariaLabel="button-loading"
-          color="#ffffff"
+          color="currentColor"
         />
       ) : (
         title

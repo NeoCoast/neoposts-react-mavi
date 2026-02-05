@@ -55,7 +55,6 @@ const Signup = () => {
     try {
       await signUp(formData).unwrap();
 
-      notify.success('Successfully signed up!');
       navigate(ROUTES.LOGIN, { replace: true });
     } catch (err: unknown) {
       const serverMessage = getApiErrorMessage(err);
@@ -125,11 +124,12 @@ const Signup = () => {
             <Button
               type="submit"
               title="Sign Up"
+              loading={isLoading}
+              disabled={!isValid}
               className={cn('form__btn', {
                 'signup__register-container-form-btnSignUp': isValid,
                 'signup__register-container-form-btnSignUp-disabled': !isValid,
               })}
-              disabled={!isValid || isLoading}
             />
 
             <div className="signup__register-container-form-separator">

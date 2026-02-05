@@ -28,7 +28,11 @@ const UserBar = ({ className }: { className: string }) => {
     followers: 0,
   });
 
-  const { data: meData } = useGetMeQuery();
+  const hasAuth = Boolean(localStorage.getItem('access-token'));
+
+  const { data: meData } = useGetMeQuery(undefined, {
+    skip: !hasAuth,
+  });
 
   useEffect(() => {
     if (!meData) return;
