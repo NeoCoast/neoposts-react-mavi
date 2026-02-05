@@ -49,9 +49,10 @@
 
    &__error {
      color: $color-error;
-     font-size: 10px;
-     font-weight: 400;
+     font-size: 12px;
+     font-weight: 600;
      height: 10px;
+     margin-top: 5px;
 
      &--hidden {
        visibility: hidden;
