@@ -59,7 +59,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
     padding: 8px 14px;
     border-radius: 8px;
     min-width: 120px;
@@ -68,6 +67,13 @@
     background: $color-primary;
     color: $color-white;
     border: none;
+
+    >.btn__content {
+      gap: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
 
     svg {
       font-size: 16px;
