@@ -88,7 +88,7 @@ export const api = createApi({
       providesTags: ['User'],
       query: (params) => {
         const queryParams = new URLSearchParams();
-        
+
         if (params?.search) queryParams.append('search', params.search);
         if (params?.page) queryParams.append('page', String(params.page));
         if (params?.per_page) queryParams.append('per_page', String(params.per_page));
