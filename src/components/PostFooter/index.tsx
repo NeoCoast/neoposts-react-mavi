@@ -23,6 +23,7 @@ const PostFooter = ({ publishedAt, likesCount, commentsCount, label }: PostFoote
 
       <div className="post__footer-icons">
         <Button
+          variant="icon"
           className="post__footer-icons-heart"
           title={(
             <span className="post__footer-button">
@@ -33,6 +34,7 @@ const PostFooter = ({ publishedAt, likesCount, commentsCount, label }: PostFoote
         />
 
         <Button
+          variant="icon"
           className="post__footer-icons-comment"
           title={(
             <span className="post__footer-button">
