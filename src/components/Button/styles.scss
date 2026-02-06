@@ -41,6 +41,22 @@
     border: 2px solid $color-primary;
   }
 
+  &--icon {
+    background-color: transparent;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    min-width: 0;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &__content {
+      gap: 2px;
+    }
+  }
+
   &:active {
     opacity: 0.9;
   }

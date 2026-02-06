@@ -6,6 +6,7 @@ import type { IconType } from 'react-icons';
 import { InputProps } from '@/ts/interfaces';
 
 import './styles.scss';
+import Button from '../Button';
 
 const Input: React.FC<InputProps> = ({
   inputName,
@@ -42,19 +43,21 @@ const Input: React.FC<InputProps> = ({
         spellCheck={false}
       />
       {type === 'password' && (
-        <button
+        <Button
           type="button"
-          className="input__password-toggle"
+          variant="icon"
           onClick={() => setShowPassword((show) => !show)}
           aria-label={showPassword ? 'Hide password' : 'Show password'}
           aria-pressed={showPassword}
-        >
-          <Icon
-            className="input__password-eye"
-            aria-hidden="true"
-            focusable="false"
-          />
-        </button>
+          title={(
+            <Icon
+              className="input__password-eye"
+              aria-hidden="true"
+              focusable="false"
+            />
+          )}
+          className="input__password-toggle"
+        />
       )}
       <div className={errors ? 'input__error' : 'input__error--hidden'}>{errors?.message as string}</div>
     </div>

@@ -6,7 +6,7 @@ import './styles.scss';
 
 type ButtonProps = {
   loading?: boolean;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'icon';
   title: string | ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: 'button' | 'submit' | 'reset';
