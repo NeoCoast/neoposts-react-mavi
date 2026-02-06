@@ -6,7 +6,7 @@ import './styles.scss';
 
 type ButtonProps = {
   loading?: boolean;
-  variant?: string;
+  variant?: 'primary' | 'secondary';
   title: string | ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: 'button' | 'submit' | 'reset';
@@ -26,8 +26,9 @@ const Button: FC<ButtonProps> = ({
   <button
     onClick={onClick}
     type={type}
-    className={cn('btn', variant, className, {
+    className={cn('btn', className, {
       'btn--loading': loading,
+      [`btn--${variant}`]: variant,
     })}
     disabled={disabled || loading}
   >

@@ -120,7 +120,7 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
               loading={isLoading}
               disabled={!isValid || isTitleTooLong}
               className="modal__main-content-post-btn"
-              variant="submit"
+              variant="primary"
             />
           </div>
         </form>
