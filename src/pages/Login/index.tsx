@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import cn from 'classnames';
 
 import { ROUTES } from '@/constants/routes';
 import { useLogInMutation } from '@/services/api';
@@ -75,22 +74,25 @@ const LogIn = () => {
               title="Log in"
               loading={isLoading}
               disabled={!isValid}
-              className={cn('form__btn', {
-                'login__register-container-form-btnLogIn': isValid,
-                'login__register-container-form-btnLogIn-disabled': !isValid,
-              })}
+              className="login__register-container-form-btnLogin"
+              variant="primary"
             />
             <div className="login__register-container-form-separator">
               <hr className='login__register-container-form-separator-line' /> <span>or</span> <hr className='login__register-container-form-separator-line' />
             </div>
 
-            <button
+            <Button
               type="button"
+              variant="secondary"
+              onClick={() => navigate(ROUTES.SIGNUP)}
+              title={(
+                <>
+                  Don&apos;t you have an account?
+                  <span className="login__register-container-form-btnSignup-span"> Sign up</span>
+                </>
+              )}
               className="login__register-container-form-btnSignup"
-              onClick={() => navigate(ROUTES.SIGNUP)}>
-              Don&apos;t you have an account?
-              <span className="login__register-container-form-btnSignup-span"> Sign up</span>
-            </button>
+            />
           </form>
         </div>
       </div>
