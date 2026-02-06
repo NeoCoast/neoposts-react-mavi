@@ -8,6 +8,7 @@ import UserBar from '@/components/UserBar';
 import { ROUTES } from '@/constants/routes';
 
 import './styles.scss';
+import Button from '../Button';
 
 const neoPostIcon = new URL('@/assets/Icons/NeoPost.svg', import.meta.url).href;
 
@@ -19,7 +20,7 @@ type MobileMenuProps = {
 const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  
+
   const goUsers = () => navigate(ROUTES.USERS);
 
   useEffect(() => {
@@ -36,15 +37,22 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
             <img className="mobileMenu__panel-header-brand-logo" src={neoPostIcon} alt="Neopost" decoding="async" />
             <span className="mobileMenu__panel-header-brand-title">NEOPOST</span>
           </div>
-          <button className="mobileMenu__panel-header-close" aria-label="Close menu" onClick={onClose}>
-            ✕
-          </button>
+          <Button
+            variant="icon"
+            className="mobileMenu__panel-header-close"
+            title={<span className="mobileMenu__panel-header-close-icon">✕</span>}
+            onClick={onClose}
+          />
         </div>
         <div className="mobileMenu__icons">
           <div className="mobileMenu__icons-navbar">
-            <button className="mobileMenu__icons-navbar-iconBtn" aria-label="People" onClick={goUsers}>
-              <GoPeople />
-            </button>
+            <Button
+              variant="icon"
+              className="mobileMenu__icons-navbar-iconBtn"
+              aria-label="People"
+              onClick={goUsers}
+              title={<GoPeople />}
+            />
           </div>
         </div>
         <div className="mobileMenu__content">

@@ -24,7 +24,6 @@ const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, se
   return (
     <div className={['pagination', className].filter(Boolean).join(' ')}>
       <Button
-        type="button"
         className="pagination__btn"
         onClick={handlePrevPage}
         disabled={page <= 1}
@@ -34,7 +33,6 @@ const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, se
         Page {page} of {totalPages}
       </span>
       <Button
-        type="button"
         className="pagination__btn"
         onClick={handleNextPage}
         disabled={page >= totalPages}

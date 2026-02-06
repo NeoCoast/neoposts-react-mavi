@@ -39,12 +39,18 @@
     background-color: transparent;
     color: $color-primary;
     border: 2px solid $color-primary;
+
+    &:hover {
+      background-color: $color-secondary-hover;
+      color: $color-white;
+      border-color: $color-secondary-hover;
+    }
   }
 
   &--icon {
     background-color: transparent;
     padding: 0;
-    width: 28px;
+    width: fit-content;
     height: 28px;
     min-width: 0;
     border: none;

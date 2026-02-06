@@ -61,11 +61,16 @@ const Users = () => {
           <div className="users__layout-usersList-card">
             <div className="users__layout-usersList-header">
               <div className="users__layout-usersList-header-back">
-                <IoIosArrowBack />
                 <Button
+                  variant='icon'
                   className="users__layout-usersList-header-button"
                   onClick={() => navigate(ROUTES.HOME)}
-                  title=" Back"
+                  title={
+                    <>
+                      <IoIosArrowBack />
+                      <span>Back</span>
+                    </>
+                  }
                 />
               </div>
               <h2>Users</h2>

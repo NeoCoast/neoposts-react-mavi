@@ -44,7 +44,6 @@ const Input: React.FC<InputProps> = ({
       />
       {type === 'password' && (
         <Button
-          type="button"
           variant="icon"
           onClick={() => setShowPassword((show) => !show)}
           aria-label={showPassword ? 'Hide password' : 'Show password'}

@@ -7,6 +7,7 @@ import {
   formatRelativeDate,
   getFullName,
 } from '@/utils/postUtils';
+import Button from '@/components/Button';
 
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 
@@ -45,10 +46,16 @@ const CommentComponent = ({ comment }: CommentComponentProps) => {
         </div>
         <p className="post__detail-list-comment-content">{comment.content}</p>
         <div className="post__detail-list-comment-actions">
-          <button type="button" className="post__detail-list-comment-actions-like">
-            <IoIosHeartEmpty />
-            <span>{comment.likesCount}</span>
-          </button>
+          <Button
+            variant="icon"
+            className="post__detail-list-comment-actions-like"
+            title={(
+              <span className="post__footer-button">
+                <IoIosHeartEmpty />
+                <span>{comment.likesCount}</span>
+              </span>
+            )}
+          />
         </div>
       </div>
     </article>

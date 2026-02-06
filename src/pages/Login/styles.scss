@@ -78,6 +78,10 @@
            color: $title-color;
            font-weight: bold;
          }
+
+         &:hover{
+          color: $color-white;
+         }
        }
      }
    }

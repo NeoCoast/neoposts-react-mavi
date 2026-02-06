@@ -70,16 +70,15 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
           />
           <span className="modal__header-top-title">New Post</span>
         </div>
-
-        <button
+        <Button
+          type="button"
+          variant="icon"
           className="modal__header-close"
           onClick={() => {
             reset();
             closeModal();
-          }}
-        >
-          &times;
-        </button>
+          }} title="X"
+        />
       </div>
 
       <div className="modal__main">

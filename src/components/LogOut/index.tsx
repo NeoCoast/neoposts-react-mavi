@@ -31,7 +31,6 @@ const LogOut = () => {
 
   return (
     <Button
-      type="button"
       onClick={handleLogout}
       loading={isLoading}
       disabled={isLoading}

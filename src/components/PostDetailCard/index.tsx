@@ -12,6 +12,7 @@ import { getFullName } from '@/utils/postUtils';
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 
 import './styles.scss';
+import Button from '../Button';
 
 type PostDetailCardProps = {
   post: PostListItem;
@@ -41,11 +42,18 @@ function PostDetailCard({
 
   return (
     <article className="post__detail-card">
-      <button type="button" className="post__detail-card-back" onClick={onBack}>
-        <IoIosArrowBack />
-        <span>Back</span>
-      </button>
-
+      <Button
+        variant='icon'
+        className="post__detail-card-back"
+        aria-label="Back"
+        onClick={onBack}
+        title={
+          <>
+            <IoIosArrowBack />
+            <span>Back</span>
+          </>
+        }
+      />
       <header className="post__detail-card-header">
         <img
           className="post__detail-card-header-avatar"

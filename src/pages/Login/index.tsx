@@ -82,7 +82,6 @@ const LogIn = () => {
             </div>
 
             <Button
-              type="button"
               variant="secondary"
               onClick={() => navigate(ROUTES.SIGNUP)}
               title={(

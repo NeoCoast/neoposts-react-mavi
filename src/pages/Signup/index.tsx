@@ -135,7 +135,6 @@ const Signup = () => {
             </div>
 
             <Button
-              type="button"
               variant="secondary"
               onClick={() => navigate(ROUTES.LOGIN)}
               title={(

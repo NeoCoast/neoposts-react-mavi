@@ -48,14 +48,11 @@
     }
 
     &-close {
-      width: 36px;
-      height: 36px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
       border: 2px solid $color-text;
-      background: transparent;
-      font-size: 20px;
       color: $color-text;
-      cursor: pointer;
     }
   }
 
