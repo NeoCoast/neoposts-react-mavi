@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import { UseFormRegister, type FieldError } from 'react-hook-form';
 
 export interface User {
@@ -6,7 +7,7 @@ export interface User {
   email: string;
   posts?: any[] | number;
   followers?: any[] | number;
-  followees?: any[] | number;
+  following?: any[] | number;
   followed?: any[] | number;
 }
 
@@ -107,6 +108,8 @@ export interface InputProps {
   required?: boolean;
   errors?: FieldError | { message?: string } | null;
   className?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
 };
 
@@ -150,4 +153,17 @@ export interface FormData {
 export interface CreatePostProps {
   isOpen: boolean;
   closeModal: () => void;
+}
+
+export interface SearchBarProps {
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onClear: () => void;
+  placeholder?: string;
+  ariaLabel?: string;
+  inputName?: string;
+  wrapperClass?: string;
+  debouncedSearch?: string;
+  setDebouncedSearch?: (value: string) => void;
+  setPage?: (page: number) => void;
 }

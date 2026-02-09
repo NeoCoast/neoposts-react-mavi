@@ -15,6 +15,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const goHome = () => navigate(ROUTES.HOME);
+  const goUsers = () => navigate(ROUTES.USERS);
   const openMenu = () => setMenuOpen(true);
   const closeMenu = () => setMenuOpen(false);
 
@@ -31,7 +32,7 @@ const Navbar = () => {
 
         {!menuOpen && (
           <div className="navbar__icons">
-            <button className="navbar__icons-iconBtn navbar__icons-peopleBtn" aria-label="People">
+            <button onClick={goUsers} className="navbar__icons-iconBtn navbar__icons-peopleBtn" aria-label="People">
               <GoPeople className="navbar__icons-iconBtn-icon" />
             </button>
             <button className="navbar__icons-hamburger" onClick={openMenu} aria-label="Open menu">

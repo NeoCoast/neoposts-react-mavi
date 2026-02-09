@@ -23,7 +23,7 @@ const PostFooter = ({ publishedAt, likesCount, commentsCount, label }: PostFoote
 
       <div className="post__footer-icons">
         <Button
-          variant="post__footer-icons-heart"
+          className="post__footer-icons-heart"
           title={(
             <span className="post__footer-button">
               <IoIosHeartEmpty />
@@ -33,7 +33,7 @@ const PostFooter = ({ publishedAt, likesCount, commentsCount, label }: PostFoote
         />
 
         <Button
-          variant="post__footer-icons-comment"
+          className="post__footer-icons-comment"
           title={(
             <span className="post__footer-button">
               <BiSolidComment />

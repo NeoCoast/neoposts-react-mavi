@@ -1,0 +1,16 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+
+  @include mobile {
+    gap: 8px;
+
+    &__btn {
+      padding: 6px 10px;
+      font-size: 13px;
+    }
+  }
+}

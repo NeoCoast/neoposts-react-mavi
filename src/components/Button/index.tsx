@@ -6,7 +6,7 @@ import './styles.scss';
 
 type ButtonProps = {
   loading?: boolean;
-  variant: string;
+  variant?: string;
   title: string | ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: 'button' | 'submit' | 'reset';
@@ -21,7 +21,7 @@ const Button: FC<ButtonProps> = ({
   onClick = () => { },
   type = 'button',
   className = '',
-  variant,
+  variant = 'primary',
 }) => (
   <button
     onClick={onClick}

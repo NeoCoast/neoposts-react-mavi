@@ -7,6 +7,7 @@ import AuthRedirect from '@/components/AuthRedirect';
 import AppToaster from '@/components/Toaster';
 
 import Home from '@/pages/Home';
+import Users from '@/pages/Users';
 import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
 import NotFound from '@/pages/NotFound';
@@ -22,6 +23,7 @@ const App = () => {
       <Routes>
         <Route element={<Layout redirectPath={ROUTES.LOGIN} />}>
           <Route path={ROUTES.HOME} element={<Home />} />
+          <Route path={ROUTES.USERS} element={<Users />} />
           <Route path={ROUTES.POST} element={<PostDetail />} />
         </Route>
         <Route element={<AuthRedirect redirectPath={ROUTES.HOME} />}>
