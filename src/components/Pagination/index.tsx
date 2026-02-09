@@ -9,16 +9,16 @@ type PaginationProps = {
   page: number;
   totalPages: number;
   className?: string;
-  setPage: (page: number) => void;
+  setSearchParams?: (params: string) => void;
 };
 
-const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, setPage }) => {
+const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, setSearchParams }) => {
   const handlePrevPage = () => {
-    if (page > 1) setPage(page - 1);
+    if (page > 1) setSearchParams?.(`?page=${page - 1}`);
   };
 
   const handleNextPage = () => {
-    if (page < totalPages) setPage(page + 1);
+    if (page < totalPages) setSearchParams?.(`?page=${page + 1}`);
   };
 
   return (

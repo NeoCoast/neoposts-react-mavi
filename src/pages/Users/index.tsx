@@ -1,5 +1,5 @@
-import { useState, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, ChangeEvent } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Oval } from 'react-loader-spinner';
 
@@ -19,11 +19,22 @@ import './styles.scss';
 const PER_PAGE_DEFAULT = 25;
 
 const Users = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const navigate = useNavigate();
 
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
-  const [page, setPage] = useState(1);
+
+  const page = (() => {
+    const raw = searchParams.get('page') || '1';
+    const parsed = parseInt(raw, 10);
+    const isInvalid = Number.isNaN(parsed) || parsed < 1;
+    if (isInvalid) {
+      setSearchParams({ page: '1' });
+    }
+    return isInvalid ? 1 : parsed;
+  })();
 
   const { data, error, isLoading, refetch } = useGetUsersQuery({
     search: debouncedSearch || undefined,
@@ -40,10 +51,18 @@ const Users = () => {
   const endIndex = startIndex + PER_PAGE_DEFAULT;
   const displayedUsers = users.slice(startIndex, endIndex);
 
+  const isValidPage = page >= 1 && page <= totalPages;
+
+  useEffect(() => {
+    if (!isValidPage && data) {
+      setSearchParams({ page: '1' });
+    }
+  }, [page, totalPages, setSearchParams, isValidPage, data]);
+
   const handleClearSearch = () => {
     setSearch('');
     setDebouncedSearch('');
-    setPage(1);
+    setSearchParams({ page: '1' });
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -84,9 +103,7 @@ const Users = () => {
               ariaLabel="Search users"
               inputName="searchUsers"
               wrapperClass="users__layout-usersList-search"
-              debouncedSearch={debouncedSearch}
               setDebouncedSearch={setDebouncedSearch}
-              setPage={setPage}
             />
 
             {isLoading && (
@@ -123,7 +140,7 @@ const Users = () => {
                   <Pagination
                     page={page}
                     totalPages={totalPages}
-                    setPage={setPage}
+                    setSearchParams={setSearchParams}
                   />
                 )}
               </>
