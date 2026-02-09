@@ -22,9 +22,10 @@ const Users = () => {
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchParamValue = searchParams.get('search') ?? '';
 
-  const [search, setSearch] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [search, setSearch] = useState(() => searchParamValue);
+  const [debouncedSearch, setDebouncedSearch] = useState(() => searchParamValue);
 
   const page = (() => {
     const raw = searchParams.get('page') || '1';
@@ -55,9 +56,30 @@ const Users = () => {
 
   useEffect(() => {
     if (!isValidPage && data) {
-      setSearchParams({ page: '1' });
+      const params: Record<string, string> = { page: '1' };
+      if (searchParamValue) {
+        params.search = searchParamValue;
+      }
+      setSearchParams(params);
     }
-  }, [page, totalPages, setSearchParams, isValidPage, data]);
+  }, [page, totalPages, setSearchParams, isValidPage, data, searchParamValue]);
+
+  useEffect(() => {
+    if (debouncedSearch === searchParamValue) {
+      return;
+    }
+
+    const params: Record<string, string> = { page: '1' };
+    if (debouncedSearch) {
+      params.search = debouncedSearch;
+    }
+    setSearchParams(params);
+  }, [debouncedSearch, searchParamValue, setSearchParams]);
+
+  useEffect(() => {
+    setSearch(searchParamValue);
+    setDebouncedSearch(searchParamValue);
+  }, [searchParamValue]);
 
   const handleClearSearch = () => {
     setSearch('');
@@ -141,6 +163,7 @@ const Users = () => {
                     page={page}
                     totalPages={totalPages}
                     className="users__layout-usersList-pagination"
+                    searchQuery={searchParamValue || undefined}
                   />
                 )}
               </>

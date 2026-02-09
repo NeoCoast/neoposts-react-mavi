@@ -10,11 +10,20 @@ type PaginationProps = {
   page: number;
   totalPages: number;
   className?: string;
+  searchQuery?: string;
 };
 
-const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className }) => {
-  const prevPage = page > 1 ? `?page=${page - 1}` : '';
-  const nextPage = page < totalPages ? `?page=${page + 1}` : '';
+const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, searchQuery }) => {
+  const buildQuery = (targetPage: number) => {
+    const params = new URLSearchParams({ page: `${targetPage}` });
+    if (searchQuery) {
+      params.set('search', searchQuery);
+    }
+    return `?${params.toString()}`;
+  };
+
+  const prevPage = page > 1 ? buildQuery(page - 1) : '';
+  const nextPage = page < totalPages ? buildQuery(page + 1) : '';
 
   return (
     <div className={['pagination', className].filter(Boolean).join(' ')}>
