@@ -11,6 +11,10 @@
     &__btn {
       padding: 6px 10px;
       font-size: 13px;
+
+      :disabled {
+        pointer-events: none;
+      }
     }
   }
 }

@@ -39,6 +39,7 @@ const SearchInput = ({
       {!!value && (
         <div>
           <Button
+            variant='icon'
             className="search_input-cross"
             onClick={onClear}
             title={<RxCross1 />}

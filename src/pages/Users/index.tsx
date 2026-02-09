@@ -19,9 +19,9 @@ import './styles.scss';
 const PER_PAGE_DEFAULT = 25;
 
 const Users = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
   const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -140,7 +140,7 @@ const Users = () => {
                   <Pagination
                     page={page}
                     totalPages={totalPages}
-                    setSearchParams={setSearchParams}
+                    className="users__layout-usersList-pagination"
                   />
                 )}
               </>
