@@ -77,7 +77,8 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
           onClick={() => {
             reset();
             closeModal();
-          }} title="X"
+          }}
+          title="X"
         />
       </div>
 

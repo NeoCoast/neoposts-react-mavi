@@ -16,9 +16,11 @@ type PaginationProps = {
 const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, searchQuery }) => {
   const buildQuery = (targetPage: number) => {
     const params = new URLSearchParams({ page: `${targetPage}` });
+
     if (searchQuery) {
       params.set('search', searchQuery);
     }
+
     return `?${params.toString()}`;
   };
 

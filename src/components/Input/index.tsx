@@ -4,9 +4,9 @@ import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import type { IconType } from 'react-icons';
 
 import { InputProps } from '@/ts/interfaces';
+import Button from '@/components/Button';
 
 import './styles.scss';
-import Button from '../Button';
 
 const Input: React.FC<InputProps> = ({
   inputName,
