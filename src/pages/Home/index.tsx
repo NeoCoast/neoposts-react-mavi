@@ -14,20 +14,36 @@ const Home = () => {
   const isAuthenticated = Boolean(localStorage.getItem('access-token'));
 
   const [page, setPage] = useState(1);
+  const [pageError, setPageError] = useState<string | null>(null);
   const [allPosts, setAllPosts] = useState<any[]>([]);
 
-  const { data, isLoading, isFetching, error } = useGetFeedQuery(
+  const {
+    data,
+    isLoading,
+    isFetching,
+    error,
+    refetch,
+  } = useGetFeedQuery(
     { page },
     { skip: !isAuthenticated }
   );
+
+  useEffect(() => {
+    if (error) {
+      setPageError(
+        (error as ApiErrorResponse)?.data?.message ??
+        'Something went wrong while loading more posts.'
+      );
+    } else {
+      setPageError(null);
+    }
+  }, [error]);
 
   useEffect(() => {
     if (data?.posts) {
       setAllPosts((prev) => [...prev, ...data.posts]);
     }
   }, [data]);
-
-  const hasMore = Boolean(data?.pagination?.nextPage);
 
   const fetchMore = () => {
     if (isFetching || !data?.pagination?.nextPage) return;
@@ -36,6 +52,13 @@ const Home = () => {
       setPage(data.pagination.nextPage);
     }, 800);
   };
+
+  const retryFetch = () => {
+    setPageError(null);
+    refetch();
+  };
+
+  const hasMore = Boolean(data?.pagination?.nextPage);
 
   const loadedCount = allPosts.length;
   const totalCount = data?.pagination?.totalCount;
@@ -82,6 +105,8 @@ const Home = () => {
               hasMore={hasMore}
               loadedCount={loadedCount}
               totalCount={totalCount}
+              pageError={pageError}
+              onRetry={retryFetch}
             />
           )}
         </div>

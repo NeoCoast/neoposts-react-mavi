@@ -4,6 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Post from '@/components/Post';
 import AuthorDetails from '@/components/Post/AuthorDetails';
+import Button from '@/components/Button';
 
 import type { PostsListProps } from '@/ts/interfaces';
 
@@ -15,6 +16,8 @@ const PostsList = ({
   hasMore,
   loadedCount,
   totalCount,
+  pageError,
+  onRetry,
 }: PostsListProps) => {
 
   return (
@@ -54,6 +57,17 @@ const PostsList = ({
             </Link>
           </article>
         ))}
+        {pageError && (
+          <div className="posts__list-error">
+            <p>{pageError}</p>
+            <Button
+              variant="primary"
+              className="posts__list-retry"
+              onClick={onRetry}
+              title="Retry"
+            />
+          </div>
+        )}
         {totalCount && (
           <div className="posts__list-progress">
             {loadedCount} / {totalCount} posts loaded

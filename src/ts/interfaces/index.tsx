@@ -79,6 +79,8 @@ export interface PostsListProps {
   hasMore: boolean;
   loadedCount: number;
   totalCount?: number;
+  pageError?: string | null;
+  onRetry?: () => void;
 }
 
 export interface AuthorDetailsProps {
