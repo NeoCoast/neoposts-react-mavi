@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Oval } from 'react-loader-spinner';
 
 import Navbar from '@/components/Navbar';
@@ -12,9 +13,29 @@ import './styles.scss';
 const Home = () => {
   const isAuthenticated = Boolean(localStorage.getItem('access-token'));
 
-  const { data, isLoading, error } = useGetFeedQuery(undefined, {
-    skip: !isAuthenticated,
-  });
+  const [page, setPage] = useState(1);
+  const [allPosts, setAllPosts] = useState<any[]>([]);
+
+  const { data, isLoading, error } = useGetFeedQuery(
+    { page },
+    { skip: !isAuthenticated }
+  );
+
+  useEffect(() => {
+    if (data?.posts) {
+      setAllPosts((prev) => [...prev, ...data.posts]);
+    }
+  }, [data]);
+
+  const hasMore = Boolean(data?.pagination?.nextPage);
+
+  const fetchMore = () => {
+    if (isLoading || !data?.pagination?.nextPage) return;
+
+    setTimeout(() => {
+      setPage(data.pagination.nextPage);
+    }, 800);
+  };
 
   const posts = data?.posts ?? [];
 
@@ -54,7 +75,11 @@ const Home = () => {
           )}
 
           {!isLoading && !error && posts.length > 0 && (
-            <PostsList items={posts} />
+            <PostsList
+              items={allPosts}
+              fetchMore={fetchMore}
+              hasMore={hasMore}
+            />
           )}
         </div>
       </div>

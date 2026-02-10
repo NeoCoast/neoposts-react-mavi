@@ -75,6 +75,8 @@ export interface PostProps {
 
 export interface PostsListProps {
   items: PostListItem[];
+  fetchMore: () => void;
+  hasMore: boolean;
 }
 
 export interface AuthorDetailsProps {

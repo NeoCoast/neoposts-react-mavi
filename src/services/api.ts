@@ -31,7 +31,13 @@ export const api = createApi({
       providesTags: ['Post'],
     }),
     getFeed: builder.query({
-      query: () => 'feed',
+      query: (params?: { page?: number; per_page?: number }) => {
+        const queryParams = new URLSearchParams();
+        if (params?.page) queryParams.append('page', String(params.page));
+        if (params?.per_page) queryParams.append('per_page', String(params.per_page));
+        const queryString = queryParams.toString();
+        return queryString ? `feed?${queryString}` : 'feed';
+      },
       providesTags: ['Post'],
     }),
     getMe: builder.query<any, void>({
