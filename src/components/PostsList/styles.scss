@@ -70,4 +70,9 @@
     justify-content: center;
     padding: 16px 0;
   }
+
+  &-error {
+    text-align: center;
+    color: $color-error;
+  }
 }

@@ -62,7 +62,6 @@ const PostsList = ({
             <p>{pageError}</p>
             <Button
               variant="primary"
-              className="posts__list-retry"
               onClick={onRetry}
               title="Retry"
             />

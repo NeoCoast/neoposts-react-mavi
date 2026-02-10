@@ -80,7 +80,7 @@ export interface PostsListProps {
   loadedCount: number;
   totalCount?: number;
   pageError?: string | null;
-  onRetry?: () => void;
+  onRetry: () => void;
 }
 
 export interface AuthorDetailsProps {
