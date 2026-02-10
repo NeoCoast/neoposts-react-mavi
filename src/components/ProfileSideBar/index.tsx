@@ -8,7 +8,7 @@ import Button from '@/components/Button';
 import LogOut from '@/components/LogOut';
 import CreatePostModal from '@/components/CreatePostModal';
 import { AppDispatch, RootState } from '@/services/store';
-import { openCreatePostModal, closeCreatePostModal } from '@/utils/sideBarSlice';
+import { openCreatePostModal, closeCreatePostModal } from '@/utils/uiSlice';
 
 import './styles.scss';
 

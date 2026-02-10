@@ -171,5 +171,4 @@ export interface SearchBarProps {
   wrapperClass?: string;
   debouncedSearch?: string;
   setDebouncedSearch?: (value: string) => void;
-  setSearchParams?: (page: string) => void;
 }

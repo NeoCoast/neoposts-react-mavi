@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { api } from './api';
-import uiReducer from '@/utils/sideBarSlice';
+import uiReducer from '@/utils/uiSlice';
 
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>

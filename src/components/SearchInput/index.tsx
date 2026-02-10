@@ -43,6 +43,7 @@ const SearchInput = ({
             className="search_input-cross"
             onClick={onClear}
             title={<RxCross1 />}
+            aria-label="Clear search"
           />
         </div>
       )}

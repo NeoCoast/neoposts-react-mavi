@@ -27,15 +27,17 @@ const Users = () => {
   const [search, setSearch] = useState(() => searchParamValue);
   const [debouncedSearch, setDebouncedSearch] = useState(() => searchParamValue);
 
-  const page = (() => {
-    const raw = searchParams.get('page') || '1';
-    const parsed = parseInt(raw, 10);
-    const isInvalid = Number.isNaN(parsed) || parsed < 1;
-    if (isInvalid) {
+  const rawPageParam = searchParams.get('page');
+  const rawPage = rawPageParam || '1';
+  const parsedPage = parseInt(rawPage, 10);
+  const isPageInvalid = Number.isNaN(parsedPage) || parsedPage < 1;
+  const page = isPageInvalid ? 1 : parsedPage;
+
+  useEffect(() => {
+    if (isPageInvalid) {
       setSearchParams({ page: '1' });
     }
-    return isInvalid ? 1 : parsed;
-  })();
+  }, [isPageInvalid, setSearchParams, searchParams]);
 
   const { data, error, isLoading, refetch } = useGetUsersQuery({
     search: debouncedSearch || undefined,

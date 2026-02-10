@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
 

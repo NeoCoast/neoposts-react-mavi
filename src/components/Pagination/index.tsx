@@ -16,9 +16,11 @@ type PaginationProps = {
 const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, searchQuery }) => {
   const buildQuery = (targetPage: number) => {
     const params = new URLSearchParams({ page: `${targetPage}` });
+
     if (searchQuery) {
       params.set('search', searchQuery);
     }
+
     return `?${params.toString()}`;
   };
 
@@ -28,25 +30,40 @@ const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, se
   return (
     <div className={['pagination', className].filter(Boolean).join(' ')}>
 
-      <Link to={prevPage} aria-disabled={page <= 1}>
+      {page > 1 ? (
+        <Link to={prevPage}>
+          <Button
+            className="pagination__btn"
+            title={<IoIosArrowBack />}
+          />
+        </Link>
+      ) : (
         <Button
           className="pagination__btn"
-          disabled={page <= 1}
+          disabled
           title={<IoIosArrowBack />}
         />
-      </Link>
+      )}
 
       <span className="pagination__info">
         Page {page} of {totalPages}
       </span>
 
-      <Link to={nextPage} aria-disabled={page >= totalPages}>
+      {page < totalPages ? (
+        <Link to={nextPage}>
+          <Button
+            className="pagination__btn"
+            title={<IoIosArrowForward />}
+          />
+        </Link>
+      ) : (
         <Button
           className="pagination__btn"
-          disabled={page >= totalPages}
+          disabled
           title={<IoIosArrowForward />}
         />
-      </Link>
+      )}
+
     </div>
   );
 };

@@ -1,8 +1,8 @@
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RootState, AppDispatch } from '@/services/store';
-import { openMobileMenu, closeMobileMenu } from '@/utils/sideBarSlice';
+import { openMobileMenu, closeMobileMenu } from '@/utils/uiSlice';
 import { GoPeople } from 'react-icons/go';
 import { RxHamburgerMenu } from "react-icons/rx";
 

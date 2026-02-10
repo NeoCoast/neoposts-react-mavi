@@ -5,6 +5,7 @@ import PostTitle from '@/components/PostTitle';
 import PostContent from '@/components/PostContent';
 import PostFooter from '@/components/PostFooter';
 import CommentComponent from '@/components/Comment';
+import Button from '@/components/Button';
 
 import { PostComment, PostListItem } from '@/ts/interfaces';
 import { getFullName } from '@/utils/postUtils';
@@ -12,7 +13,6 @@ import { getFullName } from '@/utils/postUtils';
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 
 import './styles.scss';
-import Button from '../Button';
 
 type PostDetailCardProps = {
   post: PostListItem;

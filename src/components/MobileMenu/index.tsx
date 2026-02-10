@@ -5,10 +5,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 import UserBar from '@/components/UserBar';
+import Button from '@/components/Button';
 import { ROUTES } from '@/constants/routes';
 
 import './styles.scss';
-import Button from '../Button';
 
 const neoPostIcon = new URL('@/assets/Icons/NeoPost.svg', import.meta.url).href;
 
@@ -40,6 +40,7 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
           <Button
             variant="icon"
             className="mobileMenu__panel-header-close"
+            aria-label="Close menu"
             title={<span className="mobileMenu__panel-header-close-icon">✕</span>}
             onClick={onClose}
           />

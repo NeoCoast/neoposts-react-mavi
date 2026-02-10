@@ -11,7 +11,7 @@ const initialState: UIState = {
 };
 
 const uiSlice = createSlice({
-  name: 'ui',
+  name: 'uiSlice',
   initialState,
   reducers: {
     openMobileMenu(state) {
@@ -37,4 +37,5 @@ export const {
   openCreatePostModal,
   closeCreatePostModal,
 } = uiSlice.actions;
+
 export default uiSlice.reducer;

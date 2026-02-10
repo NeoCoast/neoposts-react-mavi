@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import Modal from 'react-modal';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -36,8 +37,11 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
   const [createPost, { isLoading }] = useCreatePostMutation();
 
   const titleValue = watch('title') || '';
-  const titleLength = titleValue.length;
-  const isTitleTooLong = titleLength > 100;
+
+  const { titleLength, isTitleTooLong } = useMemo(() => ({
+    titleLength: titleValue.length,
+    isTitleTooLong: titleValue.length > 100,
+  }), [titleValue]);
 
   const onSubmit = async (info: CreatePostFormData) => {
     try {
@@ -77,7 +81,8 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
           onClick={() => {
             reset();
             closeModal();
-          }} title="X"
+          }}
+          title="X"
         />
       </div>
 
