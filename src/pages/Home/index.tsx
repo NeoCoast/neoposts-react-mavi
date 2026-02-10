@@ -16,7 +16,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState<any[]>([]);
 
-  const { data, isLoading, error } = useGetFeedQuery(
+  const { data, isLoading, isFetching, error } = useGetFeedQuery(
     { page },
     { skip: !isAuthenticated }
   );
@@ -30,7 +30,7 @@ const Home = () => {
   const hasMore = Boolean(data?.pagination?.nextPage);
 
   const fetchMore = () => {
-    if (isLoading || !data?.pagination?.nextPage) return;
+    if (isFetching || !data?.pagination?.nextPage) return;
 
     setTimeout(() => {
       setPage(data.pagination.nextPage);
