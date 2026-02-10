@@ -15,6 +15,13 @@
     color: $title-color;
   }
 
+  &-progress {
+    text-align: center;
+    font-size: 0.85rem;
+    color: $color-text-muted;
+    margin-bottom: 8px;
+  }
+
   &-item {
     display: flex;
     flex-direction: column;

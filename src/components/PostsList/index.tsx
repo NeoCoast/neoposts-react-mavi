@@ -9,8 +9,13 @@ import type { PostsListProps } from '@/ts/interfaces';
 
 import './styles.scss';
 
-const PostsList = ({ items, fetchMore,
-  hasMore, }: PostsListProps) => {
+const PostsList = ({
+  items,
+  fetchMore,
+  hasMore,
+  loadedCount,
+  totalCount,
+}: PostsListProps) => {
 
   return (
     <div className="posts__list">
@@ -49,6 +54,11 @@ const PostsList = ({ items, fetchMore,
             </Link>
           </article>
         ))}
+        {totalCount && (
+          <div className="posts__list-progress">
+            {loadedCount} / {totalCount} posts loaded
+          </div>
+        )}
       </InfiniteScroll>
     </div >
   );

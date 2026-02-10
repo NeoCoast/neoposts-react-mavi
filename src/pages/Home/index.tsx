@@ -37,7 +37,8 @@ const Home = () => {
     }, 800);
   };
 
-  const posts = data?.posts ?? [];
+  const loadedCount = allPosts.length;
+  const totalCount = data?.pagination?.totalCount;
 
   return (
     <div className="home">
@@ -68,17 +69,19 @@ const Home = () => {
             </div>
           )}
 
-          {!isLoading && !error && posts.length === 0 && (
+          {!isLoading && !error && allPosts.length === 0 && (
             <div className="home__layout-postsList-empty">
               No posts yet.
             </div>
           )}
 
-          {!isLoading && !error && posts.length > 0 && (
+          {!isLoading && !error && allPosts.length > 0 && (
             <PostsList
               items={allPosts}
               fetchMore={fetchMore}
               hasMore={hasMore}
+              loadedCount={loadedCount}
+              totalCount={totalCount}
             />
           )}
         </div>
