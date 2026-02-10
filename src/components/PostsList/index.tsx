@@ -39,7 +39,7 @@ const PostsList = ({
           </div>
         }
         endMessage={
-          <p style={{ textAlign: 'center' }}>
+          <p className="posts__list-infiniteScroll-endMessage">
             <b>Yay! You have seen it all</b>
           </p>
         }
@@ -74,7 +74,7 @@ const PostsList = ({
           </div>
         )}
       </InfiniteScroll>
-    </div >
+    </div>
   );
 };
 

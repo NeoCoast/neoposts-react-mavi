@@ -7,6 +7,7 @@ import PostsList from '@/components/PostsList';
 
 import { useGetFeedQuery } from '@/services/api';
 import { ApiErrorResponse } from '@/ts/types/errors';
+import { PostListItem } from '@/ts/interfaces';
 
 import './styles.scss';
 
@@ -15,7 +16,7 @@ const Home = () => {
 
   const [page, setPage] = useState(1);
   const [pageError, setPageError] = useState<string | null>(null);
-  const [allPosts, setAllPosts] = useState<any[]>([]);
+  const [allPosts, setAllPosts] = useState<PostListItem[]>([]);
 
   const {
     data,
@@ -24,7 +25,7 @@ const Home = () => {
     error,
     refetch,
   } = useGetFeedQuery(
-    { page },
+    { page, per_page: 25 },
     { skip: !isAuthenticated }
   );
 
@@ -42,6 +43,8 @@ const Home = () => {
   useEffect(() => {
     if (data?.posts) {
       setAllPosts((prev) => [...prev, ...data.posts]);
+    } else if (page === 1) {
+      setAllPosts([]);
     }
   }, [data]);
 
