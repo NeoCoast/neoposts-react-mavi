@@ -57,22 +57,22 @@ const PostsList = ({
             </Link>
           </article>
         ))}
-        {pageError && (
-          <div className="posts__list-error">
-            <p>{pageError}</p>
-            <Button
-              variant="primary"
-              onClick={onRetry}
-              title="Retry"
-            />
-          </div>
-        )}
-        {totalCount && (
-          <div className="posts__list-progress">
-            {loadedCount} / {totalCount} posts loaded
-          </div>
-        )}
       </InfiniteScroll>
+      {pageError && (
+        <div className="posts__list-error">
+          <p>{pageError}</p>
+          <Button
+            variant="primary"
+            onClick={onRetry}
+            title="Retry"
+          />
+        </div>
+      )}
+      {totalCount && (
+        <div className="posts__list-progress">
+          {loadedCount} / {totalCount} posts loaded
+        </div>
+      )}
     </div>
   );
 };
