@@ -1,8 +1,9 @@
+import { useMemo } from 'react';
 import Modal from 'react-modal';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { FiSave } from 'react-icons/fi';
+import cn from 'classnames';
 
 import { useCreatePostMutation } from '@/services/api';
 import { createPostSchema } from '@/utils/validationSchemas';
@@ -26,7 +27,8 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
     register,
     handleSubmit,
     reset,
-    formState: { isValid },
+    watch,
+    formState: { isValid, errors },
   } = useForm<CreatePostFormData>({
     mode: 'onChange',
     resolver: zodResolver(createPostSchema),
@@ -34,9 +36,16 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
 
   const [createPost, { isLoading }] = useCreatePostMutation();
 
+  const titleValue = watch('title') || '';
+
+  const { titleLength, isTitleTooLong } = useMemo(() => ({
+    titleLength: titleValue.length,
+    isTitleTooLong: titleValue.length > 100,
+  }), [titleValue]);
+
   const onSubmit = async (info: CreatePostFormData) => {
     try {
-      await createPost(info);
+      await createPost(info).unwrap();
 
       reset();
       closeModal();
@@ -65,16 +74,16 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
           />
           <span className="modal__header-top-title">New Post</span>
         </div>
-
-        <button
+        <Button
+          type="button"
+          variant="icon"
           className="modal__header-close"
           onClick={() => {
             reset();
             closeModal();
           }}
-        >
-          &times;
-        </button>
+          title="X"
+        />
       </div>
 
       <div className="modal__main">
@@ -86,9 +95,18 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
             inputName="title"
             register={register}
             required
+            errors={isTitleTooLong ? { message: 'Title cannot exceed 100 characters' } : errors?.title}
             className="modal__main-content-input"
             placeholder="Title"
           />
+
+          <div
+            className={cn('modal__main-content-title-counter', {
+              'modal__main-content-title-counter--error': isTitleTooLong,
+            })}
+          >
+            {titleLength}/100
+          </div>
 
           <TextArea
             inputName="body"
@@ -99,15 +117,14 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
           />
 
           <div className="modal__main-content-post">
-            <FiSave className="modal__icon" />
 
             <Button
               type="submit"
               title="Post"
               loading={isLoading}
-              disabled={!isValid}
+              disabled={!isValid || isTitleTooLong}
               className="modal__main-content-post-btn"
-              variant="submit"
+              variant="primary"
             />
           </div>
         </form>

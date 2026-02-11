@@ -6,6 +6,7 @@ import { ROUTES } from '@/constants/routes';
 import { api, useLogOutMutation } from '@/services/api';
 import { clearAuthTokens } from '@/utils/responseHeaderHandler';
 import { notify } from '@/components/Toaster/notify';
+import Button from '@/components/Button';
 
 import './styles.scss';
 
@@ -29,15 +30,18 @@ const LogOut = () => {
   };
 
   return (
-    <button
+    <Button
       onClick={handleLogout}
-      className="btn-logout"
-      aria-label="Log out"
+      loading={isLoading}
       disabled={isLoading}
-      aria-busy={isLoading}
-    >
-      <MdLogout /> Sign Out
-    </button>
+      title={
+        <>
+          <MdLogout />
+          <span>Sign Out</span>
+        </>
+      }
+      className="btn-logout"
+    />
   );
 };
 

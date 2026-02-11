@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 
-import { useGetPostsQuery } from '@/services/api';
+import { useGetPostQuery } from '@/services/api';
 import { PostComment, PostListItem } from '@/ts/interfaces';
 import {
-  extractPosts,
   formatDate,
   getComments,
   getCommentsCount,
@@ -12,7 +11,7 @@ import {
 } from '@/utils/postUtils';
 
 type UsePostDetailDataParams = {
-  id: string;
+  id: number;
   postFromState?: PostListItem | null;
 };
 
@@ -25,41 +24,33 @@ const buildDefaultDetails = () => ({
   publishedAtRaw: '',
 });
 
-const usePostDetailData = ({ id, postFromState }: UsePostDetailDataParams) => {
-  const shouldSkipQuery = Boolean(postFromState);
+const usePostDetailData = ({ id }: UsePostDetailDataParams) => {
   const {
-    data: postsData,
+    data: postData,
     isLoading: queryLoading,
     error: queryError,
-  } = useGetPostsQuery(undefined, { skip: shouldSkipQuery });
-
-  const post = useMemo(() => {
-    if (postFromState) return postFromState;
-
-    const list = extractPosts(postsData);
-    return list.find((item) => String(item.id) === String(id));
-  }, [id, postFromState, postsData]);
+  } = useGetPostQuery(id, {});
 
   const details = useMemo(() => {
-    if (!post) return buildDefaultDetails();
+    if (!postData) return buildDefaultDetails();
 
-    const normalizedComments = getComments(post);
+    const normalizedComments = getComments(postData);
 
     return {
-      content: getPostContent(post),
-      likesCount: getLikesCount(post),
+      content: getPostContent(postData),
+      likesCount: getLikesCount(postData),
       comments: normalizedComments,
-      commentsCount: getCommentsCount(post, normalizedComments),
-      publishedAt: formatDate(post.publishedAt),
-      publishedAtRaw: post.publishedAt ?? '',
+      commentsCount: getCommentsCount(postData, normalizedComments),
+      publishedAt: formatDate(postData.publishedAt),
+      publishedAtRaw: postData.publishedAt ?? '',
     };
-  }, [post]);
+  }, [postData]);
 
-  const isLoading = queryLoading && !postFromState;
-  const hasError = Boolean(queryError) && !postFromState;
+  const isLoading = queryLoading;
+  const hasError = Boolean(queryError);
 
   return {
-    post: post ?? null,
+    post: postData ?? null,
     ...details,
     isLoading,
     hasError,

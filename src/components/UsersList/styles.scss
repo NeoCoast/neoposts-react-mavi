@@ -70,4 +70,20 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &-follow-button {
+    padding-inline: 14px;
+    min-width: 120px;
+    height: 34px;
+
+    svg {
+      font-size: 16px;
+    }
+
+    @include mobile {
+      width: 95%;
+      height: 40px;
+      font-size: 14px;
+    }
+  }
 }

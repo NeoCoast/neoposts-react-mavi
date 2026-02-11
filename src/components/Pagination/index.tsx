@@ -1,5 +1,6 @@
 import React from 'react';
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { Link } from 'react-router-dom';
 
 import Button from '@/components/Button';
 
@@ -9,37 +10,60 @@ type PaginationProps = {
   page: number;
   totalPages: number;
   className?: string;
-  setPage: (page: number) => void;
+  searchQuery?: string;
 };
 
-const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, setPage }) => {
-  const handlePrevPage = () => {
-    if (page > 1) setPage(page - 1);
+const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, searchQuery }) => {
+  const buildQuery = (targetPage: number) => {
+    const params = new URLSearchParams({ page: `${targetPage}` });
+
+    if (searchQuery) {
+      params.set('search', searchQuery);
+    }
+
+    return `?${params.toString()}`;
   };
 
-  const handleNextPage = () => {
-    if (page < totalPages) setPage(page + 1);
-  };
+  const prevPage = page > 1 ? buildQuery(page - 1) : '';
+  const nextPage = page < totalPages ? buildQuery(page + 1) : '';
 
   return (
     <div className={['pagination', className].filter(Boolean).join(' ')}>
-      <Button
-        type="button"
-        className="pagination__btn"
-        onClick={handlePrevPage}
-        disabled={page <= 1}
-        title={<IoIosArrowBack />}
-      />
+
+      {page > 1 ? (
+        <Link to={prevPage}>
+          <Button
+            className="pagination__btn"
+            title={<IoIosArrowBack />}
+          />
+        </Link>
+      ) : (
+        <Button
+          className="pagination__btn"
+          disabled
+          title={<IoIosArrowBack />}
+        />
+      )}
+
       <span className="pagination__info">
         Page {page} of {totalPages}
       </span>
-      <Button
-        type="button"
-        className="pagination__btn"
-        onClick={handleNextPage}
-        disabled={page >= totalPages}
-        title={<IoIosArrowForward />}
-      />
+
+      {page < totalPages ? (
+        <Link to={nextPage}>
+          <Button
+            className="pagination__btn"
+            title={<IoIosArrowForward />}
+          />
+        </Link>
+      ) : (
+        <Button
+          className="pagination__btn"
+          disabled
+          title={<IoIosArrowForward />}
+        />
+      )}
+
     </div>
   );
 };

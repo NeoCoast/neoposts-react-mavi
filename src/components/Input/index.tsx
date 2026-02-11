@@ -4,6 +4,7 @@ import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
 import type { IconType } from 'react-icons';
 
 import { InputProps } from '@/ts/interfaces';
+import Button from '@/components/Button';
 
 import './styles.scss';
 
@@ -42,19 +43,20 @@ const Input: React.FC<InputProps> = ({
         spellCheck={false}
       />
       {type === 'password' && (
-        <button
-          type="button"
-          className="input__password-toggle"
+        <Button
+          variant="icon"
           onClick={() => setShowPassword((show) => !show)}
           aria-label={showPassword ? 'Hide password' : 'Show password'}
           aria-pressed={showPassword}
-        >
-          <Icon
-            className="input__password-eye"
-            aria-hidden="true"
-            focusable="false"
-          />
-        </button>
+          title={(
+            <Icon
+              className="input__password-eye"
+              aria-hidden="true"
+              focusable="false"
+            />
+          )}
+          className="input__password-toggle"
+        />
       )}
       <div className={errors ? 'input__error' : 'input__error--hidden'}>{errors?.message as string}</div>
     </div>

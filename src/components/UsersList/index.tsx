@@ -35,7 +35,8 @@ const UsersList: FC<{ users: User[] }> = ({ users }) => {
               title={
                 followed ? (<><BsPersonCheck /> Following</>)
                   : (<><GoPersonAdd /> Follow</>)}
-              className={cn('users_list-follow-button', { 'users_list-follow-button--active': followed })}
+              className="users_list-follow-button"
+              variant={followed ? 'secondary' : 'primary'}
             />
           )}
         </div>

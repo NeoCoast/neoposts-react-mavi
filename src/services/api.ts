@@ -64,9 +64,6 @@ export const api = createApi({
       query: ({ name, email, password, confirmPassword }) => ({
         url: 'users',
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: {
           name,
           email,
@@ -74,7 +71,17 @@ export const api = createApi({
           password_confirmation: confirmPassword,
         },
       }),
-      invalidatesTags: ['User'],
+      transformResponse: (response: any, meta) => {
+        const headers = ['uid', 'access-token', 'client', 'expiry'].reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: meta?.response?.headers?.get(key),
+          }),
+          {}
+        );
+
+        return { data: response, headers };
+      },
     }),
     createPost: builder.mutation({
       query: (body) => ({
@@ -84,11 +91,18 @@ export const api = createApi({
       }),
       invalidatesTags: ['Post'],
     }),
+    getPost: builder.query({
+      query: (id: number) => ({
+        url: `posts/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Post'],
+    }),
     getUsers: builder.query<{ users: User[]; meta?: { current_page?: number; total_pages?: number; total_count?: number } }, { search?: string; page?: number; per_page?: number } | void>({
       providesTags: ['User'],
       query: (params) => {
         const queryParams = new URLSearchParams();
-        
+
         if (params?.search) queryParams.append('search', params.search);
         if (params?.page) queryParams.append('page', String(params.page));
         if (params?.per_page) queryParams.append('per_page', String(params.per_page));
@@ -106,6 +120,7 @@ export const api = createApi({
 
 export const {
   useGetPostsQuery,
+  useGetPostQuery,
   useGetFeedQuery,
   useGetMeQuery,
   useLogOutMutation,

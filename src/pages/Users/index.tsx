@@ -1,5 +1,5 @@
-import { useState, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, ChangeEvent } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import { Oval } from 'react-loader-spinner';
 
@@ -21,9 +21,23 @@ const PER_PAGE_DEFAULT = 25;
 const Users = () => {
   const navigate = useNavigate();
 
-  const [search, setSearch] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState('');
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParamValue = searchParams.get('search') ?? '';
+
+  const [search, setSearch] = useState(() => searchParamValue);
+  const [debouncedSearch, setDebouncedSearch] = useState(() => searchParamValue);
+
+  const rawPageParam = searchParams.get('page');
+  const rawPage = rawPageParam || '1';
+  const parsedPage = parseInt(rawPage, 10);
+  const isPageInvalid = Number.isNaN(parsedPage) || parsedPage < 1;
+  const page = isPageInvalid ? 1 : parsedPage;
+
+  useEffect(() => {
+    if (isPageInvalid) {
+      setSearchParams({ page: '1' });
+    }
+  }, [isPageInvalid, setSearchParams, searchParams]);
 
   const { data, error, isLoading, refetch } = useGetUsersQuery({
     search: debouncedSearch || undefined,
@@ -40,10 +54,39 @@ const Users = () => {
   const endIndex = startIndex + PER_PAGE_DEFAULT;
   const displayedUsers = users.slice(startIndex, endIndex);
 
+  const isValidPage = page >= 1 && page <= totalPages;
+
+  useEffect(() => {
+    if (!isValidPage && data) {
+      const params: Record<string, string> = { page: '1' };
+      if (searchParamValue) {
+        params.search = searchParamValue;
+      }
+      setSearchParams(params);
+    }
+  }, [page, totalPages, setSearchParams, isValidPage, data, searchParamValue]);
+
+  useEffect(() => {
+    if (debouncedSearch === searchParamValue) {
+      return;
+    }
+
+    const params: Record<string, string> = { page: '1' };
+    if (debouncedSearch) {
+      params.search = debouncedSearch;
+    }
+    setSearchParams(params);
+  }, [debouncedSearch, searchParamValue, setSearchParams]);
+
+  useEffect(() => {
+    setSearch(searchParamValue);
+    setDebouncedSearch(searchParamValue);
+  }, [searchParamValue]);
+
   const handleClearSearch = () => {
     setSearch('');
     setDebouncedSearch('');
-    setPage(1);
+    setSearchParams({ page: '1' });
   };
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,11 +104,16 @@ const Users = () => {
           <div className="users__layout-usersList-card">
             <div className="users__layout-usersList-header">
               <div className="users__layout-usersList-header-back">
-                <IoIosArrowBack />
                 <Button
+                  variant='icon'
                   className="users__layout-usersList-header-button"
                   onClick={() => navigate(ROUTES.HOME)}
-                  title=" Back"
+                  title={
+                    <>
+                      <IoIosArrowBack />
+                      <span>Back</span>
+                    </>
+                  }
                 />
               </div>
               <h2>Users</h2>
@@ -79,9 +127,7 @@ const Users = () => {
               ariaLabel="Search users"
               inputName="searchUsers"
               wrapperClass="users__layout-usersList-search"
-              debouncedSearch={debouncedSearch}
               setDebouncedSearch={setDebouncedSearch}
-              setPage={setPage}
             />
 
             {isLoading && (
@@ -118,7 +164,8 @@ const Users = () => {
                   <Pagination
                     page={page}
                     totalPages={totalPages}
-                    setPage={setPage}
+                    className="users__layout-usersList-pagination"
+                    searchQuery={searchParamValue || undefined}
                   />
                 )}
               </>

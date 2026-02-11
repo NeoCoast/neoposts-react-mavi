@@ -6,7 +6,7 @@ import './styles.scss';
 
 type ButtonProps = {
   loading?: boolean;
-  variant?: string;
+  variant?: 'primary' | 'secondary' | 'icon';
   title: string | ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: 'button' | 'submit' | 'reset';
@@ -26,20 +26,25 @@ const Button: FC<ButtonProps> = ({
   <button
     onClick={onClick}
     type={type}
-    className={cn('btn', variant, className)}
+    className={cn('btn', className, {
+      'btn--loading': loading,
+      [`btn--${variant}`]: variant,
+    })}
     disabled={disabled || loading}
   >
-    {loading ? (
-      <ThreeDots
-        visible={true}
-        height="40"
-        width="40"
-        radius="9"
-        ariaLabel="three-dots-loading"
-      />
-    ) : (
-      title
-    )}
+    <span className="btn__content">
+      {loading ? (
+        <ThreeDots
+          height="35"
+          width="35"
+          radius="8"
+          ariaLabel="button-loading"
+          color="currentColor"
+        />
+      ) : (
+        title
+      )}
+    </span>
   </button>
 );
 

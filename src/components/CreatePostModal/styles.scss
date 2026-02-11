@@ -48,14 +48,11 @@
     }
 
     &-close {
-      width: 36px;
-      height: 36px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
       border: 2px solid $color-text;
-      background: transparent;
-      font-size: 20px;
       color: $color-text;
-      cursor: pointer;
     }
   }
 
@@ -67,7 +64,20 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 10px;
+
+      &-title-counter {
+        align-self: flex-end;
+        font-size: 14px;
+        color: $color-text-subtle;
+        margin-top: -20px;
+
+        &--error {
+          color: $color-error;
+          font-weight: 600;
+          font-size: 14px;
+        }
+      }
 
       &-input {
         width: 100%;
@@ -78,6 +88,10 @@
         font-size: 16px;
         color: $color-text;
         background: $color-white;
+      }
+
+      &-input--error {
+        border: 1px solid $color-error;
       }
 
       &-textarea {
@@ -96,9 +110,9 @@
       &-post {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-end;
         gap: 12px;
-        margin-top: 8px;
+        margin-top: auto;
 
         &-btn {
           padding: 12px 28px;

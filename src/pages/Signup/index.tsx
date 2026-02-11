@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import cn from 'classnames';
 
-import { notify } from '@/components/Toaster/notify';
 import { signupSchema } from '@/utils/validationSchemas';
+import { setResponseHeaders } from '@/utils/responseHeaderHandler';
 import { useSignupMutation } from '@/services/api';
 import { SignupFormData } from '@/ts/interfaces';
 import { ApiErrorResponse } from '@/ts/types/errors';
@@ -53,10 +52,10 @@ const Signup = () => {
 
   const onSubmit = async (formData: SignupFormData) => {
     try {
-      await signUp(formData).unwrap();
+      const response = await signUp(formData).unwrap();
 
-      notify.success('Successfully signed up!');
-      navigate(ROUTES.LOGIN, { replace: true });
+      setResponseHeaders(response.headers);
+      navigate(ROUTES.HOME, { replace: true });
     } catch (err: unknown) {
       const serverMessage = getApiErrorMessage(err);
       const errorField = getSignupErrorField(serverMessage);
@@ -125,24 +124,27 @@ const Signup = () => {
             <Button
               type="submit"
               title="Sign Up"
-              className={cn('form__btn', {
-                'signup__register-container-form-btnSignUp': isValid,
-                'signup__register-container-form-btnSignUp-disabled': !isValid,
-              })}
-              disabled={!isValid || isLoading}
+              loading={isLoading}
+              disabled={!isValid}
+              variant="primary"
+              className="signup__register-container-form-btnSignUp"
             />
 
             <div className="signup__register-container-form-separator">
               <hr className='signup__register-container-form-separator-line' /> <span>or</span> <hr className='signup__register-container-form-separator-line' />
             </div>
 
-            <button
-              type="button"
+            <Button
+              variant="secondary"
+              onClick={() => navigate(ROUTES.LOGIN)}
+              title={(
+                <>
+                  Already have an account?
+                  <span className="signup__register-container-form-btnLogin-span"> Log in</span>
+                </>
+              )}
               className="signup__register-container-form-btnLogin"
-              onClick={() => navigate(ROUTES.LOGIN)}>
-              Already have an account?
-              <span className="signup__register-container-form-btnLogin-span"> Log in</span>
-            </button>
+            />
           </form>
         </div>
       </div>

@@ -17,19 +17,13 @@ const SearchInput = ({
   ariaLabel = 'Search',
   inputName = 'search',
   wrapperClass,
-  debouncedSearch,
   setDebouncedSearch,
-  setPage,
 }: SearchBarProps) => {
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedSearch?.(value), 200);
     return () => clearTimeout(t);
   }, [value, setDebouncedSearch]);
-
-  useEffect(() => {
-    setPage?.(1);
-  }, [debouncedSearch, setPage]);
 
   return (
     <div className={cn('search_input', wrapperClass)}>
@@ -45,9 +39,11 @@ const SearchInput = ({
       {!!value && (
         <div>
           <Button
+            variant='icon'
             className="search_input-cross"
             onClick={onClear}
             title={<RxCross1 />}
+            aria-label="Clear search"
           />
         </div>
       )}

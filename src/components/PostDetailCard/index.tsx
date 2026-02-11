@@ -5,6 +5,7 @@ import PostTitle from '@/components/PostTitle';
 import PostContent from '@/components/PostContent';
 import PostFooter from '@/components/PostFooter';
 import CommentComponent from '@/components/Comment';
+import Button from '@/components/Button';
 
 import { PostComment, PostListItem } from '@/ts/interfaces';
 import { getFullName } from '@/utils/postUtils';
@@ -41,11 +42,18 @@ function PostDetailCard({
 
   return (
     <article className="post__detail-card">
-      <button type="button" className="post__detail-card-back" onClick={onBack}>
-        <IoIosArrowBack />
-        <span>Back</span>
-      </button>
-
+      <Button
+        variant='icon'
+        className="post__detail-card-back"
+        aria-label="Back"
+        onClick={onBack}
+        title={
+          <>
+            <IoIosArrowBack />
+            <span>Back</span>
+          </>
+        }
+      />
       <header className="post__detail-card-header">
         <img
           className="post__detail-card-header-avatar"

@@ -37,7 +37,7 @@ function PostDetail() {
 
   const handleBack = useCallback(() => {
     if (window.history.state && window.history.length > 1) {
-      navigate(-1);
+      navigate(ROUTES.HOME, { replace: true });
       return;
     }
     navigate(ROUTES.HOME);
@@ -67,7 +67,12 @@ function PostDetail() {
       return (
         <div className="post__detail-error">
           We couldn&apos;t load this post. Please try again later.
-        </div>
+          <Button
+            className="post__detail-empty-home"
+            title="Go to home"
+            onClick={handleGoHome}
+          />
+        </div >
       );
     }
 
@@ -110,5 +115,4 @@ function PostDetail() {
   );
 }
 
-export { PostDetail };
 export default PostDetail;

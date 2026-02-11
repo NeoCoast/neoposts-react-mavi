@@ -1,15 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import cn from 'classnames';
 
-import { notify } from '@/components/Toaster/notify';
-import { logInSchema } from '@/utils/validationSchemas';
 import { ROUTES } from '@/constants/routes';
 import { useLogInMutation } from '@/services/api';
 import { LoginFormData } from '@/ts/interfaces';
+import { logInSchema } from '@/utils/validationSchemas';
 import { setResponseHeaders } from '@/utils/responseHeaderHandler';
 
+import { notify } from '@/components/Toaster/notify';
 import Header from '@/components/Header';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
@@ -32,14 +31,11 @@ const LogIn = () => {
 
     if (response.error) {
       notify.error('Incorrect email or password. Please check your credentials.');
-      setValue('email', '');
       setValue('password', '');
       return;
     }
     const headers = response.data.headers;
     setResponseHeaders(headers);
-
-    notify.success('Successfully logged in!');
     navigate(ROUTES.HOME, { replace: true });
   };
 
@@ -55,7 +51,7 @@ const LogIn = () => {
           <form
             onSubmit={handleSubmit(onSubmit)}
             aria-label="Log in form"
-            className='login__register-container-form'
+            className="login__register-container-form"
           >
             <Input
               inputName="email"
@@ -76,23 +72,26 @@ const LogIn = () => {
             <Button
               type="submit"
               title="Log in"
-              className={cn('form__btn', {
-                'login__register-container-form-btnLogIn': isValid,
-                'login__register-container-form-btnLogIn-disabled': !isValid,
-              })}
-              disabled={!isValid || isLoading}
+              loading={isLoading}
+              disabled={!isValid}
+              className="login__register-container-form-btnLogin"
+              variant="primary"
             />
             <div className="login__register-container-form-separator">
               <hr className='login__register-container-form-separator-line' /> <span>or</span> <hr className='login__register-container-form-separator-line' />
             </div>
 
-            <button
-              type="button"
+            <Button
+              variant="secondary"
+              onClick={() => navigate(ROUTES.SIGNUP)}
+              title={(
+                <>
+                  Don&apos;t you have an account?
+                  <span className="login__register-container-form-btnSignup-span"> Sign up</span>
+                </>
+              )}
               className="login__register-container-form-btnSignup"
-              onClick={() => navigate(ROUTES.SIGNUP)}>
-              Don&apos;t you have an account?
-              <span className="login__register-container-form-btnSignup-span"> Sign up</span>
-            </button>
+            />
           </form>
         </div>
       </div>

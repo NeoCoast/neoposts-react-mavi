@@ -48,6 +48,10 @@
        width: 100%;
        gap: 30px;
 
+       &-btnLogin {
+         height: 50px;
+       }
+
        &-separator {
          display: flex;
          align-items: center;
@@ -66,25 +70,17 @@
 
        &-btnSignup {
          height: 50px;
-         padding: 10px;
-         background-color: transparent;
-         border: 1px solid $color-primary;
-         cursor: pointer;
          color: $color-text-muted;
-         font-weight: 300;
+         border: 1px solid $color-primary;
+         font-size: 14px;
 
          &-span {
            color: $title-color;
            font-weight: bold;
          }
 
-         &:hover {
-           border-color: $title-color;
-         }
-
-         &:focus-visible {
-           outline: 3px solid $title-color;
-           outline-offset: 2px;
+         &:hover{
+          color: $color-white;
          }
        }
      }

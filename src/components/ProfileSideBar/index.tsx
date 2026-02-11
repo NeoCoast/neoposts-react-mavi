@@ -1,12 +1,14 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { FaPlus } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { ProfileSideBarProps } from '@/ts/interfaces';
-
 import Button from '@/components/Button';
 import LogOut from '@/components/LogOut';
 import CreatePostModal from '@/components/CreatePostModal';
+import { AppDispatch, RootState } from '@/services/store';
+import { openCreatePostModal, closeCreatePostModal } from '@/utils/uiSlice';
 
 import './styles.scss';
 
@@ -18,8 +20,9 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
   following,
   followers
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  
+  const dispatch = useDispatch<AppDispatch>();
+  const isOpen = useSelector((state: RootState) => state.ui.createPostModalOpen);
+
   const stats = [
     { title: 'Posts', value: posts },
     { title: 'Following', value: following },
@@ -44,12 +47,14 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
               <span>New Post</span>
             </span>
           }
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            dispatch(openCreatePostModal());
+          }}
         />
 
         <CreatePostModal
           isOpen={isOpen}
-          closeModal={() => setIsOpen(false)}
+          closeModal={() => dispatch(closeCreatePostModal())}
         />
         <div className="profile__sidebar-card-stats">
           {stats.map(({ title, value }) => (

@@ -50,13 +50,6 @@ export const getComments = (post: PostListItem): PostComment[] => {
   return raw.comments.map((comment) => mapComment(comment));
 };
 
-export const extractPosts = (data: unknown): PostListItem[] => {
-  if (!data || typeof data !== 'object') return [];
-
-  const posts = (data as { posts?: PostListItem[] }).posts;
-  return Array.isArray(posts) ? posts : [];
-};
-
 export const getCommentsCount = (post: PostListItem, comments: PostComment[]): number => {
   if (typeof post.commentsCount === 'number') return post.commentsCount;
 
