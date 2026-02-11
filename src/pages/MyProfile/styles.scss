@@ -1,1 +1,17 @@
+.my-profile {
 
+  &__loader,
+  &__error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    gap: 1rem;
+  }
+
+  &__error {
+    margin: 0;
+    color: $color-error;
+  }
+}
