@@ -3,7 +3,7 @@
   color: $color-text;
   width: 100%;
   max-width: 752px;
-  margin: 0 40px;
+  margin: 0 auto;
   border-radius: 25px;
   box-shadow: $shadow-elevation-1;
   padding: 30px;
@@ -96,6 +96,36 @@
     height: 1px;
     background: $border-color-light;
     width: 100%;
+  }
+
+  &-posts {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    .posts__list,
+    .users_list {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 0;
+      color: inherit;
+    }
+
+    .posts__list-item,
+    .users_list-item {
+      margin-top: 10px;
+      background: transparent;
+      border: 1px solid $color-border-muted;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-bottom: 16px;
+      box-shadow: none;
+    }
   }
 
   &-stats {
