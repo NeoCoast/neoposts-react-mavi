@@ -1,7 +1,14 @@
 import { IoIosArrowBack } from 'react-icons/io';
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+
+import { useGetMeQuery } from '@/services/api';
+import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 
 import Button from '@/components/Button';
-import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
+import PostsList from '@/components/PostsList';
+import UsersList from '@/components/UsersList';
+
 
 import './styles.scss';
 
@@ -22,9 +29,14 @@ const ProfileInfo = ({
   followersCount,
   onBack,
 }: MyProfileInfoProps) => {
+  const { data: me, refetch } = useGetMeQuery();
+
+  const posts = me?.posts ?? [];
+  const followees = me?.followees ?? [];
+  const followers = me?.followers ?? [];
+
   return (
     <article className="my-profile__card">
-
       <Button
         variant="icon"
         className="my-profile__card-back"
@@ -53,28 +65,48 @@ const ProfileInfo = ({
 
       <div className="my-profile__card-separator" />
 
-      <section className="my-profile__card-stats">
-        <div className="my-profile__card-stats-item active">
-          <span className="value">{postsCount}</span>
-          <span className="label">Post</span>
-        </div>
+      <Tabs>
+        <TabList className="my-profile__card-stats">
+          <Tab className="my-profile__card-stats-item" selectedClassName="active">
+            <span className="value">{postsCount}</span>
+            <span className="label">Posts</span>
+          </Tab>
 
-        <div className="my-profile__card-stats-item">
-          <span className="value">{followingCount}</span>
-          <span className="label">Following</span>
-        </div>
+          <Tab className="my-profile__card-stats-item" selectedClassName="active">
+            <span className="value">{followingCount}</span>
+            <span className="label">Following</span>
+          </Tab>
 
-        <div className="my-profile__card-stats-item">
-          <span className="value">{followersCount}</span>
-          <span className="label">Followers</span>
-        </div>
-      </section>
+          <Tab className="my-profile__card-stats-item" selectedClassName="active">
+            <span className="value">{followersCount}</span>
+            <span className="label">Followers</span>
+          </Tab>
+        </TabList>
 
-      <div className="my-profile__card-separator" />
+        <div className="my-profile__card-separator" />
 
-      <section className="my-profile__card-posts">
-      </section>
+        <section className="my-profile__card-posts">
+          <TabPanel>
+            <PostsList
+              items={posts}
+              fetchMore={() => { }}
+              hasMore={false}
+              loadedCount={posts.length}
+              totalCount={posts.length}
+              pageError={undefined}
+              onRetry={() => refetch()}
+            />
+          </TabPanel>
 
+          <TabPanel>
+            <UsersList users={followees} />
+          </TabPanel>
+
+          <TabPanel>
+            <UsersList users={followers} />
+          </TabPanel>
+        </section>
+      </Tabs>
     </article>
   );
 };

@@ -110,6 +110,9 @@
       gap: 6px;
       cursor: pointer;
       position: relative;
+      background: none;
+      border: none;
+      padding-bottom: 10px;
 
       .value {
         font-size: 48px;
@@ -122,7 +125,7 @@
         color: $color-text-subtle;
       }
 
-      .active::after {
+      &.active::after {
         content: '';
         position: absolute;
         bottom: -18px;
