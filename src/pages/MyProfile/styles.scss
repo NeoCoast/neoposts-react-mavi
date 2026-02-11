@@ -16,8 +16,22 @@
       @include tablet {
         display: none;
       }
-    }
 
+      &-newPost {
+        min-width: 120px;
+        padding: 8px 16px;
+
+        &-content {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+
+          &-icon {
+            font-size: 14px;
+          }
+        }
+      }
+    }
   }
 
   &__loader,
