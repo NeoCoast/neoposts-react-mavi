@@ -31,36 +31,26 @@ const usePostDetailData = ({ id }: UsePostDetailDataParams) => {
     error: queryError,
   } = useGetPostQuery(id, {});
 
-  const post = useMemo(() => {
-    if (!postData || typeof postData !== 'object') return null;
-
-    const asAny = postData as any;
-    if (asAny.post) return asAny.post as PostListItem;
-    if (Array.isArray(asAny.posts)) return (asAny.posts as PostListItem[]).find((p) => String(p.id) === String(id)) ?? null;
-
-    return postData as PostListItem;
-  }, [id, postData]);
-
   const details = useMemo(() => {
-    if (!post) return buildDefaultDetails();
+    if (!postData) return buildDefaultDetails();
 
-    const normalizedComments = getComments(post);
+    const normalizedComments = getComments(postData);
 
     return {
-      content: getPostContent(post),
-      likesCount: getLikesCount(post),
+      content: getPostContent(postData),
+      likesCount: getLikesCount(postData),
       comments: normalizedComments,
-      commentsCount: getCommentsCount(post, normalizedComments),
-      publishedAt: formatDate(post.publishedAt),
-      publishedAtRaw: post.publishedAt ?? '',
+      commentsCount: getCommentsCount(postData, normalizedComments),
+      publishedAt: formatDate(postData.publishedAt),
+      publishedAtRaw: postData.publishedAt ?? '',
     };
-  }, [post]);
+  }, [postData]);
 
   const isLoading = queryLoading;
   const hasError = Boolean(queryError);
 
   return {
-    post: post ?? null,
+    post: postData ?? null,
     ...details,
     isLoading,
     hasError,
