@@ -1,18 +1,25 @@
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
+import { FaPlus } from 'react-icons/fa';
 
-import { useGetMeQuery } from '@/services/api';
+import { useGetMeQuery, useLogOutMutation, api } from '@/services/api';
+import { AppDispatch } from '@/services/store';
+
 import { ROUTES } from '@/constants/routes';
+import { openCreatePostModal } from '@/utils/uiSlice';
 
 import Navbar from '@/components/Navbar';
 import MyProfileInfo from '@/components/ProfileInfo';
 import Button from '@/components/Button';
+import LogOut from '@/components/LogOut';
 
 import './styles.scss';
 
 const MyProfile = () => {
   const { data, isLoading, error, refetch } = useGetMeQuery();
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <div className="my-profile">
@@ -42,14 +49,31 @@ const MyProfile = () => {
       )}
 
       {!isLoading && !error && data && (
-        <MyProfileInfo
-          name={`${data.name}`}
-          email={data.email}
-          postsCount={data.posts?.length ?? 0}
-          followingCount={data.followees?.length ?? 0}
-          followersCount={data.followers?.length ?? 0}
-          onBack={() => navigate(ROUTES.HOME)}
-        />
+        <div className="my-profile__content">
+          <div className="my-profile__content-buttons">
+            <Button
+              className="my-profile__content-buttons-newPost"
+              title={
+                <span className="my-profile__content-buttons-newPost-content">
+                  <FaPlus className="my-profile__content-buttons-newPost-content-icon" />
+                  <span>New Post</span>
+                </span>
+              }
+              onClick={() => {
+                dispatch(openCreatePostModal());
+              }}
+            />
+            <LogOut />
+          </div>
+          <MyProfileInfo
+            name={`${data.name}`}
+            email={data.email}
+            postsCount={data.posts?.length ?? 0}
+            followingCount={data.followees?.length ?? 0}
+            followersCount={data.followers?.length ?? 0}
+            onBack={() => navigate(ROUTES.HOME)}
+          />
+        </div>
       )}
     </div>
   );
