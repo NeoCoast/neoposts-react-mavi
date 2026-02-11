@@ -49,17 +49,3 @@
     color: $color-error;
   }
 }
-
-.my-profile {
-  &__card {
-    flex: 1 1 auto;
-  }
-}
-
-@include tablet {
-  .my-profile {
-    &__content {
-      margin-top: 96px;
-    }
-  }
-}

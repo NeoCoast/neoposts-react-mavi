@@ -1,28 +1,40 @@
 .my-profile__card {
+  background-color: $color-white;
+  color: $color-text;
   width: 100%;
-  max-width: 700px;
-  background: $color-white;
-  border-radius: 32px;
+  max-width: 752px;
+  margin: 0 40px;
+  border-radius: 25px;
   box-shadow: $shadow-elevation-1;
-  padding: 40px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  color: $color-text;
+  gap: 30px;
 
   @include laptop {
-    max-width: calc(90% - 70px);
-    margin: 90px auto 0;
+    max-width: calc(100% - 70px);
+
+    .my-profile__card-stats {
+      &-item {
+        .value {
+          font-size: 20px;
+          font-weight: 600;
+        }
+
+        .label {
+          font-size: 16px;
+          color: $color-text-subtle;
+        }
+      }
+    }
   }
 
   @include tablet {
-    max-width: calc(90% - 70px);
-    margin: 90px auto 0;
+    max-width: calc(100% - 70px);
   }
 
   @include mobile {
-    max-width: calc(90% - 70px);
-    margin: 90px auto 0;
+    max-width: calc(100% - 70px);
 
     .my-profile__card-stats {
       &-item {
