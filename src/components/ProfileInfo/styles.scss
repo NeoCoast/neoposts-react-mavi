@@ -38,7 +38,7 @@
 
   @include mobile {
     max-width: calc(100% - 10px);
-    margin: 0 auto;
+    margin: 0 20px;
     padding: 16px;
 
     .my-profile__card-stats {

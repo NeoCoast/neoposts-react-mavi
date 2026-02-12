@@ -25,6 +25,8 @@
     &-buttons {
       display: flex;
       flex-direction: column;
+      margin-left: 60px;
+      width: 60%;
       gap: 20px;
 
       @include tablet {
