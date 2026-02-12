@@ -87,23 +87,41 @@ const ProfileInfo = ({
 
         <section className="my-profile__card-posts">
           <TabPanel>
-            <PostsList
-              items={posts}
-              fetchMore={() => { }}
-              hasMore={false}
-              loadedCount={posts.length}
-              totalCount={posts.length}
-              pageError={undefined}
-              onRetry={() => refetch()}
-            />
+            {posts.length === 0 ? (
+              <div className="my-profile__card-posts-empty">
+                <p className="my-profile__card-posts-empty-title">You have no posts yet</p>
+              </div>
+            ) : (
+              <PostsList
+                items={posts}
+                fetchMore={() => { }}
+                hasMore={false}
+                loadedCount={posts.length}
+                totalCount={posts.length}
+                pageError={undefined}
+                onRetry={() => refetch()}
+              />
+            )}
           </TabPanel>
 
           <TabPanel>
-            <UsersList users={followees} />
+            {followees.length === 0 ? (
+              <div className="my-profile__card-posts-empty">
+                <p className="my-profile__card-posts-empty-title">You are not following anyone</p>
+              </div>
+            ) : (
+              <UsersList users={followees} />
+            )}
           </TabPanel>
 
           <TabPanel>
-            <UsersList users={followers} />
+            {followers.length === 0 ? (
+              <div className="my-profile__card-posts-empty">
+                <p className="my-profile__card-posts-empty-title">You have no followers</p>
+              </div>
+            ) : (
+              <UsersList users={followers} />
+            )}
           </TabPanel>
         </section>
       </Tabs>

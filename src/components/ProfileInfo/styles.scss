@@ -9,7 +9,7 @@
   padding: 30px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 10px;
 
   @include laptop {
     max-width: calc(100% - 70px);
@@ -125,6 +125,18 @@
       padding: 1rem;
       margin-bottom: 16px;
       box-shadow: none;
+    }
+
+    &-empty {
+      padding: 36px 20px;
+      text-align: center;
+
+      &-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: $color-text;
+        margin: 0 0 8px 0;
+      }
     }
   }
 
