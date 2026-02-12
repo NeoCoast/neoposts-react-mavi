@@ -36,39 +36,6 @@
           }
         }
       }
-
-      @include laptop {
-        gap: 16px;
-        flex: 0 0 160px;
-      }
-
-      @include tablet {
-        order: -1;
-        width: 100%;
-        flex: 0 0 auto;
-        margin: 0 0 8px 0;
-        flex-direction: row;
-        justify-content: center;
-        gap: 12px;
-
-        &-newPost {
-          min-width: 120px;
-          padding: 8px 12px;
-        }
-      }
-
-      @include mobile {
-        gap: 8px;
-
-        &-newPost {
-          min-width: 100px;
-          padding: 6px 10px;
-
-          &-content &-icon {
-            font-size: 12px;
-          }
-        }
-      }
     }
 
     @include tablet {
