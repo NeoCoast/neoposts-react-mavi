@@ -11,7 +11,7 @@ import {
 } from '@/utils/postUtils';
 
 type UsePostDetailDataParams = {
-  id: number;
+  id: string;
   postFromState?: PostListItem | null;
 };
 
@@ -29,7 +29,7 @@ const usePostDetailData = ({ id }: UsePostDetailDataParams) => {
     data: postData,
     isLoading: queryLoading,
     error: queryError,
-  } = useGetPostQuery(id, {});
+  } = useGetPostQuery(Number(id), {});
 
   const post = useMemo(() => {
     if (!postData || typeof postData !== 'object') return null;

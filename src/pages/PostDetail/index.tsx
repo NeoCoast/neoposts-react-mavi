@@ -17,7 +17,7 @@ import './styles.scss';
 
 function PostDetail() {
   const navigate = useNavigate();
-  const { id = '' } = useParams<PostDetailRouteParams>();
+  const { id: idParam = '' } = useParams<PostDetailRouteParams>();
   const location = useLocation();
   const locationState = location.state as PostDetailLocationState | null;
 
@@ -33,13 +33,9 @@ function PostDetail() {
     publishedAt,
     isLoading,
     hasError,
-  } = usePostDetailData({ id, postFromState });
+  } = usePostDetailData({ id: idParam, postFromState });
 
   const handleBack = useCallback(() => {
-    if (window.history.state && window.history.length > 1) {
-      navigate(ROUTES.HOME, { replace: true });
-      return;
-    }
     navigate(ROUTES.HOME);
   }, [navigate]);
 
@@ -52,7 +48,7 @@ function PostDetail() {
       return (
         <div className="post__detail-loader">
           <Oval
-            visible={true}
+            visible
             height="72"
             width="72"
             color="#0F31AA"
@@ -66,13 +62,13 @@ function PostDetail() {
     if (hasError) {
       return (
         <div className="post__detail-error">
-          We couldn&apos;t load this post. Please try again later.
+          <p>We couldn&apos;t load this post. Please try again later.</p>
           <Button
             className="post__detail-empty-home"
             title="Go to home"
             onClick={handleGoHome}
           />
-        </div >
+        </div>
       );
     }
 
@@ -109,7 +105,9 @@ function PostDetail() {
 
       <div className="post__detail-layout">
         <UserBar className="post__detail-layout-sidebar" />
-        <div className="post__detail-layout-sidebar-content">{renderMainContent()}</div>
+        <div className="post__detail-layout-sidebar-content">
+          {renderMainContent()}
+        </div>
       </div>
     </div>
   );

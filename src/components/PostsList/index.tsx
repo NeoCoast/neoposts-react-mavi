@@ -43,8 +43,8 @@ const PostsList = ({
           </p>
         }
       >
-        {items.map((post) => (
-          <article key={post.id} className="posts__list-item">
+        {items.map((post, idx) => (
+          <article key={`${post.id}-${idx}`} className="posts__list-item">
             <Link
               to={`/posts/${post.id}`}
               state={{ post }}
