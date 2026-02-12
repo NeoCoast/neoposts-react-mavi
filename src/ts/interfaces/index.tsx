@@ -63,6 +63,7 @@ export interface PostListItem extends Post {
 
 export interface PostDetailLocationState {
   post?: PostListItem;
+  from?: string;
 }
 
 export interface PostDetailRouteParams extends Record<string, string | undefined> {

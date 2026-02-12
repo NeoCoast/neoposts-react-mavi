@@ -36,8 +36,15 @@ function PostDetail() {
   } = usePostDetailData({ id: idParam, postFromState });
 
   const handleBack = useCallback(() => {
+    const from = (location.state as PostDetailLocationState)?.from;
+
+    if (from) {
+      navigate(-1);
+      return;
+    }
+
     navigate(ROUTES.HOME);
-  }, [navigate]);
+  }, [navigate, location.state]);
 
   const handleGoHome = useCallback(() => {
     navigate(ROUTES.HOME);

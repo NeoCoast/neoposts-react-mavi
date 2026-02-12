@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -20,6 +20,8 @@ const PostsList = ({
   onRetry,
   showContent = false,
 }: PostsListProps & { showContent?: boolean }) => {
+  const location = useLocation();
+
   return (
     <div className="posts__list">
       <InfiniteScroll
@@ -48,7 +50,7 @@ const PostsList = ({
           <article key={`${post.id}-${idx}`} className="posts__list-item">
             <Link
               to={`/posts/${post.id}`}
-              state={{ post }}
+              state={{ post, from: location.pathname }}
               className="posts__list-item-link"
             >
               {post.author && (
