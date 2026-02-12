@@ -42,7 +42,7 @@ export interface PostComment {
 export interface Post {
   id: string | number;
   title: string;
-  content: string;
+  body: string;
   publishedAt: string;
   likesCount?: number;
   commentsCount?: number;
@@ -71,6 +71,7 @@ export interface PostDetailRouteParams extends Record<string, string | undefined
 
 export interface PostProps {
   post: Post;
+  showContent?: boolean;
 }
 
 export interface PostsListProps {

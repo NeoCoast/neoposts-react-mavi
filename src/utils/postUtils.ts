@@ -60,7 +60,7 @@ export const getCommentsCount = (post: PostListItem, comments: PostComment[]): n
 };
 
 export const getPostContent = (post: PostListItem): string => {
-  if (typeof post.content === 'string' && post.content.trim()) return post.content;
+  if (typeof post.body === 'string' && post.body.trim()) return post.body;
 
   const raw = post as unknown as {
     body?: unknown;

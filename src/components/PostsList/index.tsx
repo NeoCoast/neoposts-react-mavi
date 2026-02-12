@@ -18,7 +18,8 @@ const PostsList = ({
   totalCount,
   pageError,
   onRetry,
-}: PostsListProps) => {
+  showContent = false,
+}: PostsListProps & { showContent?: boolean }) => {
   return (
     <div className="posts__list">
       <InfiniteScroll
@@ -59,7 +60,7 @@ const PostsList = ({
                 />
               )}
 
-              <Post post={post} />
+              <Post post={post} showContent={showContent} />
             </Link>
           </article>
         ))}

@@ -1,17 +1,20 @@
 import type { PostProps } from '@/ts/interfaces';
+
 import PostTitle from '@/components/PostTitle';
 import PostContent from '@/components/PostContent';
 import PostFooter from '@/components/PostFooter';
 
 import './styles.scss';
 
-const Post = ({ post }: PostProps) => {
-  const { title, content, publishedAt } = post;
+const Post = ({ post, showContent = true }: PostProps) => {
+  const title = post.title;
+  const content = post.body;
+  const publishedAt = post.publishedAt;
 
   return (
     <article className="post">
       <PostTitle title={title} />
-      <PostContent content={content} />
+      {showContent && <PostContent content={content} />}
       <PostFooter publishedAt={publishedAt} />
     </article>
   );

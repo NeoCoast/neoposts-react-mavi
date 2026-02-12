@@ -4,6 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 
 import { useGetMeQuery } from '@/services/api';
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
+import { Post } from '@/ts/interfaces';
 
 import Button from '@/components/Button';
 import PostsList from '@/components/PostsList';
@@ -34,6 +35,12 @@ const ProfileInfo = ({
   const posts = me?.posts ?? [];
   const followees = me?.followees ?? [];
   const followers = me?.followers ?? [];
+
+  const sortedPosts = [...posts].sort((a: Post, b: Post) => {
+    const dateA = new Date(a.publishedAt).getTime();
+    const dateB = new Date(b.publishedAt).getTime();
+    return dateB - dateA;
+  });
 
   return (
     <article className="my-profile__card">
@@ -93,9 +100,10 @@ const ProfileInfo = ({
               </div>
             ) : (
               <PostsList
-                items={posts}
+                items={sortedPosts}
                 fetchMore={() => { }}
                 hasMore={false}
+                showContent={true}
                 loadedCount={posts.length}
                 totalCount={posts.length}
                 pageError={undefined}
