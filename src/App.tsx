@@ -12,7 +12,7 @@ import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
 import NotFound from '@/pages/NotFound';
 import PostDetail from '@/pages/PostDetail';
-import MyProfile from '@/pages/MyProfile';
+import MyProfile from '@/pages/Profile';
 
 import './App.scss';
 

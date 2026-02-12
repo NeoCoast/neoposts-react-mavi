@@ -3,20 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
 import { FaPlus } from 'react-icons/fa';
 
-import { useGetMeQuery, useLogOutMutation, api } from '@/services/api';
+import { useGetMeQuery } from '@/services/api';
 import { AppDispatch } from '@/services/store';
 
 import { ROUTES } from '@/constants/routes';
 import { openCreatePostModal } from '@/utils/uiSlice';
 
 import Navbar from '@/components/Navbar';
-import MyProfileInfo from '@/components/ProfileInfo';
+import ProfileInfo from '@/components/ProfileInfo';
 import Button from '@/components/Button';
 import LogOut from '@/components/LogOut';
 
 import './styles.scss';
 
-const MyProfile = () => {
+const Profile = () => {
   const { data, isLoading, error, refetch } = useGetMeQuery();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -65,7 +65,7 @@ const MyProfile = () => {
             />
             <LogOut />
           </div>
-          <MyProfileInfo
+          <ProfileInfo
             name={`${data.name}`}
             email={data.email}
             postsCount={data.posts?.length ?? 0}
@@ -79,5 +79,4 @@ const MyProfile = () => {
   );
 };
 
-
-export default MyProfile;
+export default Profile;
