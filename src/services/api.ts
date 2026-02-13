@@ -38,6 +38,7 @@ export const api = createApi({
         const queryString = queryParams.toString();
         return queryString ? `feed?${queryString}` : 'feed';
       },
+      keepUnusedDataFor: 0,
       providesTags: ['Post'],
     }),
     getMe: builder.query<any, void>({
