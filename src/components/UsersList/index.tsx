@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { GoPersonAdd } from 'react-icons/go';
 import { BsPersonCheck } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { ROUTES } from '@/constants/routes';
 
 import Button from '@/components/Button';
 import { useGetMeQuery } from '@/services/api';
@@ -14,12 +15,19 @@ const userProfilePhoto = new URL('@/assets/Icons/userProfilePhoto.svg', import.m
 const UsersList: FC<{ users: User[] }> = ({ users }) => {
   const { data: me } = useGetMeQuery();
 
+  const redirectToProfile = (userId: string | number) => {
+    if (me?.id === userId) {
+      return ROUTES.MY_PROFILE;
+    }
+    return `/users/${userId}`;
+  }
+
   return (
     <div className="users_list">
       {users.map(({ id, name, email, followed }) => (
         <div key={id} className="users_list-item">
           <div className="users_list-item-left">
-            <Link to={`/users/${id}`} className="users_list-item-left-link">
+            <Link to={redirectToProfile(id)} className="users_list-item-left-link">
               <img
                 src={userProfilePhoto}
                 alt={`${name}'s avatar`}
@@ -28,7 +36,7 @@ const UsersList: FC<{ users: User[] }> = ({ users }) => {
             </Link>
 
             <div className="users_list-item-left-info">
-              <Link to={`/users/${id}`} className="users_list-item-left-info-link">
+              <Link to={redirectToProfile(id)} className="users_list-item-left-info-link">
                 <div className="users_list-item-left-info-link-name">{name}</div>
                 <div className="users_list-item-left-info-link-email">{email}</div>
               </Link>
