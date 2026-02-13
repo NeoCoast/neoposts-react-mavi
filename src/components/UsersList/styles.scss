@@ -21,69 +21,74 @@
       gap: 10px;
       padding: 12px 0;
     }
-  }
 
-  &-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-width: 0;
+    &-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
 
-    @include mobile {
-      gap: 10px;
-    }
-  }
+      @include mobile {
+        gap: 10px;
+      }
 
-  &-avatar {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: $color-white;
-    flex-shrink: 0;
+      &-link {
+        &-avatar {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: $color-white;
+          flex-shrink: 0;
 
-    @include tablet {
-      width: 40px;
-      height: 40px;
-    }
+          @include tablet {
+            width: 40px;
+            height: 40px;
+          }
 
-    @include mobile {
-      width: 36px;
-      height: 36px;
-    }
-  }
+          @include mobile {
+            width: 36px;
+            height: 36px;
+          }
+        }
+      }
 
-  &-info {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
+      &-info {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
 
-  &-name {
-    font-weight: 600;
-    font-size: 14px;
-  }
+        &-link {
+          text-decoration: none;
 
-  &-email {
-    font-size: 13px;
-    color: $color-text-muted;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+          &-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: $color-text;
+          }
 
-  &-follow-button {
-    padding-inline: 14px;
-    min-width: 120px;
-    height: 34px;
-
-    svg {
-      font-size: 16px;
+          &-email {
+            font-size: 13px;
+            color: $color-text-muted;
+            text-overflow: ellipsis;
+          }
+        }
+      }
     }
 
-    @include mobile {
-      width: 95%;
-      height: 40px;
-      font-size: 14px;
+    &-follow {
+      padding-inline: 14px;
+      min-width: 120px;
+      height: 34px;
+
+      svg {
+        font-size: 16px;
+      }
+
+      @include mobile {
+        width: 95%;
+        height: 40px;
+        font-size: 14px;
+      }
     }
   }
 }

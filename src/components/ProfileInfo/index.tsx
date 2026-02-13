@@ -21,6 +21,7 @@ type MyProfileInfoProps = {
   posts: PostListItem[];
   followees: any[];
   followers: any[];
+  isOwn?: boolean;
   onBack: () => void;
   onRetry: () => void;
 };
@@ -34,6 +35,7 @@ const ProfileInfo = ({
   posts,
   followees,
   followers,
+  isOwn = true,
   onBack,
   onRetry,
 }: MyProfileInfoProps) => {
@@ -111,7 +113,9 @@ const ProfileInfo = ({
           <TabPanel>
             {posts.length === 0 ? (
               <div className="my-profile__card-posts-empty">
-                <p className="my-profile__card-posts-empty-title">You have no posts yet</p>
+                <p className="my-profile__card-posts-empty-title">
+                  {isOwn ? 'You have no posts yet' : "This user hasn't published any posts yet"}
+                </p>
               </div>
             ) : (
               <PostsList
@@ -130,7 +134,9 @@ const ProfileInfo = ({
           <TabPanel>
             {followees.length === 0 ? (
               <div className="my-profile__card-posts-empty">
-                <p className="my-profile__card-posts-empty-title">You are not following anyone</p>
+                <p className="my-profile__card-posts-empty-title">
+                  {isOwn ? 'You are not following anyone' : 'This user is not following anyone'}
+                </p>
               </div>
             ) : (
               <UsersList users={followees} />
@@ -140,7 +146,9 @@ const ProfileInfo = ({
           <TabPanel>
             {followers.length === 0 ? (
               <div className="my-profile__card-posts-empty">
-                <p className="my-profile__card-posts-empty-title">You have no followers</p>
+                <p className="my-profile__card-posts-empty-title">
+                  {isOwn ? 'You have no followers' : 'This user has no followers yet'}
+                </p>
               </div>
             ) : (
               <UsersList users={followers} />

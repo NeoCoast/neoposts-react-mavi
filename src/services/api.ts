@@ -122,6 +122,13 @@ export const api = createApi({
         };
       },
     }),
+    getUser: builder.query<User, string | number>({
+      query: (id) => ({
+        method: 'GET',
+        url: `/users/${id}`,
+      }),
+      providesTags: ['User'],
+    }),
   }),
 });
 
@@ -134,5 +141,6 @@ export const {
   useLogInMutation,
   useSignupMutation,
   useCreatePostMutation,
+  useGetUserQuery,
   useGetUsersQuery,
 } = api;

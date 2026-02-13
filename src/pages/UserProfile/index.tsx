@@ -1,0 +1,110 @@
+import { useEffect } from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Oval } from 'react-loader-spinner';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
+
+import { useGetUserQuery } from '@/services/api';
+import { ROUTES } from '@/constants/routes';
+
+import Navbar from '@/components/Navbar';
+import UserBar from '@/components/UserBar';
+import ProfileInfo from '@/components/ProfileInfo';
+import Button from '@/components/Button';
+
+import './styles.scss';
+
+const UserProfile = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const { data, error, isLoading, refetch } = useGetUserQuery(id ?? '');
+
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    const allowedTabs = ['posts', 'following', 'followers'];
+
+    if (!allowedTabs.includes(tab ?? '')) {
+      navigate(`${ROUTES.USERS}/${id}?tab=posts`, { replace: true });
+    }
+  }, [searchParams, navigate, id]);
+
+  let errorMessage = 'An error occurred while loading the user data.';
+
+  if (error) {
+    if ('status' in error) {
+      const fetchError = error as FetchBaseQueryError;
+
+      if (fetchError.status === 404) {
+        errorMessage = 'User not found.';
+      }
+    } else {
+      const serializedError = error as SerializedError;
+
+      if (serializedError.message) {
+        errorMessage = serializedError.message;
+      }
+    }
+  }
+
+  return (
+    <div className="user-profile">
+      <Navbar />
+
+      <div className="user-profile__layout">
+        <UserBar className="user-profile__layout-sidebar" />
+
+        <div className="user-profile__layout-userInfo">
+          {isLoading && (
+            <div className="user-profile__layout-userInfo-loader">
+              <Oval
+                visible
+                height="80"
+                width="80"
+                color="#0F31AA"
+                secondaryColor="#1445D8"
+                ariaLabel="oval-loading"
+              />
+            </div>
+          )}
+
+          {!isLoading && error && (
+            <div className="user-profile__layout-userInfo-error">
+              <p className="user-profile__layout-userInfo-error-message">
+                {errorMessage}
+              </p>
+
+              <div className="user-profile__layout-userInfo-error-actions">
+                <Button
+                  variant="primary"
+                  onClick={() => navigate(ROUTES.USERS)}
+                  className="user-profile__layout-userInfo-error-button"
+                  title="Back to Users"
+                />
+              </div>
+            </div>
+          )}
+
+          {!isLoading && !error && data && (
+            <ProfileInfo
+              name={data.name}
+              email={data.email}
+              postsCount={data.posts?.length ?? 0}
+              followingCount={data.following?.length ?? 0}
+              followersCount={data.followers?.length ?? 0}
+              posts={data.posts ?? []}
+              followees={data.following ?? []}
+              followers={data.followers ?? []}
+              isOwn={false}
+              onBack={() => navigate(ROUTES.USERS)}
+              onRetry={refetch}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default UserProfile;

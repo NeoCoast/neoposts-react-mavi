@@ -5,10 +5,10 @@ export interface User {
   id: string | number;
   name: string;
   email: string;
-  posts?: any[] | number;
-  followers?: any[] | number;
-  following?: any[] | number;
-  followed?: any[] | number;
+  posts: PostListItem[];
+  followers: User[];
+  following: User[];
+  followed?: User[];
 }
 
 export interface Profile {
