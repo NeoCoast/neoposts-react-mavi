@@ -48,6 +48,13 @@ const Home = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    return () => {
+      setAllPosts([]);
+      setPage(1);
+    }
+  }, []);
+
   const fetchMore = () => {
     if (isFetching || !data?.pagination?.nextPage) return;
 
