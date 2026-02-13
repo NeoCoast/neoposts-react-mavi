@@ -51,7 +51,6 @@ export interface Post {
 
 export interface Author {
   name?: string;
-  lastName?: string;
   email?: string;
   profilePhoto?: string;
   username?: string;
@@ -83,18 +82,17 @@ export interface PostsListProps {
   totalCount?: number;
   pageError?: string | null;
   onRetry: () => void;
+  showContent?: boolean;
 }
 
 export interface AuthorDetailsProps {
   name?: Author['name'];
-  lastName?: Author['lastName'];
   email?: Author['email'];
   profilePhoto?: Author['profilePhoto'];
 }
 
 export interface PostTitleProps {
   name?: Author['name'];
-  lastName?: Author['lastName'];
   title: string;
 }
 

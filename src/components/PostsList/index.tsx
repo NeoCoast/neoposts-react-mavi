@@ -19,7 +19,7 @@ const PostsList = ({
   pageError,
   onRetry,
   showContent = false,
-}: PostsListProps & { showContent?: boolean }) => {
+}: PostsListProps) => {
   const location = useLocation();
 
   return (
@@ -46,21 +46,18 @@ const PostsList = ({
           </p>
         }
       >
-        {items.map((post, idx) => (
-          <article key={`${post.id}-${idx}`} className="posts__list-item">
+        {items.map((post) => (
+          <article key={post.id} className="posts__list-item">
             <Link
               to={`/posts/${post.id}`}
               state={{ post, from: location.pathname }}
               className="posts__list-item-link"
             >
-              {post.author && (
-                <AuthorDetails
-                  name={post.author.name}
-                  lastName={post.author.lastName}
-                  email={post.author.email}
-                  profilePhoto={post.author.profilePhoto}
-                />
-              )}
+              <AuthorDetails
+                name={post.author?.name}
+                email={post.author?.email}
+                profilePhoto={post.author?.profilePhoto}
+              />
 
               <Post post={post} showContent={showContent} />
             </Link>

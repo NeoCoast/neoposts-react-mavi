@@ -92,6 +92,8 @@
         &-stat {
           display: flex;
           flex-direction: column;
+          text-decoration: none;
+
 
           &-span {
             color: $color-text-subtle;

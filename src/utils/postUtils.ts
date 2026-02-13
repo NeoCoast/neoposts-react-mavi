@@ -33,7 +33,6 @@ export const mapComment = (comment: any): PostComment => {
     likesCount,
     author: {
       name: author?.name ?? author?.first_name ?? author?.username ?? '',
-      lastName: author?.lastName ?? author?.last_name ?? '',
       email: author?.email,
       profilePhoto: author?.profilePhoto ?? author?.profile_photo ?? author?.avatar ?? author?.image,
       username: author?.username,
@@ -122,12 +121,12 @@ export const formatRelativeDate = (value?: string) => {
   });
 };
 
-export const getFullName = (name?: string | null, lastName?: string | null): string => {
-  return [name, lastName].filter(Boolean).join(' ').trim();
+export const getFullName = (name?: string | null): string => {
+  return [name].filter(Boolean).join(' ').trim();
 };
 
 export const formatAuthorName = (author: PostComment['author']): string => {
-  const base = [author.name, author.lastName].filter(Boolean).join(' ').trim();
+  const base = [author.name].filter(Boolean).join(' ').trim();
   if (base) return base;
   if (author.username) return author.username;
   if (author.email) return author.email.split('@')[0];

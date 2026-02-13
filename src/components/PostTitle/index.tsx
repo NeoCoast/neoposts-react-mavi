@@ -2,8 +2,8 @@ import type { PostTitleProps } from '@/ts/interfaces';
 
 import './styles.scss';
 
-const PostTitle = ({ title, name, lastName }: PostTitleProps) => {
-  const authorName = [name, lastName].filter(Boolean).join(' ').trim();
+const PostTitle = ({ title, name }: PostTitleProps) => {
+  const authorName = [name].filter(Boolean).join(' ').trim();
 
   return (
     <>

@@ -4,13 +4,13 @@ import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 
 import './author.scss';
 
-const AuthorDetails = ({ name, lastName, email, profilePhoto }: AuthorDetailsProps) => {
+const AuthorDetails = ({ name, email }: AuthorDetailsProps) => {
 
   return (
     <div className="post-author">
-      <img className="post-author__avatar" src={userProfilePlaceholder} alt={`${name} ${lastName}`} />
+      <img className="post-author__avatar" src={userProfilePlaceholder} alt={name} />
       <div className="post-author__info">
-        <div className="post-author__name">{name} {lastName}</div>
+        <div className="post-author__name">{name}</div>
         {email && <div className="post-author__email">{email}</div>}
       </div>
     </div>

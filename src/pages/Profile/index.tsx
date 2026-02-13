@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
 import { FaPlus } from 'react-icons/fa';
 
@@ -19,7 +20,17 @@ import './styles.scss';
 const Profile = () => {
   const { data, isLoading, error, refetch } = useGetMeQuery();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    const allowedTabs = ['posts', 'following', 'followers'];
+
+    if (!allowedTabs.includes(tab ?? '')) {
+      navigate(`${ROUTES.MY_PROFILE}?tab=posts`, { replace: true });
+    }
+  }, [searchParams, navigate]);
 
   return (
     <div className="my-profile">
@@ -56,7 +67,7 @@ const Profile = () => {
               title={
                 <span className="my-profile__content-buttons-newPost-content">
                   <FaPlus className="my-profile__content-buttons-newPost-content-icon" />
-                  <span>New Post</span>
+                  New Post
                 </span>
               }
               onClick={() => {
@@ -71,7 +82,11 @@ const Profile = () => {
             postsCount={data.posts?.length ?? 0}
             followingCount={data.followees?.length ?? 0}
             followersCount={data.followers?.length ?? 0}
+            posts={data.posts ?? []}
+            followees={data.followees ?? []}
+            followers={data.followers ?? []}
             onBack={() => navigate(ROUTES.HOME)}
+            onRetry={refetch}
           />
         </div>
       )}
