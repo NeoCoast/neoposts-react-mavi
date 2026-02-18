@@ -20,7 +20,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
   name,
   email,
   posts,
-  following,
+  followees,
   followers
 }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,7 +28,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
 
   const stats = [
     { title: 'Posts', value: posts, tab: 'posts' },
-    { title: 'Following', value: following, tab: 'following' },
+    { title: 'Following', value: followees, tab: 'following' },
     { title: 'Followers', value: followers, tab: 'followers' },
   ];
 

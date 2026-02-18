@@ -83,7 +83,7 @@ const Profile = () => {
             followingCount={data.followees?.length ?? 0}
             followersCount={data.followers?.length ?? 0}
             posts={data.posts ?? []}
-            followees={data.followees ?? []}
+            following={data.followees ?? []}
             followers={data.followers ?? []}
             onBack={() => navigate(ROUTES.HOME)}
             onRetry={refetch}

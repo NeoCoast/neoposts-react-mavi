@@ -7,7 +7,7 @@ export interface User {
   email: string;
   posts: PostListItem[];
   followers: UserData[];
-  following: UserData[];
+  followees: UserData[];
 }
 
 export interface UserData {
@@ -22,7 +22,7 @@ export interface Profile {
   name: string;
   email: string;
   posts: number;
-  following: number;
+  followees: number;
   followers: number;
 }
 
@@ -134,7 +134,7 @@ export interface ProfileSideBarProps {
   name: string;
   email: string;
   posts: number;
-  following: number;
+  followees: number;
   followers: number;
 };
 

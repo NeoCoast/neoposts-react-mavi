@@ -2,10 +2,13 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { useSearchParams } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
+import { useEffect, useState } from 'react';
 
+import { useGetMeQuery, useFollowUserMutation, useUnfollowUserMutation } from '@/services/api';
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 import { PostListItem, UserData } from '@/ts/interfaces';
 
+import { notify } from '@/components/Toaster/notify';
 import Button from '@/components/Button';
 import PostsList from '@/components/PostsList';
 import UsersList from '@/components/UsersList';
@@ -22,6 +25,7 @@ type MyProfileInfoProps = {
   following: UserData[];
   followers: UserData[];
   isOwn?: boolean;
+  userId?: string | number;
   onBack: () => void;
   onRetry: () => void;
 };
@@ -36,11 +40,27 @@ const ProfileInfo = ({
   following = [],
   followers = [],
   isOwn = true,
+  userId,
   onBack,
   onRetry,
 }: MyProfileInfoProps) => {
-
   const [searchParams, setSearchParams] = useSearchParams();
+  const { data: me } = useGetMeQuery();
+  const [followUser] = useFollowUserMutation();
+  const [unfollowUser] = useUnfollowUserMutation();
+
+  const [isFollowed, setIsFollowed] = useState<boolean | undefined>(undefined);
+  const [followersCountState, setFollowersCountState] = useState<number>(followersCount);
+  const [followingCountState, setFollowingCountState] = useState<number>(followingCount);
+
+  useEffect(() => {
+    if (me) {
+      const follows = followers.some((f) => f.id === me.id);
+      setIsFollowed(follows);
+    }
+    setFollowersCountState(followersCount);
+    setFollowingCountState(followingCount);
+  }, [me, followers, followersCount, followingCount]);
   const tabParam = searchParams.get('tab') ?? 'posts';
   const tabToIndex: Record<string, number> = { posts: 0, following: 1, followers: 2 };
   const indexToTab = ['posts', 'following', 'followers'];
@@ -52,6 +72,28 @@ const ProfileInfo = ({
     const dateB = new Date(b.publishedAt).getTime();
     return dateB - dateA;
   });
+
+  const handleFollow = async () => {
+    if (!userId) return;
+    try {
+      await followUser(userId).unwrap();
+      setIsFollowed(true);
+      setFollowersCountState((c) => c + 1);
+    } catch (e) {
+      notify.error('Unable to follow user. Please try again.');
+    }
+  };
+
+  const handleUnfollow = async () => {
+    if (!userId) return;
+    try {
+      await unfollowUser(userId).unwrap();
+      setIsFollowed(false);
+      setFollowersCountState((c) => Math.max(0, c - 1));
+    } catch (e) {
+      notify.error('Unable to unfollow user. Please try again.');
+    }
+  };
 
   return (
     <article className="my-profile__card">
@@ -79,6 +121,15 @@ const ProfileInfo = ({
           <p className="my-profile__card-header-info-name">{name}</p>
           <p className="my-profile__card-header-info-email">{email}</p>
         </div>
+        {!isOwn && me?.id !== userId && isFollowed !== undefined && (
+          <div className="my-profile__card-header-action">
+            <Button
+              title={isFollowed ? 'Unfollow' : 'Follow'}
+              variant={isFollowed ? 'secondary' : 'primary'}
+              onClick={isFollowed ? handleUnfollow : handleFollow}
+            />
+          </div>
+        )}
       </header>
 
       <div className="my-profile__card-separator" />
@@ -97,12 +148,12 @@ const ProfileInfo = ({
           </Tab>
 
           <Tab className="my-profile__card-stats-item" selectedClassName="active">
-            <span className="value">{followingCount}</span>
+            <span className="value">{followingCountState}</span>
             <span className="label">Following</span>
           </Tab>
 
           <Tab className="my-profile__card-stats-item" selectedClassName="active">
-            <span className="value">{followersCount}</span>
+            <span className="value">{followersCountState}</span>
             <span className="label">Followers</span>
           </Tab>
         </TabList>

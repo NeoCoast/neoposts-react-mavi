@@ -15,7 +15,7 @@ const mapUserToProfile = (u: User): Profile => ({
   name: u?.name ?? '-',
   email: u?.email ?? '-',
   posts: getCount(u?.posts),
-  following: getCount(u?.following),
+  followees: getCount(u?.followees),
   followers: getCount(u?.followers),
 });
 
@@ -24,7 +24,7 @@ const UserBar = ({ className }: { className: string }) => {
     name: '-',
     email: '-',
     posts: 0,
-    following: 0,
+    followees: 0,
     followers: 0,
   });
 
