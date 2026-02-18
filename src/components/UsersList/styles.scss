@@ -69,6 +69,8 @@
           &-email {
             font-size: 13px;
             color: $color-text-muted;
+            white-space: nowrap;
+            overflow: hidden;
             text-overflow: ellipsis;
           }
         }

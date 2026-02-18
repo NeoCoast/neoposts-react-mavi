@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
@@ -18,17 +18,17 @@ const UserProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
 
   const { data, error, isLoading, refetch } = useGetUserQuery(id ?? '');
 
   useEffect(() => {
     const tab = searchParams.get('tab');
     const allowedTabs = ['posts', 'following', 'followers'];
-
-    if (!allowedTabs.includes(tab ?? '')) {
+    if (!allowedTabs.includes(tab ?? '') && location.pathname === `${ROUTES.USERS}/${id}`) {
       navigate(`${ROUTES.USERS}/${id}?tab=posts`, { replace: true });
     }
-  }, [searchParams, navigate, id]);
+  }, [searchParams, navigate, id, location.pathname]);
 
   let errorMessage = 'An error occurred while loading the user data.';
 
@@ -71,18 +71,12 @@ const UserProfile = () => {
 
           {!isLoading && error && (
             <div className="user-profile__layout-userInfo-error">
-              <p className="user-profile__layout-userInfo-error-message">
-                {errorMessage}
-              </p>
-
-              <div className="user-profile__layout-userInfo-error-actions">
-                <Button
-                  variant="primary"
-                  onClick={() => navigate(ROUTES.USERS)}
-                  className="user-profile__layout-userInfo-error-button"
-                  title="Back to Users"
-                />
-              </div>
+              <p>{errorMessage}</p>
+              <Button
+                variant="primary"
+                onClick={() => navigate(ROUTES.USERS)}
+                title="Back to Users"
+              />
             </div>
           )}
 
@@ -94,7 +88,7 @@ const UserProfile = () => {
               followingCount={data.following?.length ?? 0}
               followersCount={data.followers?.length ?? 0}
               posts={data.posts ?? []}
-              followees={data.following ?? []}
+              following={data.following ?? []}
               followers={data.followers ?? []}
               isOwn={false}
               onBack={() => navigate(ROUTES.USERS)}

@@ -50,17 +50,6 @@
         }
       }
     }
-
-    &-stats {
-      display: flex;
-      flex-direction: row;
-      gap: 18px;
-      align-items: center;
-
-      &-item {
-        padding-bottom: 12px;
-      }
-    }
   }
 
   &-back {
@@ -157,6 +146,16 @@
     justify-content: space-around;
     text-align: center;
     position: relative;
+
+    @include mobile {
+      flex-direction: row;
+      gap: 18px;
+      align-items: center;
+
+      &-item {
+        padding-bottom: 12px;
+      }
+    }
 
     &-item {
       display: flex;

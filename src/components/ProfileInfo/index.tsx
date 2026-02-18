@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
-import { PostListItem } from '@/ts/interfaces';
+import { PostListItem, UserData } from '@/ts/interfaces';
 
 import Button from '@/components/Button';
 import PostsList from '@/components/PostsList';
@@ -19,8 +19,8 @@ type MyProfileInfoProps = {
   followingCount: number;
   followersCount: number;
   posts: PostListItem[];
-  followees: any[];
-  followers: any[];
+  following: UserData[];
+  followers: UserData[];
   isOwn?: boolean;
   onBack: () => void;
   onRetry: () => void;
@@ -32,9 +32,9 @@ const ProfileInfo = ({
   postsCount,
   followingCount,
   followersCount,
-  posts,
-  followees,
-  followers,
+  posts = [],
+  following = [],
+  followers = [],
   isOwn = true,
   onBack,
   onRetry,
@@ -132,14 +132,14 @@ const ProfileInfo = ({
           </TabPanel>
 
           <TabPanel>
-            {followees.length === 0 ? (
+            {following.length === 0 ? (
               <div className="my-profile__card-posts-empty">
                 <p className="my-profile__card-posts-empty-title">
                   {isOwn ? 'You are not following anyone' : 'This user is not following anyone'}
                 </p>
               </div>
             ) : (
-              <UsersList users={followees} />
+              <UsersList users={following} />
             )}
           </TabPanel>
 

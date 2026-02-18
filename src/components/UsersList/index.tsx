@@ -6,20 +6,20 @@ import { ROUTES } from '@/constants/routes';
 
 import Button from '@/components/Button';
 import { useGetMeQuery } from '@/services/api';
-import { User } from '@/ts/interfaces';
+import { UserData } from '@/ts/interfaces';
 
 import './styles.scss';
 
 const userProfilePhoto = new URL('@/assets/Icons/userProfilePhoto.svg', import.meta.url).href;
 
-const UsersList: FC<{ users: User[] }> = ({ users }) => {
+const UsersList: FC<{ users: UserData[] }> = ({ users }) => {
   const { data: me } = useGetMeQuery();
 
   const redirectToProfile = (userId: string | number) => {
     if (me?.id === userId) {
       return ROUTES.MY_PROFILE;
     }
-    return `/users/${userId}`;
+    return ROUTES.USER.replace(':id', String(userId));
   }
 
   return (
