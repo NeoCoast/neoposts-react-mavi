@@ -90,6 +90,7 @@ const UserProfile = () => {
               posts={data.posts ?? []}
               following={data.followees ?? []}
               followers={data.followers ?? []}
+              followed={data.followed}
               isOwn={false}
               userId={data.id}
               onBack={() => navigate(ROUTES.USERS)}

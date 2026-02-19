@@ -128,21 +128,21 @@ export const api = createApi({
         method: 'GET',
         url: `/users/${id}`,
       }),
-      providesTags: ['User'],
+      providesTags: (__result, __error, id) => [{ type: 'User', id }],
     }),
     followUser: builder.mutation<void, string | number>({
       query: (id) => ({
         method: 'POST',
         url: `/users/${id}/follow`,
       }),
-      invalidatesTags: ['User'],
+      invalidatesTags: (__result, __error, id) => [{ type: 'User', id }, 'User'],
     }),
     unfollowUser: builder.mutation<void, string | number>({
       query: (id) => ({
         method: 'DELETE',
         url: `/users/${id}/follow`,
       }),
-      invalidatesTags: ['User'],
+      invalidatesTags: (__result, __error, id) => [{ type: 'User', id }, 'User'],
     }),
   }),
 });

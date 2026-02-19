@@ -8,6 +8,7 @@ export interface User {
   posts: PostListItem[];
   followers: UserData[];
   followees: UserData[];
+  followed?: boolean;
 }
 
 export interface UserData {

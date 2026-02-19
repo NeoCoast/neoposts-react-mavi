@@ -39,7 +39,7 @@ const Users = () => {
     }
   }, [isPageInvalid, setSearchParams, searchParams]);
 
-  const { data, error, isLoading, refetch } = useGetUsersQuery({
+  const { data, error, isLoading, isFetching, refetch } = useGetUsersQuery({
     search: debouncedSearch || undefined,
     page,
     per_page: PER_PAGE_DEFAULT,
@@ -159,7 +159,7 @@ const Users = () => {
 
             {!isLoading && !error && totalCount > 0 && (
               <>
-                <UsersList users={displayedUsers} />
+                <UsersList users={displayedUsers} areUsersLoading={isFetching} />
                 {shouldShowPagination && (
                   <Pagination
                     page={page}

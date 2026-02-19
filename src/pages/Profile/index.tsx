@@ -18,7 +18,7 @@ import LogOut from '@/components/LogOut';
 import './styles.scss';
 
 const Profile = () => {
-  const { data, isLoading, error, refetch } = useGetMeQuery();
+  const { data, isLoading, isFetching, error, refetch } = useGetMeQuery();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
@@ -86,6 +86,8 @@ const Profile = () => {
             following={data.followees ?? []}
             followers={data.followers ?? []}
             onBack={() => navigate(ROUTES.HOME)}
+            followed={data.followed}
+            isFetching={isFetching}
             onRetry={refetch}
           />
         </div>
