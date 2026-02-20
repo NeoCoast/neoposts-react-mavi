@@ -79,7 +79,7 @@ export interface PostProps {
 
 export interface PostsListProps {
   items: PostListItem[];
-  fetchMore: VoidFunction;
+  fetchMore?: VoidFunction;
   hasMore: boolean;
   loadedCount: number;
   totalCount?: number;

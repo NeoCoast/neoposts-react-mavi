@@ -7,14 +7,12 @@ import PostFooter from '@/components/PostFooter';
 import './styles.scss';
 
 const Post = ({ post, showContent = true }: PostProps) => {
-  const title = post.title;
-  const content = post.body;
-  const publishedAt = post.publishedAt;
+  const { title, body, publishedAt } = post;
 
   return (
     <article className="post">
       <PostTitle title={title} />
-      {showContent && <PostContent content={content} />}
+      {showContent && <PostContent content={body} />}
       <PostFooter publishedAt={publishedAt} />
     </article>
   );

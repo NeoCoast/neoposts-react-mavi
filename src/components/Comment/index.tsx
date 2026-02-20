@@ -49,13 +49,12 @@ const CommentComponent = ({ comment }: CommentComponentProps) => {
           <Button
             variant="icon"
             className="post__detail-list-comment-actions-like"
-            title={(
-              <span className="post__footer-button">
-                <IoIosHeartEmpty />
-                <span>{comment.likesCount}</span>
-              </span>
-            )}
-          />
+          >
+            <span className="post__footer-button">
+              <IoIosHeartEmpty />
+              {comment.likesCount}
+            </span>
+          </Button>
         </div>
       </div>
     </article>

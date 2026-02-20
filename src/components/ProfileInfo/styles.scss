@@ -133,18 +133,6 @@
       margin-bottom: 16px;
       box-shadow: none;
     }
-
-    &-empty {
-      padding: 36px 20px;
-      text-align: center;
-
-      &-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: $color-text;
-        margin: 0 0 8px 0;
-      }
-    }
   }
 
   &-stats {

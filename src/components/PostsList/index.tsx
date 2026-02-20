@@ -12,7 +12,7 @@ import './styles.scss';
 
 const PostsList = ({
   items,
-  fetchMore,
+  fetchMore = () => {},
   hasMore,
   loadedCount,
   totalCount,
@@ -71,7 +71,6 @@ const PostsList = ({
           <Button
             variant="primary"
             onClick={onRetry}
-            title="Retry"
           />
         </div>
       )}

@@ -82,7 +82,6 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
             reset();
             closeModal();
           }}
-          title="X"
         />
       </div>
 
@@ -120,7 +119,6 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
 
             <Button
               type="submit"
-              title="Post"
               loading={isLoading}
               disabled={!isValid || isTitleTooLong}
               className="modal__main-content-post-btn"

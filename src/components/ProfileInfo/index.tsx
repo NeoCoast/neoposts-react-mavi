@@ -14,6 +14,7 @@ import { notify } from '@/components/Toaster/notify';
 import Button from '@/components/Button';
 import PostsList from '@/components/PostsList';
 import UsersList from '@/components/UsersList';
+import EmptyState from '@/components/EmptyState';
 
 import './styles.scss';
 
@@ -33,7 +34,6 @@ type MyProfileInfoProps = {
   onBack: () => void;
   onRetry: () => void;
 };
-
 const ProfileInfo = ({
   name,
   email,
@@ -51,10 +51,8 @@ const ProfileInfo = ({
   onRetry,
 }: MyProfileInfoProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data: me } = useGetMeQuery();
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();
-
   const [followersCountState, setFollowersCountState] = useState<number>(followersCount);
   const [followingCountState] = useState<number>(followingCount);
   const [isLoadingFollowingMutation, setIsLoadingFollowingMutation] = useState(false);
@@ -74,12 +72,6 @@ const ProfileInfo = ({
   const tabToIndex: Record<string, number> = { posts: 0, following: 1, followers: 2 };
   const indexToTab = ['posts', 'following', 'followers'];
   const selectedIndex = tabToIndex[tabParam] ?? 0;
-
-  const sortedPosts = [...posts].sort((a: PostListItem, b: PostListItem) => {
-    const dateA = new Date(a.publishedAt).getTime();
-    const dateB = new Date(b.publishedAt).getTime();
-    return dateB - dateA;
-  });
 
   const handleFollow = async () => {
     if (!userId) return;
@@ -159,13 +151,10 @@ const ProfileInfo = ({
         className="my-profile__card-back"
         aria-label="Back"
         onClick={onBack}
-        title={
-          <>
-            <IoIosArrowBack />
-            <span>Back</span>
-          </>
-        }
-      />
+      >
+        <IoIosArrowBack />
+        Back
+      </Button>
 
       <header className="my-profile__card-header">
         <img
@@ -180,13 +169,14 @@ const ProfileInfo = ({
         </div>
 
 
-        {!isOwn && me?.id !== userId && followed !== undefined && (
+        {!isOwn && (
           <div className="my-profile__card-header-action">
             <Button
-              title={handleButtonText()}
               variant={handleButtonColor()}
               onClick={handleButtonClick}
-            />
+            >
+              {handleButtonText()}
+            </Button>
           </div>
         )}
       </header>
@@ -197,6 +187,7 @@ const ProfileInfo = ({
         selectedIndex={selectedIndex}
         onSelect={(index: number) => {
           const tab = indexToTab[index] ?? 'posts';
+
           setSearchParams({ tab });
         }}
       >
@@ -222,17 +213,14 @@ const ProfileInfo = ({
         <section className="my-profile__card-posts">
           <TabPanel>
             {posts.length === 0 ? (
-              <div className="my-profile__card-posts-empty">
-                <p className="my-profile__card-posts-empty-title">
-                  {isOwn ? 'You have no posts yet' : "This user hasn't published any posts yet"}
-                </p>
-              </div>
+              <EmptyState
+                title={isOwn ? 'You have no posts yet' : "This user hasn't published any posts yet"}
+              />
             ) : (
               <PostsList
-                items={sortedPosts}
-                fetchMore={() => { }}
+                items={posts}
                 hasMore={false}
-                showContent={true}
+                showContent
                 loadedCount={posts.length}
                 totalCount={posts.length}
                 onRetry={onRetry}
@@ -242,11 +230,9 @@ const ProfileInfo = ({
 
           <TabPanel>
             {following.length === 0 ? (
-              <div className="my-profile__card-posts-empty">
-                <p className="my-profile__card-posts-empty-title">
-                  {isOwn ? 'You are not following anyone' : 'This user is not following anyone'}
-                </p>
-              </div>
+              <EmptyState
+                title={isOwn ? 'You are not following anyone' : 'This user is not following anyone'}
+              />
             ) : (
               <UsersList users={following} />
             )}
@@ -254,11 +240,9 @@ const ProfileInfo = ({
 
           <TabPanel>
             {followers.length === 0 ? (
-              <div className="my-profile__card-posts-empty">
-                <p className="my-profile__card-posts-empty-title">
-                  {isOwn ? 'You have no followers' : 'This user has no followers yet'}
-                </p>
-              </div>
+              <EmptyState
+                title={isOwn ? 'You have no followers' : 'This user has no followers yet'}
+              />
             ) : (
               <UsersList users={followers} />
             )}

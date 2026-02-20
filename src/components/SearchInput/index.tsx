@@ -42,9 +42,10 @@ const SearchInput = ({
             variant='icon'
             className="search_input-cross"
             onClick={onClear}
-            title={<RxCross1 />}
             aria-label="Clear search"
-          />
+          >
+            <RxCross1 />
+          </Button>
         </div>
       )}
     </div>

@@ -48,16 +48,15 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
 
         <Button
           className="profile__sidebar-card-newPost"
-          title={
-            <span className="profile__sidebar-card-newPost-content">
-              <FaPlus className="profile__sidebar-card-newPost-content-icon" />
-              <span>New Post</span>
-            </span>
-          }
           onClick={() => {
             dispatch(openCreatePostModal());
           }}
-        />
+        >
+          <span className="profile__sidebar-card-newPost-content">
+            <FaPlus className="profile__sidebar-card-newPost-content-icon" />
+            New Post
+          </span>
+        </Button>
 
         <CreatePostModal
           isOpen={isOpen}
@@ -66,7 +65,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
         <div className="profile__sidebar-card-stats">
           {stats.map(({ title, value, tab }) => (
             <Link
-              to={`${ROUTES.MY_PROFILE}?tab=${tab}`}
+              to={{ pathname: ROUTES.MY_PROFILE, search: `?tab=${tab}` }}
               key={title}
               className="profile__sidebar-card-stats-stat profile__sidebar-card-stats-link"
             >

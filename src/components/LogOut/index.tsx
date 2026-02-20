@@ -35,14 +35,11 @@ const LogOut = () => {
       onClick={handleLogout}
       loading={isLoading}
       disabled={isLoading}
-      title={
-        <>
-          <MdLogout />
-          <span>Sign Out</span>
-        </>
-      }
       className="btn-logout"
-    />
+    >
+      <MdLogout />
+      Sign Out
+    </Button>
   );
 };
 

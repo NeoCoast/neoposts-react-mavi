@@ -123,12 +123,13 @@ const Signup = () => {
 
             <Button
               type="submit"
-              title="Sign Up"
               loading={isLoading}
               disabled={!isValid}
               variant="primary"
               className="signup__register-container-form-btnSignUp"
-            />
+            >
+              Sign Up
+            </Button>
 
             <div className="signup__register-container-form-separator">
               <hr className='signup__register-container-form-separator-line' /> <span>or</span> <hr className='signup__register-container-form-separator-line' />
@@ -137,14 +138,11 @@ const Signup = () => {
             <Button
               variant="secondary"
               onClick={() => navigate(ROUTES.LOGIN)}
-              title={(
-                <>
-                  Already have an account?
-                  <span className="signup__register-container-form-btnLogin-span"> Log in</span>
-                </>
-              )}
               className="signup__register-container-form-btnLogin"
-            />
+            >
+              Already have an account?
+              <span className="signup__register-container-form-btnLogin-span"> Log in</span>
+            </Button>
           </form>
         </div>
       </div>

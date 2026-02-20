@@ -53,8 +53,7 @@ const Profile = () => {
           <p>Unable to load profile. Please try again.</p>
           <Button
             variant="primary"
-            title="Retry"
-            onClick={() => refetch()}
+            onClick={refetch}
           />
         </div>
       )}
@@ -64,16 +63,15 @@ const Profile = () => {
           <div className="my-profile__content-buttons">
             <Button
               className="my-profile__content-buttons-newPost"
-              title={
-                <span className="my-profile__content-buttons-newPost-content">
-                  <FaPlus className="my-profile__content-buttons-newPost-content-icon" />
-                  New Post
-                </span>
-              }
               onClick={() => {
                 dispatch(openCreatePostModal());
               }}
-            />
+            >
+              <span className="my-profile__content-buttons-newPost-content">
+                <FaPlus className="my-profile__content-buttons-newPost-content-icon" />
+                New Post
+              </span>
+            </Button>
             <LogOut />
           </div>
           <ProfileInfo

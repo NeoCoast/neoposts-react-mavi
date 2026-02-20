@@ -115,11 +115,12 @@ const UserListItem = ({ user, areUsersLoading = false }: { user: UserData, areUs
 
       {user.followed !== undefined && me?.id !== user.id && (
         <Button
-          title={handleButtonText()}
           className="users_list-item-follow"
           variant={handleButtonColor()}
           onClick={handleButtonClick}
-        />
+        >
+          {handleButtonText()}
+        </Button>
       )}
     </div>
   );

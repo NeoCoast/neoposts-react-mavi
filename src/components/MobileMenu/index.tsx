@@ -41,9 +41,10 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
             variant="icon"
             className="mobileMenu__panel-header-close"
             aria-label="Close menu"
-            title={<span className="mobileMenu__panel-header-close-icon">✕</span>}
             onClick={onClose}
-          />
+          >
+            <span className="mobileMenu__panel-header-close-icon">✕</span>
+          </Button>
         </div>
         <div className="mobileMenu__icons">
           <div className="mobileMenu__icons-navbar">
@@ -52,8 +53,9 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
               className="mobileMenu__icons-navbar-iconBtn"
               aria-label="People"
               onClick={goUsers}
-              title={<GoPeople />}
-            />
+            >
+              <GoPeople />
+            </Button>
           </div>
         </div>
         <div className="mobileMenu__content">

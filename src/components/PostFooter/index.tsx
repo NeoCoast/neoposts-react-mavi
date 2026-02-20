@@ -25,24 +25,22 @@ const PostFooter = ({ publishedAt, likesCount, commentsCount, label }: PostFoote
         <Button
           variant="icon"
           className="post__footer-icons-heart"
-          title={(
-            <span className="post__footer-button">
-              <IoIosHeartEmpty />
-              {hasLikes && <span className="post__footer-count">{likesCount}</span>}
-            </span>
-          )}
-        />
+        >
+          <span className="post__footer-button">
+            <IoIosHeartEmpty />
+            {hasLikes && <span className="post__footer-count">{likesCount}</span>}
+          </span>
+        </Button>
 
         <Button
           variant="icon"
           className="post__footer-icons-comment"
-          title={(
-            <span className="post__footer-button">
-              <BiSolidComment />
-              {hasComments && <span className="post__footer-count">{commentsCount}</span>}
-            </span>
-          )}
-        />
+        >
+          <span className="post__footer-button">
+            <BiSolidComment />
+            {hasComments && <span className="post__footer-count">{commentsCount}</span>}
+          </span>
+        </Button>
       </div>
     </footer>
   );
