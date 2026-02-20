@@ -42,7 +42,7 @@ export interface PostComment {
 export interface Post {
   id: string | number;
   title: string;
-  content: string;
+  body: string;
   publishedAt: string;
   likesCount?: number;
   commentsCount?: number;
@@ -51,7 +51,6 @@ export interface Post {
 
 export interface Author {
   name?: string;
-  lastName?: string;
   email?: string;
   profilePhoto?: string;
   username?: string;
@@ -63,6 +62,7 @@ export interface PostListItem extends Post {
 
 export interface PostDetailLocationState {
   post?: PostListItem;
+  from?: string;
 }
 
 export interface PostDetailRouteParams extends Record<string, string | undefined> {
@@ -71,6 +71,7 @@ export interface PostDetailRouteParams extends Record<string, string | undefined
 
 export interface PostProps {
   post: Post;
+  showContent?: boolean;
 }
 
 export interface PostsListProps {
@@ -81,18 +82,17 @@ export interface PostsListProps {
   totalCount?: number;
   pageError?: string | null;
   onRetry: () => void;
+  showContent?: boolean;
 }
 
 export interface AuthorDetailsProps {
   name?: Author['name'];
-  lastName?: Author['lastName'];
   email?: Author['email'];
   profilePhoto?: Author['profilePhoto'];
 }
 
 export interface PostTitleProps {
   name?: Author['name'];
-  lastName?: Author['lastName'];
   title: string;
 }
 

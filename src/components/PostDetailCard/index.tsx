@@ -35,7 +35,7 @@ function PostDetailCard({
   publishedAtLabel,
   onBack,
 }: PostDetailCardProps) {
-  const authorFullName = getFullName(post.author.name, post.author.lastName);
+  const authorFullName = getFullName(post.author.name);
   const authorAlt = authorFullName || 'Author avatar';
   const authorEmail = post.author.email ?? 'email unavailable';
   const authorDisplayName = authorFullName || 'Unknown Author';

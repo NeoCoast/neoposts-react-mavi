@@ -16,7 +16,7 @@ type CommentComponentProps = {
 };
 
 const CommentComponent = ({ comment }: CommentComponentProps) => {
-  const commentFullName = getFullName(comment.author.name, comment.author.lastName);
+  const commentFullName = getFullName(comment.author.name);
   const commentAlt = commentFullName || 'Comment author';
   const mention = formatMention(comment.author);
 

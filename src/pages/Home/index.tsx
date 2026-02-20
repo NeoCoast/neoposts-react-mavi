@@ -62,7 +62,6 @@ const Home = () => {
   };
 
   const hasMore = Boolean(data?.pagination?.nextPage);
-
   const loadedCount = allPosts.length;
   const totalCount = data?.pagination?.totalCount;
 

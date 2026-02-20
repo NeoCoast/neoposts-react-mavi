@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ThreeDots } from 'react-loader-spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
+import type { PostsListProps } from '@/ts/interfaces';
 
 import Post from '@/components/Post';
 import AuthorDetails from '@/components/Post/AuthorDetails';
 import Button from '@/components/Button';
-
-import type { PostsListProps } from '@/ts/interfaces';
 
 import './styles.scss';
 
@@ -18,7 +18,9 @@ const PostsList = ({
   totalCount,
   pageError,
   onRetry,
+  showContent = false,
 }: PostsListProps) => {
+  const location = useLocation();
 
   return (
     <div className="posts__list">
@@ -46,18 +48,23 @@ const PostsList = ({
       >
         {items.map((post) => (
           <article key={post.id} className="posts__list-item">
-            <Link to={`/posts/${post.id}`} state={{ post }} className="posts__list-item-link">
+            <Link
+              to={`/posts/${post.id}`}
+              state={{ post, from: location.pathname }}
+              className="posts__list-item-link"
+            >
               <AuthorDetails
-                name={post.author.name}
-                lastName={post.author.lastName}
-                email={post.author.email}
-                profilePhoto={post.author.profilePhoto}
+                name={post.author?.name}
+                email={post.author?.email}
+                profilePhoto={post.author?.profilePhoto}
               />
-              <Post post={post} />
+
+              <Post post={post} showContent={showContent} />
             </Link>
           </article>
         ))}
       </InfiniteScroll>
+
       {pageError && (
         <div className="posts__list-error">
           <p>{pageError}</p>
@@ -68,7 +75,8 @@ const PostsList = ({
           />
         </div>
       )}
-      {totalCount && (
+
+      {typeof totalCount === 'number' && (
         <div className="posts__list-progress">
           {loadedCount} / {totalCount} posts loaded
         </div>

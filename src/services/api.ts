@@ -42,6 +42,7 @@ export const api = createApi({
     }),
     getMe: builder.query<any, void>({
       query: () => 'users/me',
+      providesTags: ['User'],
     }),
     logOut: builder.mutation<void, void>({
       query: () => ({
@@ -95,7 +96,7 @@ export const api = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['Post'],
+      invalidatesTags: ['Post', 'User'],
     }),
     getPost: builder.query({
       query: (id: number) => ({
