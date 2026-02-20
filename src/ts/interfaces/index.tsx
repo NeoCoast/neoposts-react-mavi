@@ -44,7 +44,7 @@ export interface PostComment {
   content: string;
   publishedAt?: string;
   likesCount?: number;
-  author: Author;
+  author: UserData;
 }
 
 export interface Post {
@@ -57,10 +57,8 @@ export interface Post {
   comments?: PostComment[];
 }
 
-export type Author = UserData;
-
 export interface PostListItem extends Post {
-  author: Author;
+  author: UserData;
 }
 
 export interface PostDetailLocationState {
@@ -89,13 +87,13 @@ export interface PostsListProps {
 }
 
 export interface AuthorDetailsProps {
-  name?: Author['name'];
-  email?: Author['email'];
-  profilePhoto?: Author['profilePhoto'];
+  name?: UserData['name'];
+  email?: UserData['email'];
+  profilePhoto?: UserData['profilePhoto'];
 }
 
 export interface PostTitleProps {
-  name?: Author['name'];
+  name?: UserData['name'];
   title: string;
 }
 

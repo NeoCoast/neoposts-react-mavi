@@ -214,7 +214,7 @@ const ProfileInfo = ({
           <TabPanel>
             {posts.length === 0 ? (
               <EmptyState
-                title={isOwn ? 'You have no posts yet' : "This user hasn't published any posts yet"}
+                title={`${isOwn ? 'You have' : 'This user has'} no posts`}
               />
             ) : (
               <PostsList
@@ -231,7 +231,7 @@ const ProfileInfo = ({
           <TabPanel>
             {following.length === 0 ? (
               <EmptyState
-                title={isOwn ? 'You are not following anyone' : 'This user is not following anyone'}
+                title={`${isOwn ? 'You are' : 'This user is'} following anyone`}
               />
             ) : (
               <UsersList users={following} />
@@ -241,7 +241,7 @@ const ProfileInfo = ({
           <TabPanel>
             {followers.length === 0 ? (
               <EmptyState
-                title={isOwn ? 'You have no followers' : 'This user has no followers yet'}
+                title={`${isOwn ? 'You have no' : 'This user has no'} followers`}
               />
             ) : (
               <UsersList users={followers} />

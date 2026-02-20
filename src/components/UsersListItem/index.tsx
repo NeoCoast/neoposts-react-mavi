@@ -1,4 +1,4 @@
-import { FC, JSX, useState } from "react";
+import { JSX, useState } from "react";
 import { BsPersonCheck } from "react-icons/bs";
 import { GoPersonAdd } from "react-icons/go";
 import { Link } from "react-router-dom";
