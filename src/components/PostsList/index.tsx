@@ -20,7 +20,7 @@ const PostsList = ({
   onRetry,
   showContent = false,
 }: PostsListProps) => {
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   return (
     <div className="posts__list">
@@ -42,7 +42,7 @@ const PostsList = ({
         }
         endMessage={
           <p className="posts__list-infiniteScroll-endMessage">
-            <b>Yay! You have seen it all</b>
+            Yay! You have seen it all
           </p>
         }
       >
@@ -50,7 +50,7 @@ const PostsList = ({
           <article key={post.id} className="posts__list-item">
             <Link
               to={`/posts/${post.id}`}
-              state={{ post, from: location.pathname }}
+              state={{ post, from: pathname }}
               className="posts__list-item-link"
             >
               <AuthorDetails

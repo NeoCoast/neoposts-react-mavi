@@ -235,7 +235,6 @@ const ProfileInfo = ({
                 showContent={true}
                 loadedCount={posts.length}
                 totalCount={posts.length}
-                pageError={undefined}
                 onRetry={onRetry}
               />
             )}

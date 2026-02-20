@@ -79,12 +79,12 @@ export interface PostProps {
 
 export interface PostsListProps {
   items: PostListItem[];
-  fetchMore: () => void;
+  fetchMore: VoidFunction;
   hasMore: boolean;
   loadedCount: number;
   totalCount?: number;
   pageError?: string | null;
-  onRetry: () => void;
+  onRetry: VoidFunction;
   showContent?: boolean;
 }
 
@@ -141,7 +141,7 @@ export interface ProfileSideBarProps {
 
 export interface CreateModalProps {
   isOpen: boolean;
-  closeModal: () => void;
+  closeModal: VoidFunction;
 };
 
 export interface CreatePostFormData {
@@ -151,7 +151,7 @@ export interface CreatePostFormData {
 
 export interface ModalProps {
   isOpen: boolean;
-  closeModal: () => void;
+  closeModal: VoidFunction;
 };
 
 export interface FormData {
@@ -161,13 +161,13 @@ export interface FormData {
 
 export interface CreatePostProps {
   isOpen: boolean;
-  closeModal: () => void;
+  closeModal: VoidFunction;
 }
 
 export interface SearchBarProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onClear: () => void;
+  onClear: VoidFunction;
   placeholder?: string;
   ariaLabel?: string;
   inputName?: string;
