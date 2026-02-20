@@ -4,6 +4,7 @@ const ROUTES = {
   SIGNUP: '/signup',
   POST: '/posts/:id',
   USERS: '/users',
+  USER: '/users/:id',
   MY_PROFILE: '/my-profile',
 }
 

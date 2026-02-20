@@ -32,24 +32,20 @@
 
   @include tablet {
     max-width: calc(100% - 40px);
-    margin: 0 auto;
-    padding: 20px;
   }
 
   @include mobile {
     max-width: calc(100% - 10px);
-    margin: 0 20px;
-    padding: 16px;
 
     .my-profile__card-stats {
       &-item {
         .value {
-          font-size: 16px;
+          font-size: 12px;
           font-weight: 600;
         }
 
         .label {
-          font-size: 16px;
+          font-size: 12px;
           font-weight: 600;
         }
       }
@@ -150,6 +146,16 @@
     justify-content: space-around;
     text-align: center;
     position: relative;
+
+    @include mobile {
+      flex-direction: row;
+      gap: 18px;
+      align-items: center;
+
+      &-item {
+        padding-bottom: 12px;
+      }
+    }
 
     &-item {
       display: flex;

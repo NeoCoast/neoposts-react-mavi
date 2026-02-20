@@ -13,6 +13,7 @@ import Signup from '@/pages/Signup';
 import NotFound from '@/pages/NotFound';
 import PostDetail from '@/pages/PostDetail';
 import MyProfile from '@/pages/Profile';
+import UserProfile from '@/pages/UserProfile';
 
 import './App.scss';
 
@@ -25,6 +26,7 @@ const App = () => {
         <Route element={<Layout redirectPath={ROUTES.LOGIN} />}>
           <Route path={ROUTES.HOME} element={<Home />} />
           <Route path={ROUTES.USERS} element={<Users />} />
+          <Route path={ROUTES.USER} element={<UserProfile />} />
           <Route path={ROUTES.POST} element={<PostDetail />} />
           <Route path={ROUTES.MY_PROFILE} element={<MyProfile />} />
         </Route>

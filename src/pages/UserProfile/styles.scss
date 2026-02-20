@@ -1,0 +1,57 @@
+.user-profile {
+  color: $color-text;
+
+  &__layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    column-gap: 20px;
+    align-items: start;
+    padding: 32px 60px 60px;
+    margin-top: 64px;
+
+    @include laptop {
+      padding: 32px 40px 48px;
+      column-gap: 28px;
+    }
+
+    @include tablet {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: 24px 20px 40px;
+      margin-top: 72px;
+    }
+
+    &-sidebar {
+      width: 100%;
+
+      @include tablet {
+        display: none;
+      }
+    }
+
+    &-userInfo {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-top: 50px;
+
+      @include tablet {
+        align-self: center;
+        width: min(100%, 90vw);
+      }
+
+      @include mobile {
+        width: min(100%, 88vw);
+      }
+
+      &-error {
+        color: $color-error;
+        font-size: 18px;
+        text-align: center;
+        margin-top: 20px;
+      }
+    }
+  }
+}

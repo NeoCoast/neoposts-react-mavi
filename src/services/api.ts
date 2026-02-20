@@ -38,6 +38,7 @@ export const api = createApi({
         const queryString = queryParams.toString();
         return queryString ? `feed?${queryString}` : 'feed';
       },
+      keepUnusedDataFor: 0,
       providesTags: ['Post'],
     }),
     getMe: builder.query<any, void>({
@@ -122,6 +123,13 @@ export const api = createApi({
         };
       },
     }),
+    getUser: builder.query<User, string | number>({
+      query: (id) => ({
+        method: 'GET',
+        url: `/users/${id}`,
+      }),
+      providesTags: ['User'],
+    }),
   }),
 });
 
@@ -134,5 +142,6 @@ export const {
   useLogInMutation,
   useSignupMutation,
   useCreatePostMutation,
+  useGetUserQuery,
   useGetUsersQuery,
 } = api;

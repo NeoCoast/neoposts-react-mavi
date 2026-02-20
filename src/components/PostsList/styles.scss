@@ -5,6 +5,7 @@
   max-width: 752px;
   margin: 0 auto;
   border-radius: 25px;
+  overflow: hidden;
   box-shadow: $shadow-elevation-1;
   padding: 30px;
   display: flex;
@@ -45,7 +46,7 @@
     &:focus-visible {
       box-shadow: $shadow-elevation-1;
       transform: translateY(-2px);
-      border-color: transparent;
+      border-color: rgba($color-primary, 0.12);
     }
 
     &:focus-visible {

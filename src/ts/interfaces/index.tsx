@@ -5,10 +5,17 @@ export interface User {
   id: string | number;
   name: string;
   email: string;
-  posts?: any[] | number;
-  followers?: any[] | number;
-  following?: any[] | number;
-  followed?: any[] | number;
+  posts: PostListItem[];
+  followers: UserData[];
+  following: UserData[];
+}
+
+export interface UserData {
+  id: string | number;
+  name: string;
+  email: string;
+  profilePhoto?: string;
+  followed?: boolean;
 }
 
 export interface Profile {
@@ -49,12 +56,7 @@ export interface Post {
   comments?: PostComment[];
 }
 
-export interface Author {
-  name?: string;
-  email?: string;
-  profilePhoto?: string;
-  username?: string;
-}
+export type Author = UserData;
 
 export interface PostListItem extends Post {
   author: Author;
