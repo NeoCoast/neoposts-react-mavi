@@ -75,6 +75,12 @@ export interface PostProps {
 
 export interface PostsListProps {
   items: PostListItem[];
+  fetchMore: () => void;
+  hasMore: boolean;
+  loadedCount: number;
+  totalCount?: number;
+  pageError?: string | null;
+  onRetry: () => void;
 }
 
 export interface AuthorDetailsProps {

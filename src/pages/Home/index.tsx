@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Oval } from 'react-loader-spinner';
 
 import Navbar from '@/components/Navbar';
@@ -6,17 +7,64 @@ import PostsList from '@/components/PostsList';
 
 import { useGetFeedQuery } from '@/services/api';
 import { ApiErrorResponse } from '@/ts/types/errors';
+import { PostListItem } from '@/ts/interfaces';
 
 import './styles.scss';
 
 const Home = () => {
   const isAuthenticated = Boolean(localStorage.getItem('access-token'));
 
-  const { data, isLoading, error } = useGetFeedQuery(undefined, {
-    skip: !isAuthenticated,
-  });
+  const [page, setPage] = useState(1);
+  const [pageError, setPageError] = useState<string | null>(null);
+  const [allPosts, setAllPosts] = useState<PostListItem[]>([]);
 
-  const posts = data?.posts ?? [];
+  const {
+    data,
+    isLoading,
+    isFetching,
+    error,
+    refetch,
+  } = useGetFeedQuery(
+    { page, per_page: 25 },
+    { skip: !isAuthenticated }
+  );
+
+  useEffect(() => {
+    if (error) {
+      setPageError(
+        (error as ApiErrorResponse)?.data?.message ??
+        'Something went wrong while loading more posts.'
+      );
+    } else {
+      setPageError(null);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (data?.posts) {
+      setAllPosts((prev) => [...prev, ...data.posts]);
+    } else if (page === 1) {
+      setAllPosts([]);
+    }
+  }, [data]);
+
+  const fetchMore = () => {
+    if (isFetching || !data?.pagination?.nextPage) return;
+
+    setTimeout(() => {
+      setPage(data.pagination.nextPage);
+    }, 800);
+  };
+
+  const retryFetch = () => {
+    setPageError(null);
+    refetch();
+  };
+
+  const hasMore = Boolean(data?.pagination?.nextPage);
+
+  const loadedCount = allPosts.length;
+  const totalCount = data?.pagination?.totalCount;
 
   return (
     <div className="home">
@@ -47,14 +95,22 @@ const Home = () => {
             </div>
           )}
 
-          {!isLoading && !error && posts.length === 0 && (
+          {!isLoading && !error && allPosts.length === 0 && (
             <div className="home__layout-postsList-empty">
               No posts yet.
             </div>
           )}
 
-          {!isLoading && !error && posts.length > 0 && (
-            <PostsList items={posts} />
+          {!isLoading && !error && allPosts.length > 0 && (
+            <PostsList
+              items={allPosts}
+              fetchMore={fetchMore}
+              hasMore={hasMore}
+              loadedCount={loadedCount}
+              totalCount={totalCount}
+              pageError={pageError}
+              onRetry={retryFetch}
+            />
           )}
         </div>
       </div>
