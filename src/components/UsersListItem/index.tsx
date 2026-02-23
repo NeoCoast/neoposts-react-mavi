@@ -1,37 +1,36 @@
-import { JSX, useState } from "react";
-import { BsPersonCheck } from "react-icons/bs";
-import { GoPersonAdd } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { BsPersonCheck } from 'react-icons/bs';
+import { GoPersonAdd } from 'react-icons/go';
+import { Link } from 'react-router-dom';
 
-import { ROUTES } from "@/constants/routes";
-import { useFollowUserMutation, useGetMeQuery, useUnfollowUserMutation } from "@/services/api";
-import { UserData } from "@/ts/interfaces";
+import { ROUTES } from '@/constants/routes';
+import { useFollowUserMutation, useUnfollowUserMutation } from '@/services/api';
+import { UserData } from '@/ts/interfaces';
 
-import { notify } from "@/components/Toaster/notify";
-import Button from "@/components/Button";
+import { notify } from '@/components/Toaster/notify';
+import Button from '@/components/Button';
 
 import './styles.scss';
 
 const userProfilePhoto = new URL('@/assets/Icons/userProfilePhoto.svg', import.meta.url).href;
 
-const UserListItem = ({ user, areUsersLoading = false }: { user: UserData, areUsersLoading?: boolean }) => {
-  const [buttonState, setButtonState] = useState<{
-    color: 'primary' | 'secondary';
-    text: JSX.Element;
-  }>({
-    color: user.followed ? 'secondary' : 'primary',
-    text: user.followed ? <><BsPersonCheck /> Following</> : <><GoPersonAdd /> Follow</>
-  });
-
+const UserListItem = ({
+  user,
+  onUnfollow,
+  meId,
+}: {
+  user: UserData;
+  onUnfollow?: (userId: string | number) => void;
+  meId?: string | number;
+}) => {
   const [isLoadingFollowingMutation, setIsLoadingFollowingMutation] = useState(false);
+  const [isFollowedState, setIsFollowedState] = useState(user.followed);
 
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();
 
-  const { data: me } = useGetMeQuery();
-
   const redirectToProfile = (userId: string | number) => {
-    if (me?.id === userId) {
+    if (meId === userId) {
       return ROUTES.MY_PROFILE;
     }
 
@@ -42,7 +41,8 @@ const UserListItem = ({ user, areUsersLoading = false }: { user: UserData, areUs
     if (!user.id) return;
 
     setIsLoadingFollowingMutation(true);
-    setButtonState({ color: 'secondary', text: <><BsPersonCheck /> Following</> });
+
+    setIsFollowedState(true);
 
     try {
       await followUser(user.id).unwrap();
@@ -56,11 +56,12 @@ const UserListItem = ({ user, areUsersLoading = false }: { user: UserData, areUs
   const handleUnfollow = async () => {
     if (!user.id) return;
 
-    setButtonState({ color: 'primary', text: <><GoPersonAdd /> Follow</> });
+    setIsFollowedState(false);
     setIsLoadingFollowingMutation(true);
 
     try {
       await unfollowUser(user.id).unwrap();
+      onUnfollow?.(user.id);
     } catch (err) {
       notify.error('Unable to unfollow user.');
     } finally {
@@ -71,31 +72,15 @@ const UserListItem = ({ user, areUsersLoading = false }: { user: UserData, areUs
   const handleButtonClick = () => {
     if (isLoadingFollowingMutation) return;
 
-    if (buttonState.color === 'secondary') {
+    if (isFollowedState) {
       handleUnfollow();
     } else {
       handleFollow();
     }
   };
 
-  const handleButtonColor = () => {
-    if (isLoadingFollowingMutation || areUsersLoading) {
-      return buttonState.color;
-    }
-
-    return user.followed ? 'secondary' : 'primary';
-  }
-
-  const handleButtonText = () => {
-    if (isLoadingFollowingMutation || areUsersLoading) {
-      return buttonState.text;
-    }
-
-    return user.followed ? <><BsPersonCheck /> Following</> : <><GoPersonAdd /> Follow</>;
-  }
-
   return (
-    <div key={user.id} className="users_list-item">
+    <div className="users_list-item">
       <div className="users_list-item-left">
         <Link to={redirectToProfile(user.id)} className="users_list-item-left-link">
           <img
@@ -113,13 +98,13 @@ const UserListItem = ({ user, areUsersLoading = false }: { user: UserData, areUs
         </div>
       </div>
 
-      {user.followed !== undefined && me?.id !== user.id && (
+      {meId !== user.id && (
         <Button
           className="users_list-item-follow"
-          variant={handleButtonColor()}
+          variant={isFollowedState ? 'secondary' : 'primary'}
           onClick={handleButtonClick}
         >
-          {handleButtonText()}
+          {isFollowedState ? <><BsPersonCheck /> Following</> : <><GoPersonAdd /> Follow</>}
         </Button>
       )}
     </div>

@@ -1,12 +1,22 @@
 import { UserData } from '@/ts/interfaces';
+import { useGetMeQuery } from '@/services/api';
 import UserListItem from '@/components/UsersListItem';
 
-const UsersList = ({ users, areUsersLoading = false }: { users: UserData[]; areUsersLoading?: boolean }) => (
-  <div className="users_list">
-    {users.map((u) => (
-      <UserListItem key={u.id} user={u} areUsersLoading={areUsersLoading} />
-    ))}
-  </div>
-);
+const UsersList = ({
+  users,
+  onUnfollow,
+}: {
+  users: UserData[];
+  onUnfollow?: (userId: string | number) => void;
+}) => {
+  const { data: me } = useGetMeQuery();
+  return (
+    <div className="users_list">
+      {users.map((user) => (
+        <UserListItem key={user.id} user={user} onUnfollow={onUnfollow} meId={me?.id} />
+      ))}
+    </div>
+  );
+};
 
 export default UsersList;

@@ -1,4 +1,4 @@
-import { JSX, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { BsPersonCheck } from 'react-icons/bs';
 import { GoPersonAdd } from 'react-icons/go';
@@ -7,7 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
-import { useFollowUserMutation, useGetMeQuery, useUnfollowUserMutation } from '@/services/api';
+import { useFollowUserMutation, useUnfollowUserMutation } from '@/services/api';
 import { PostListItem, UserData } from '@/ts/interfaces';
 
 import { notify } from '@/components/Toaster/notify';
@@ -31,8 +31,8 @@ type MyProfileInfoProps = {
   userId?: string | number;
   followed?: boolean;
   isFetching?: boolean;
-  onBack: () => void;
-  onRetry: () => void;
+  onBack: VoidFunction;
+  onRetry: VoidFunction;
 };
 const ProfileInfo = ({
   name,
@@ -45,7 +45,7 @@ const ProfileInfo = ({
   followers = [],
   isOwn = true,
   userId,
-  followed = false,
+  followed,
   isFetching,
   onBack,
   onRetry,
@@ -53,44 +53,44 @@ const ProfileInfo = ({
   const [searchParams, setSearchParams] = useSearchParams();
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();
+
   const [followersCountState, setFollowersCountState] = useState<number>(followersCount);
-  const [followingCountState] = useState<number>(followingCount);
+  const [followingCountState, setFollowingCountState] = useState<number>(followingCount);
   const [isLoadingFollowingMutation, setIsLoadingFollowingMutation] = useState(false);
   const [isFollowedState, setIsFollowedState] = useState(followed);
-
-  const [buttonState, setButtonState] = useState<{
-    color: 'primary' | 'secondary';
-    text: JSX.Element;
-  }>({
-    color: followed ? 'secondary' : 'primary',
-    text: followed
-      ? <><BsPersonCheck /> Following</>
-      : <><GoPersonAdd /> Follow</>,
-  });
 
   const tabParam = searchParams.get('tab') ?? 'posts';
   const tabToIndex: Record<string, number> = { posts: 0, following: 1, followers: 2 };
   const indexToTab = ['posts', 'following', 'followers'];
   const selectedIndex = tabToIndex[tabParam] ?? 0;
 
+  useEffect(() => {
+    setFollowingCountState(following.length);
+  }, [following]);
+
+  useEffect(() => {
+    setFollowersCountState(followersCount);
+  }, [followersCount]);
+
+  useEffect(() => {
+    setFollowingCountState(followingCount);
+  }, [followingCount]);
+
+  useEffect(() => {
+    setIsFollowedState(followed);
+  }, [followed]);
+
+
   const handleFollow = async () => {
     if (!userId) return;
 
     setIsLoadingFollowingMutation(true);
-    setButtonState({
-      color: 'secondary',
-      text: <><BsPersonCheck /> Following</>
-    });
+    setIsFollowedState(true);
 
     try {
       await followUser(userId).unwrap();
-      setIsFollowedState(true);
-      setFollowersCountState(prev => prev + 1);
-      setButtonState({
-        color: 'secondary',
-        text: <><BsPersonCheck /> Following</>
-      });
 
+      setFollowersCountState(prev => prev + 1);
     } catch (err) {
       notify.error('Unable to follow user.');
     } finally {
@@ -101,15 +101,12 @@ const ProfileInfo = ({
   const handleUnfollow = async () => {
     if (!userId) return;
 
-    setButtonState({
-      color: 'primary',
-      text: <><GoPersonAdd /> Follow</>
-    });
+    setIsFollowedState(false);
     setIsLoadingFollowingMutation(true);
 
     try {
       await unfollowUser(userId).unwrap();
-      setIsFollowedState(false);
+
       setFollowersCountState(prev => prev - 1);
     } catch (err) {
       notify.error('Unable to unfollow user.');
@@ -128,21 +125,16 @@ const ProfileInfo = ({
     }
   };
 
-  const handleButtonColor = () => {
-    if (isLoadingFollowingMutation || isFetching) {
-      return buttonState.color;
+  const handleUnfollowFromList = async (id: string | number) => {
+    try {
+      await unfollowUser(id).unwrap();
+
+      setFollowingCountState(prev => prev - 1);
+
+    } catch (err) {
+      notify.error('Unable to unfollow user.');
     }
-
-    return isFollowedState ? 'secondary' : 'primary';
-  }
-
-  const handleButtonText = () => {
-    if (isLoadingFollowingMutation || isFetching) {
-      return buttonState.text;
-    }
-
-    return isFollowedState ? <><BsPersonCheck /> Following</> : <><GoPersonAdd /> Follow</>;
-  }
+  };
 
   return (
     <article className="my-profile__card">
@@ -172,10 +164,10 @@ const ProfileInfo = ({
         {!isOwn && (
           <div className="my-profile__card-header-action">
             <Button
-              variant={handleButtonColor()}
+              variant={isFollowedState ? 'secondary' : 'primary'}
               onClick={handleButtonClick}
             >
-              {handleButtonText()}
+              {isFollowedState ? <><BsPersonCheck /> Following</> : <><GoPersonAdd /> Follow</>}
             </Button>
           </div>
         )}
@@ -234,7 +226,13 @@ const ProfileInfo = ({
                 title={`${isOwn ? 'You are' : 'This user is'} following anyone`}
               />
             ) : (
-              <UsersList users={following} />
+              <UsersList
+                users={following.map((user) => ({
+                  ...user,
+                  followed: true,
+                  onUnfollow: () => handleUnfollowFromList(user.id),
+                }))}
+              />
             )}
           </TabPanel>
 
