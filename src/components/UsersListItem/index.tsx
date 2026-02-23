@@ -17,14 +17,15 @@ const userProfilePhoto = new URL('@/assets/Icons/userProfilePhoto.svg', import.m
 const UserListItem = ({
   user,
   onUnfollow,
+  onFollow,
   meId,
 }: {
   user: UserData;
   onUnfollow?: (userId: string | number) => void;
+  onFollow?: (userId: string | number) => void;
   meId?: string | number;
 }) => {
   const [isLoadingFollowingMutation, setIsLoadingFollowingMutation] = useState(false);
-  const [isFollowedState, setIsFollowedState] = useState(user.followed);
 
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();
@@ -42,10 +43,10 @@ const UserListItem = ({
 
     setIsLoadingFollowingMutation(true);
 
-    setIsFollowedState(true);
-
     try {
       await followUser(user.id).unwrap();
+
+      onFollow?.(user.id);
     } catch (err) {
       notify.error('Unable to follow user.');
     } finally {
@@ -56,11 +57,11 @@ const UserListItem = ({
   const handleUnfollow = async () => {
     if (!user.id) return;
 
-    setIsFollowedState(false);
     setIsLoadingFollowingMutation(true);
 
     try {
       await unfollowUser(user.id).unwrap();
+
       onUnfollow?.(user.id);
     } catch (err) {
       notify.error('Unable to unfollow user.');
@@ -72,7 +73,7 @@ const UserListItem = ({
   const handleButtonClick = () => {
     if (isLoadingFollowingMutation) return;
 
-    if (isFollowedState) {
+    if (user.followed) {
       handleUnfollow();
     } else {
       handleFollow();
@@ -101,10 +102,10 @@ const UserListItem = ({
       {meId !== user.id && (
         <Button
           className="users_list-item-follow"
-          variant={isFollowedState ? 'secondary' : 'primary'}
+          variant={user.followed ? 'secondary' : 'primary'}
           onClick={handleButtonClick}
         >
-          {isFollowedState ? <><BsPersonCheck /> Following</> : <><GoPersonAdd /> Follow</>}
+          {user.followed ? <><BsPersonCheck /> Following</> : <><GoPersonAdd /> Follow</>}
         </Button>
       )}
     </div>

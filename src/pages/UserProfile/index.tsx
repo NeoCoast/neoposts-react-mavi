@@ -75,7 +75,10 @@ const UserProfile = () => {
               <Button
                 variant="primary"
                 onClick={() => navigate(ROUTES.USERS)}
-              />
+              >
+                Back to Users
+              </Button>
+
             </div>
           )}
 

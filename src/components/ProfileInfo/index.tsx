@@ -54,8 +54,6 @@ const ProfileInfo = ({
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();
 
-  const [followersCountState, setFollowersCountState] = useState<number>(followersCount);
-  const [followingCountState, setFollowingCountState] = useState<number>(followingCount);
   const [isLoadingFollowingMutation, setIsLoadingFollowingMutation] = useState(false);
   const [isFollowedState, setIsFollowedState] = useState(followed);
 
@@ -65,21 +63,8 @@ const ProfileInfo = ({
   const selectedIndex = tabToIndex[tabParam] ?? 0;
 
   useEffect(() => {
-    setFollowingCountState(following.length);
-  }, [following]);
-
-  useEffect(() => {
-    setFollowersCountState(followersCount);
-  }, [followersCount]);
-
-  useEffect(() => {
-    setFollowingCountState(followingCount);
-  }, [followingCount]);
-
-  useEffect(() => {
     setIsFollowedState(followed);
   }, [followed]);
-
 
   const handleFollow = async () => {
     if (!userId) return;
@@ -89,8 +74,6 @@ const ProfileInfo = ({
 
     try {
       await followUser(userId).unwrap();
-
-      setFollowersCountState(prev => prev + 1);
     } catch (err) {
       notify.error('Unable to follow user.');
     } finally {
@@ -106,8 +89,6 @@ const ProfileInfo = ({
 
     try {
       await unfollowUser(userId).unwrap();
-
-      setFollowersCountState(prev => prev - 1);
     } catch (err) {
       notify.error('Unable to unfollow user.');
     } finally {
@@ -128,12 +109,13 @@ const ProfileInfo = ({
   const handleUnfollowFromList = async (id: string | number) => {
     try {
       await unfollowUser(id).unwrap();
-
-      setFollowingCountState(prev => prev - 1);
-
     } catch (err) {
       notify.error('Unable to unfollow user.');
     }
+  };
+
+  const handleFollowFromList = async (id: string | number) => {
+    await followUser(id).unwrap();
   };
 
   return (
@@ -190,12 +172,12 @@ const ProfileInfo = ({
           </Tab>
 
           <Tab className="my-profile__card-stats-item" selectedClassName="active">
-            <span className="value">{followingCountState}</span>
+            <span className="value">{followingCount}</span>
             <span className="label">Following</span>
           </Tab>
 
           <Tab className="my-profile__card-stats-item" selectedClassName="active">
-            <span className="value">{followersCountState}</span>
+            <span className="value">{followersCount}</span>
             <span className="label">Followers</span>
           </Tab>
         </TabList>
@@ -230,8 +212,8 @@ const ProfileInfo = ({
                 users={following.map((user) => ({
                   ...user,
                   followed: true,
-                  onUnfollow: () => handleUnfollowFromList(user.id),
                 }))}
+                onUnfollow={handleUnfollowFromList}
               />
             )}
           </TabPanel>
@@ -242,7 +224,14 @@ const ProfileInfo = ({
                 title={`${isOwn ? 'You have no' : 'This user has no'} followers`}
               />
             ) : (
-              <UsersList users={followers} />
+              <UsersList
+                users={followers.map((user) => ({
+                  ...user,
+                  followed: following.some((f) => f.id === user.id),
+                }))}
+                onUnfollow={handleUnfollowFromList}
+                onFollow={handleFollowFromList}
+              />
             )}
           </TabPanel>
         </section>

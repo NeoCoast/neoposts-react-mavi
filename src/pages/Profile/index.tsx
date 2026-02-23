@@ -18,7 +18,9 @@ import LogOut from '@/components/LogOut';
 import './styles.scss';
 
 const Profile = () => {
-  const { data, isLoading, isFetching, error, refetch } = useGetMeQuery();
+  const { data, isLoading, isFetching, error, refetch } = useGetMeQuery(undefined, {
+    skip: !Boolean(localStorage.getItem('access-token')),
+  });
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
@@ -54,7 +56,9 @@ const Profile = () => {
           <Button
             variant="primary"
             onClick={refetch}
-          />
+          >
+            Retry
+          </Button>
         </div>
       )}
 
@@ -87,6 +91,7 @@ const Profile = () => {
             followed={data.followed}
             isFetching={isFetching}
             onRetry={refetch}
+            userId={data.id}
           />
         </div>
       )}

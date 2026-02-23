@@ -23,8 +23,8 @@ const LogOut = () => {
         notify.error('Error logging out. Please try again.');
       }
     } finally {
-      dispatch(api.util.resetApiState());
       clearAuthTokens();
+      dispatch(api.util.resetApiState());
       navigate(ROUTES.LOGIN, { replace: true });
     }
   };
