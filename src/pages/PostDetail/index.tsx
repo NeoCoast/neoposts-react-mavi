@@ -72,7 +72,6 @@ function PostDetail() {
           <p>We couldn&apos;t load this post. Please try again later.</p>
           <Button
             className="post__detail-empty-home"
-            title="Go to home"
             onClick={handleGoHome}
           />
         </div>
@@ -85,7 +84,6 @@ function PostDetail() {
           <p>The requested post does not exist.</p>
           <Button
             className="post__detail-empty-home"
-            title="Go to home"
             onClick={handleGoHome}
           />
         </div>

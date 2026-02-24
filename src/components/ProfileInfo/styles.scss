@@ -69,6 +69,12 @@
     align-items: center;
     gap: 4px;
 
+    &-action {
+      background: transparent;
+      margin-left: auto;
+      margin-right: 8px;
+    }
+
     &-avatar {
       width: 90px;
       height: 90px;
@@ -126,18 +132,6 @@
       padding: 1rem;
       margin-bottom: 16px;
       box-shadow: none;
-    }
-
-    &-empty {
-      padding: 36px 20px;
-      text-align: center;
-
-      &-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: $color-text;
-        margin: 0 0 8px 0;
-      }
     }
   }
 

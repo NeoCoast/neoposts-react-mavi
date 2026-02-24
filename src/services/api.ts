@@ -33,15 +33,18 @@ export const api = createApi({
     getFeed: builder.query({
       query: (params?: { page?: number; per_page?: number }) => {
         const queryParams = new URLSearchParams();
+
         if (params?.page) queryParams.append('page', String(params.page));
         if (params?.per_page) queryParams.append('per_page', String(params.per_page));
+
         const queryString = queryParams.toString();
-        return queryString ? `feed?${queryString}` : 'feed';
+
+        return `feed?${queryString || ''}`;
       },
       keepUnusedDataFor: 0,
       providesTags: ['Post'],
     }),
-    getMe: builder.query<any, void>({
+    getMe: builder.query<User, void>({
       query: () => 'users/me',
       providesTags: ['User'],
     }),
@@ -128,7 +131,21 @@ export const api = createApi({
         method: 'GET',
         url: `/users/${id}`,
       }),
-      providesTags: ['User'],
+      providesTags: (__result, __error, id) => [{ type: 'User', id }],
+    }),
+    followUser: builder.mutation<void, string | number>({
+      query: (id) => ({
+        method: 'POST',
+        url: `/users/${id}/follow`,
+      }),
+      invalidatesTags: (__result, __error, id) => [{ type: 'User', id }, 'User'],
+    }),
+    unfollowUser: builder.mutation<void, string | number>({
+      query: (id) => ({
+        method: 'DELETE',
+        url: `/users/${id}/follow`,
+      }),
+      invalidatesTags: (__result, __error, id) => [{ type: 'User', id }, 'User'],
     }),
   }),
 });
@@ -144,4 +161,6 @@ export const {
   useCreatePostMutation,
   useGetUserQuery,
   useGetUsersQuery,
+  useFollowUserMutation,
+  useUnfollowUserMutation,
 } = api;

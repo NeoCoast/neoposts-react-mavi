@@ -20,7 +20,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
   name,
   email,
   posts,
-  following,
+  followees,
   followers
 }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,7 +28,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
 
   const stats = [
     { title: 'Posts', value: posts, tab: 'posts' },
-    { title: 'Following', value: following, tab: 'following' },
+    { title: 'Following', value: followees, tab: 'following' },
     { title: 'Followers', value: followers, tab: 'followers' },
   ];
 
@@ -48,16 +48,13 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
 
         <Button
           className="profile__sidebar-card-newPost"
-          title={
-            <span className="profile__sidebar-card-newPost-content">
-              <FaPlus className="profile__sidebar-card-newPost-content-icon" />
-              <span>New Post</span>
-            </span>
-          }
           onClick={() => {
             dispatch(openCreatePostModal());
           }}
-        />
+        >
+          <FaPlus className="profile__sidebar-card-newPost-content-icon" />
+          New Post
+        </Button>
 
         <CreatePostModal
           isOpen={isOpen}
@@ -66,7 +63,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
         <div className="profile__sidebar-card-stats">
           {stats.map(({ title, value, tab }) => (
             <Link
-              to={`${ROUTES.MY_PROFILE}?tab=${tab}`}
+              to={{ pathname: ROUTES.MY_PROFILE, search: `?tab=${tab}` }}
               key={title}
               className="profile__sidebar-card-stats-stat profile__sidebar-card-stats-link"
             >

@@ -34,15 +34,17 @@ const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, se
         <Link to={prevPage}>
           <Button
             className="pagination__btn"
-            title={<IoIosArrowBack />}
-          />
+          >
+            <IoIosArrowBack />
+          </Button>
         </Link>
       ) : (
         <Button
           className="pagination__btn"
           disabled
-          title={<IoIosArrowBack />}
-        />
+        >
+          <IoIosArrowBack />
+        </Button>
       )}
 
       <span className="pagination__info">
@@ -53,15 +55,17 @@ const Pagination: React.FC<PaginationProps> = ({ page, totalPages, className, se
         <Link to={nextPage}>
           <Button
             className="pagination__btn"
-            title={<IoIosArrowForward />}
-          />
+          >
+            <IoIosArrowForward />
+          </Button>
         </Link>
       ) : (
         <Button
           className="pagination__btn"
           disabled
-          title={<IoIosArrowForward />}
-        />
+        >
+          <IoIosArrowForward />
+        </Button>
       )}
 
     </div>

@@ -23,8 +23,8 @@ const LogOut = () => {
         notify.error('Error logging out. Please try again.');
       }
     } finally {
-      dispatch(api.util.resetApiState());
       clearAuthTokens();
+      dispatch(api.util.resetApiState());
       navigate(ROUTES.LOGIN, { replace: true });
     }
   };
@@ -35,14 +35,11 @@ const LogOut = () => {
       onClick={handleLogout}
       loading={isLoading}
       disabled={isLoading}
-      title={
-        <>
-          <MdLogout />
-          <span>Sign Out</span>
-        </>
-      }
       className="btn-logout"
-    />
+    >
+      <MdLogout />
+      Sign Out
+    </Button>
   );
 };
 

@@ -108,13 +108,10 @@ const Users = () => {
                   variant='icon'
                   className="users__layout-usersList-header-button"
                   onClick={() => navigate(ROUTES.HOME)}
-                  title={
-                    <>
-                      <IoIosArrowBack />
-                      <span>Back</span>
-                    </>
-                  }
-                />
+                >
+                  <IoIosArrowBack />
+                  <span>Back</span>
+                </Button>
               </div>
               <h2>Users</h2>
             </div>
@@ -147,8 +144,7 @@ const Users = () => {
                 <div>
                   <p>Unable to load users. Please try again.</p>
                   <Button
-                    title="Retry"
-                    onClick={() => refetch()}
+                    onClick={refetch}
                   />
                 </div>
               </div>

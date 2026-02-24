@@ -45,8 +45,9 @@ const Navbar = () => {
               className="navbar__icons-hamburger"
               aria-label="Open menu"
               onClick={openMenu}
-              title={<RxHamburgerMenu className="navbar__icons-iconBtn-icon" />}
-            />
+            >
+              <RxHamburgerMenu className="navbar__icons-iconBtn-icon" />
+            </Button>
           </div>
         )}
       </nav>

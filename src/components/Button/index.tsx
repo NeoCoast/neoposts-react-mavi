@@ -7,21 +7,21 @@ import './styles.scss';
 type ButtonProps = {
   loading?: boolean;
   variant?: 'primary' | 'secondary' | 'icon';
-  title: string | ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
   disabled?: boolean;
+  children?: ReactNode;
 };
 
 const Button: FC<ButtonProps> = ({
   disabled = false,
   loading = false,
-  title,
   onClick = () => { },
   type = 'button',
   className = '',
   variant = 'primary',
+  children,
 }) => (
   <button
     onClick={onClick}
@@ -42,7 +42,7 @@ const Button: FC<ButtonProps> = ({
           color="currentColor"
         />
       ) : (
-        title
+        children
       )}
     </span>
   </button>

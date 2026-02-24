@@ -7,7 +7,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 8px;
+    padding: 12px 4px 12px 8px;
     border-bottom: 1px solid $color-border-muted;
 
     @include tablet {
@@ -81,6 +81,7 @@
       padding-inline: 14px;
       min-width: 120px;
       height: 34px;
+      width: 150px;
 
       svg {
         font-size: 16px;

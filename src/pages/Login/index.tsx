@@ -71,12 +71,13 @@ const LogIn = () => {
             />
             <Button
               type="submit"
-              title="Log in"
               loading={isLoading}
               disabled={!isValid}
               className="login__register-container-form-btnLogin"
               variant="primary"
-            />
+            >
+              Log In
+            </Button>
             <div className="login__register-container-form-separator">
               <hr className='login__register-container-form-separator-line' /> <span>or</span> <hr className='login__register-container-form-separator-line' />
             </div>
@@ -84,14 +85,11 @@ const LogIn = () => {
             <Button
               variant="secondary"
               onClick={() => navigate(ROUTES.SIGNUP)}
-              title={(
-                <>
-                  Don&apos;t you have an account?
-                  <span className="login__register-container-form-btnSignup-span"> Sign up</span>
-                </>
-              )}
               className="login__register-container-form-btnSignup"
-            />
+            >
+              Don&apos;t you have an account?
+              <span className="login__register-container-form-btnSignup-span"> Sign up</span>
+            </Button>
           </form>
         </div>
       </div>

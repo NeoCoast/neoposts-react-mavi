@@ -7,7 +7,8 @@ export interface User {
   email: string;
   posts: PostListItem[];
   followers: UserData[];
-  following: UserData[];
+  followees: UserData[];
+  followed?: boolean;
 }
 
 export interface UserData {
@@ -22,7 +23,7 @@ export interface Profile {
   name: string;
   email: string;
   posts: number;
-  following: number;
+  followees: number;
   followers: number;
 }
 
@@ -43,7 +44,7 @@ export interface PostComment {
   content: string;
   publishedAt?: string;
   likesCount?: number;
-  author: Author;
+  author: UserData;
 }
 
 export interface Post {
@@ -56,10 +57,8 @@ export interface Post {
   comments?: PostComment[];
 }
 
-export type Author = UserData;
-
 export interface PostListItem extends Post {
-  author: Author;
+  author: UserData;
 }
 
 export interface PostDetailLocationState {
@@ -78,23 +77,23 @@ export interface PostProps {
 
 export interface PostsListProps {
   items: PostListItem[];
-  fetchMore: () => void;
+  fetchMore?: VoidFunction;
   hasMore: boolean;
   loadedCount: number;
   totalCount?: number;
   pageError?: string | null;
-  onRetry: () => void;
+  onRetry: VoidFunction;
   showContent?: boolean;
 }
 
 export interface AuthorDetailsProps {
-  name?: Author['name'];
-  email?: Author['email'];
-  profilePhoto?: Author['profilePhoto'];
+  name?: UserData['name'];
+  email?: UserData['email'];
+  profilePhoto?: UserData['profilePhoto'];
 }
 
 export interface PostTitleProps {
-  name?: Author['name'];
+  name?: UserData['name'];
   title: string;
 }
 
@@ -134,13 +133,13 @@ export interface ProfileSideBarProps {
   name: string;
   email: string;
   posts: number;
-  following: number;
+  followees: number;
   followers: number;
 };
 
 export interface CreateModalProps {
   isOpen: boolean;
-  closeModal: () => void;
+  closeModal: VoidFunction;
 };
 
 export interface CreatePostFormData {
@@ -150,7 +149,7 @@ export interface CreatePostFormData {
 
 export interface ModalProps {
   isOpen: boolean;
-  closeModal: () => void;
+  closeModal: VoidFunction;
 };
 
 export interface FormData {
@@ -160,13 +159,13 @@ export interface FormData {
 
 export interface CreatePostProps {
   isOpen: boolean;
-  closeModal: () => void;
+  closeModal: VoidFunction;
 }
 
 export interface SearchBarProps {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onClear: () => void;
+  onClear: VoidFunction;
   placeholder?: string;
   ariaLabel?: string;
   inputName?: string;

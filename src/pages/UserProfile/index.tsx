@@ -75,8 +75,10 @@ const UserProfile = () => {
               <Button
                 variant="primary"
                 onClick={() => navigate(ROUTES.USERS)}
-                title="Back to Users"
-              />
+              >
+                Back to Users
+              </Button>
+
             </div>
           )}
 
@@ -85,12 +87,14 @@ const UserProfile = () => {
               name={data.name}
               email={data.email}
               postsCount={data.posts?.length ?? 0}
-              followingCount={data.following?.length ?? 0}
+              followingCount={data.followees?.length ?? 0}
               followersCount={data.followers?.length ?? 0}
               posts={data.posts ?? []}
-              following={data.following ?? []}
+              following={data.followees ?? []}
               followers={data.followers ?? []}
+              followed={data.followed}
               isOwn={false}
+              userId={data.id}
               onBack={() => navigate(ROUTES.USERS)}
               onRetry={refetch}
             />

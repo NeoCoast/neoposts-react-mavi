@@ -18,7 +18,9 @@ import LogOut from '@/components/LogOut';
 import './styles.scss';
 
 const Profile = () => {
-  const { data, isLoading, error, refetch } = useGetMeQuery();
+  const { data, isLoading, isFetching, error, refetch } = useGetMeQuery(undefined, {
+    skip: !Boolean(localStorage.getItem('access-token')),
+  });
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
@@ -53,9 +55,10 @@ const Profile = () => {
           <p>Unable to load profile. Please try again.</p>
           <Button
             variant="primary"
-            title="Retry"
-            onClick={() => refetch()}
-          />
+            onClick={refetch}
+          >
+            Retry
+          </Button>
         </div>
       )}
 
@@ -64,16 +67,13 @@ const Profile = () => {
           <div className="my-profile__content-buttons">
             <Button
               className="my-profile__content-buttons-newPost"
-              title={
-                <span className="my-profile__content-buttons-newPost-content">
-                  <FaPlus className="my-profile__content-buttons-newPost-content-icon" />
-                  New Post
-                </span>
-              }
               onClick={() => {
                 dispatch(openCreatePostModal());
               }}
-            />
+            >
+              <FaPlus className="my-profile__content-buttons-newPost-content-icon" />
+              New Post
+            </Button>
             <LogOut />
           </div>
           <ProfileInfo
@@ -83,10 +83,13 @@ const Profile = () => {
             followingCount={data.followees?.length ?? 0}
             followersCount={data.followers?.length ?? 0}
             posts={data.posts ?? []}
-            followees={data.followees ?? []}
+            following={data.followees ?? []}
             followers={data.followers ?? []}
             onBack={() => navigate(ROUTES.HOME)}
+            followed={data.followed}
+            isFetching={isFetching}
             onRetry={refetch}
+            userId={data.id}
           />
         </div>
       )}

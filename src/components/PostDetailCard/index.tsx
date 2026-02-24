@@ -47,13 +47,10 @@ function PostDetailCard({
         className="post__detail-card-back"
         aria-label="Back"
         onClick={onBack}
-        title={
-          <>
-            <IoIosArrowBack />
-            <span>Back</span>
-          </>
-        }
-      />
+      >
+        <IoIosArrowBack />
+        Back
+      </Button>
       <header className="post__detail-card-header">
         <img
           className="post__detail-card-header-avatar"
