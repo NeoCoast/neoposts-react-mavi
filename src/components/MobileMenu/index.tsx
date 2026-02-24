@@ -34,7 +34,7 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
       <aside className="mobileMenu__panel" role="dialog" aria-modal="true">
         <div className="mobileMenu__panel-header">
           <div className="mobileMenu__panel-header-brand">
-            <img className="mobileMenu__panel-header-brand-logo" src={neoPostIcon} alt="Neopost" decoding="async" />
+            <img className="mobileMenu__panel-header-brand-logo" src={neoPostIcon} alt="Neopost" />
             <span className="mobileMenu__panel-header-brand-title">NEOPOST</span>
           </div>
           <Button

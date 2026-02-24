@@ -76,7 +76,7 @@ const Signup = () => {
         <div className="signup__register-container-content">
 
           <div className="signup__register-container-header">
-            <img src={neoPostIcon} alt="neopostIcon" decoding="async" />
+            <img src={neoPostIcon} alt="neopostIcon" />
             <Header />
           </div>
           <form

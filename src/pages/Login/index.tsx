@@ -44,7 +44,7 @@ const LogIn = () => {
       <div className="login__register-container">
         <div className="login__register-container-content">
           <div className="login__register-container-header">
-            <img src={neoPostIcon} alt="neopostIcon" decoding="async" />
+            <img src={neoPostIcon} alt="neopostIcon" />
             <Header />
           </div>
           <span className="login__register-container-text">Stay informed 🤓</span>

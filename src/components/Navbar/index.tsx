@@ -27,7 +27,7 @@ const Navbar = () => {
         <div className="navbar__left">
           <Link to={ROUTES.HOME} className="btn navbar__left-title btn--icon" aria-label="Go to home">
             <span className="btn__content">
-              <img className="navbar__left-title-logo" src={neoPostIcon} alt="Neopost" decoding="async" />
+              <img className="navbar__left-title-logo" src={neoPostIcon} alt="Neopost" />
               <span>NEOPOST</span>
             </span>
           </Link>
