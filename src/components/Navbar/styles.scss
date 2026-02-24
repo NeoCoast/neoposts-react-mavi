@@ -1,0 +1,138 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 75px;
+  padding: 0 140px;
+  box-sizing: border-box;
+  background-color: $color-navbar;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 12px;
+    background: $color-navbar;
+    pointer-events: none;
+  }
+
+  @include tablet {
+    padding: 0 12px;
+    height: 64px;
+  }
+
+  &__left {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    &-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: $color-primary;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 30px;
+      padding: 0;
+      text-decoration: none;
+
+      @include tablet {
+        font-size: 18px;
+      }
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      &-logo {
+        width: 28px;
+        height: 28px;
+
+        @include tablet {
+          width: 22px;
+          height: 22px;
+        }
+      }
+    }
+  }
+
+  &__icons {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    color: $color-primary;
+
+    @include tablet {
+      gap: 12px;
+    }
+
+    &-peopleBtn {
+      font-size: 16px;
+
+      @include tablet {
+        display: none;
+      }
+    }
+
+    &-hamburger {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: $color-primary;
+      font-size: 24px;
+      background: transparent;
+      border: none;
+      padding: 0;
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      @include tablet {
+        display: inline-flex;
+        font-size: 18px;
+      }
+    }
+
+    &-iconBtn {
+      background: transparent;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      padding: 0;
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      &-icon {
+        font-size: 24px;
+
+        @include tablet {
+          font-size: 18px;
+        }
+      }
+    }
+
+  }
+
+  &--menuOpen {
+    @include tablet {
+      .navbar__icons {
+        display: none;
+      }
+    }
+  }
+}

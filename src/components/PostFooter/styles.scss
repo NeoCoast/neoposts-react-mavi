@@ -1,0 +1,54 @@
+.post__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: $color-text-muted;
+
+  &-icons {
+    display: flex;
+    gap: 0.5rem;
+
+    .post__footer-count {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: $color-text;
+    }
+
+    &-heart {
+      display: inline-flex;
+      align-items: center;
+      background-color: transparent;
+      color: $color-text;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border-radius: 9999px;
+      border: none;
+
+      &:hover {
+        background-color: transparent !important;
+        color: $color-red;
+      }
+    }
+
+    &-comment {
+      display: inline-flex;
+      align-items: center;
+      background-color: transparent;
+      color: $color-text;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border-radius: 9999px;
+      border: none;
+
+      &:hover {
+        background-color: transparent !important;
+      }
+    }
+  }
+
+}

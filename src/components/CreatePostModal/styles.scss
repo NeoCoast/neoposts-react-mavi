@@ -1,0 +1,168 @@
+.modal {
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  padding: 28px 32px;
+  background-color: $color-white;
+  color: $color-text;
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(29, 49, 91, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  &__background {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(18, 24, 40, 0.35);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    &-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      &-photo {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      &-title {
+        font-size: 24px;
+        font-weight: 700;
+      }
+    }
+
+    &-close {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 2px solid $color-text;
+      color: $color-text;
+    }
+  }
+
+  &__main {
+    flex: 1;
+    display: flex;
+
+    &-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      &-title-counter {
+        align-self: flex-end;
+        font-size: 14px;
+        color: $color-text-subtle;
+        margin-top: -20px;
+
+        &--error {
+          color: $color-error;
+          font-weight: 600;
+          font-size: 14px;
+        }
+      }
+
+      &-input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid $color-logOut-button;
+        font-size: 16px;
+        color: $color-text;
+        background: $color-white;
+      }
+
+      &-input--error {
+        border: 1px solid $color-error;
+      }
+
+      &-textarea {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 140px;
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid $color-logOut-button;
+        font-size: 16px;
+        color: $color-text;
+        resize: vertical;
+        background: $color-white;
+      }
+
+      &-post {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: auto;
+
+        &-btn {
+          padding: 12px 28px;
+          border-radius: 12px;
+        }
+      }
+    }
+
+    &__icon {
+      font-size: 22px;
+      color: $color-text-subtle;
+    }
+
+  }
+
+  @include tablet {
+    max-width: 90vw;
+    padding: 20px;
+
+    &__header-top-photo {
+      width: 56px;
+      height: 56px;
+    }
+
+    &__header-top-title {
+      font-size: 22px;
+    }
+  }
+
+  @include mobile {
+    max-width: 95vw;
+    padding: 16px;
+    border-radius: 16px;
+
+    &__header-top-photo {
+      width: 48px;
+      height: 48px;
+    }
+
+    &__header-top-title {
+      font-size: 20px;
+    }
+
+    &__main-content-post {
+      flex-direction: column;
+      align-items: stretch;
+
+      &-btn {
+        width: 100%;
+      }
+    }
+  }
+}
