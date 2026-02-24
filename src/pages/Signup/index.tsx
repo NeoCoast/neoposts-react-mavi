@@ -16,7 +16,7 @@ import { ROUTES } from '@/constants/routes';
 import './styles.scss';
 
 const registerBackground = new URL('@/assets/Background/RegisterBackground.png', import.meta.url).href;
-const neoPostIcon = new URL('@/assets/Icons/NeoPost.svg', import.meta.url).href;
+const neoPostIcon = new URL('@/assets/Icons/neoPost.svg', import.meta.url).href;
 
 const Signup = () => {
   const navigate = useNavigate();

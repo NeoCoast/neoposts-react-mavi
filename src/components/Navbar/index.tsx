@@ -12,7 +12,7 @@ import Button from '@/components/Button';
 
 import './styles.scss';
 
-const neoPostIcon = new URL('@/assets/Icons/NeoPost.svg', import.meta.url).href;
+const neoPostIcon = new URL('@/assets/Icons/neoPost.svg', import.meta.url).href;
 
 const Navbar = () => {
   const dispatch = useDispatch<AppDispatch>();
