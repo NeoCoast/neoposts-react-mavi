@@ -52,10 +52,8 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
             dispatch(openCreatePostModal());
           }}
         >
-          <span className="profile__sidebar-card-newPost-content">
-            <FaPlus className="profile__sidebar-card-newPost-content-icon" />
-            New Post
-          </span>
+          <FaPlus className="profile__sidebar-card-newPost-content-icon" />
+          New Post
         </Button>
 
         <CreatePostModal

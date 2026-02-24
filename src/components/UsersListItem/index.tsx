@@ -26,6 +26,7 @@ const UserListItem = ({
   meId?: string | number;
 }) => {
   const [isLoadingFollowingMutation, setIsLoadingFollowingMutation] = useState(false);
+  const [isFollowedState, setIsFollowedState] = useState(user.followed);
 
   const [followUser] = useFollowUserMutation();
   const [unfollowUser] = useUnfollowUserMutation();
@@ -42,6 +43,7 @@ const UserListItem = ({
     if (!user.id) return;
 
     setIsLoadingFollowingMutation(true);
+    setIsFollowedState(true);
 
     try {
       await followUser(user.id).unwrap();
@@ -57,6 +59,7 @@ const UserListItem = ({
   const handleUnfollow = async () => {
     if (!user.id) return;
 
+    setIsFollowedState(false);
     setIsLoadingFollowingMutation(true);
 
     try {
@@ -73,7 +76,7 @@ const UserListItem = ({
   const handleButtonClick = () => {
     if (isLoadingFollowingMutation) return;
 
-    if (user.followed) {
+    if (isFollowedState) {
       handleUnfollow();
     } else {
       handleFollow();
@@ -102,10 +105,10 @@ const UserListItem = ({
       {meId !== user.id && (
         <Button
           className="users_list-item-follow"
-          variant={user.followed ? 'secondary' : 'primary'}
+          variant={isFollowedState ? 'secondary' : 'primary'}
           onClick={handleButtonClick}
         >
-          {user.followed ? <><BsPersonCheck /> Following</> : <><GoPersonAdd /> Follow</>}
+          {isFollowedState ? <><BsPersonCheck /> Following</> : <><GoPersonAdd /> Follow</>}
         </Button>
       )}
     </div>

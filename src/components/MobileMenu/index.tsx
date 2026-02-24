@@ -43,7 +43,7 @@ const MobileMenu = ({ open, onClose }: MobileMenuProps) => {
             aria-label="Close menu"
             onClick={onClose}
           >
-            <span className="mobileMenu__panel-header-close-icon">✕</span>
+            &#x2715;
           </Button>
         </div>
         <div className="mobileMenu__icons">

@@ -1,18 +1,13 @@
-import { JSX } from 'react';
-
+import { ReactNode } from 'react';
 import './styles.scss';
 
 type EmptyStateProps = {
-  title: string | JSX.Element;
-  wrapperClass?: string;
-  titleClass?: string;
+  children?: ReactNode;
 };
 
-const EmptyState = ({
-  title,
-}: EmptyStateProps) => (
+const EmptyState = ({ children }: EmptyStateProps) => (
   <div className='my-profile__card-posts-empty'>
-    <p className='my-profile__card-posts-empty-title'>{title}</p>
+    <p className='my-profile__card-posts-empty-title'>{children}</p>
   </div>
 );
 

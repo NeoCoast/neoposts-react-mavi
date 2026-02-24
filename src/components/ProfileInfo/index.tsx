@@ -51,10 +51,10 @@ const ProfileInfo = ({
   onRetry,
 }: MyProfileInfoProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [followUser] = useFollowUserMutation();
-  const [unfollowUser] = useUnfollowUserMutation();
+  const [followUser, { isLoading: isFollowingLoading }] = useFollowUserMutation();
+  const [unfollowUser, { isLoading: isUnfollowingLoading }] = useUnfollowUserMutation();
 
-  const [isLoadingFollowingMutation, setIsLoadingFollowingMutation] = useState(false);
+  const isLoadingFollowingMutation = isFollowingLoading || isUnfollowingLoading;
   const [isFollowedState, setIsFollowedState] = useState(followed);
 
   const tabParam = searchParams.get('tab') ?? 'posts';
@@ -69,15 +69,13 @@ const ProfileInfo = ({
   const handleFollow = async () => {
     if (!userId) return;
 
-    setIsLoadingFollowingMutation(true);
     setIsFollowedState(true);
 
     try {
-      await followUser(userId).unwrap();
+      await followUser(userId);
     } catch (err) {
       notify.error('Unable to follow user.');
-    } finally {
-      setIsLoadingFollowingMutation(false);
+      setIsFollowedState(false);
     }
   };
 
@@ -85,14 +83,12 @@ const ProfileInfo = ({
     if (!userId) return;
 
     setIsFollowedState(false);
-    setIsLoadingFollowingMutation(true);
 
     try {
-      await unfollowUser(userId).unwrap();
+      await unfollowUser(userId);
     } catch (err) {
       notify.error('Unable to unfollow user.');
-    } finally {
-      setIsLoadingFollowingMutation(false);
+      setIsFollowedState(true);
     }
   };
 
@@ -108,14 +104,14 @@ const ProfileInfo = ({
 
   const handleUnfollowFromList = async (id: string | number) => {
     try {
-      await unfollowUser(id).unwrap();
+      await unfollowUser(id);
     } catch (err) {
       notify.error('Unable to unfollow user.');
     }
   };
 
   const handleFollowFromList = async (id: string | number) => {
-    await followUser(id).unwrap();
+    await followUser(id);
   };
 
   return (
@@ -187,9 +183,9 @@ const ProfileInfo = ({
         <section className="my-profile__card-posts">
           <TabPanel>
             {posts.length === 0 ? (
-              <EmptyState
-                title={`${isOwn ? 'You have' : 'This user has'} no posts`}
-              />
+              <EmptyState>
+                {isOwn ? 'You have' : 'This user has'} no posts yet
+              </EmptyState>
             ) : (
               <PostsList
                 items={posts}
@@ -204,9 +200,9 @@ const ProfileInfo = ({
 
           <TabPanel>
             {following.length === 0 ? (
-              <EmptyState
-                title={`${isOwn ? 'You are' : 'This user is'} following anyone`}
-              />
+              <EmptyState>
+                {isOwn ? 'You are not' : 'This user is not'} following anyone yet
+              </EmptyState>
             ) : (
               <UsersList
                 users={following.map((user) => ({
@@ -220,9 +216,9 @@ const ProfileInfo = ({
 
           <TabPanel>
             {followers.length === 0 ? (
-              <EmptyState
-                title={`${isOwn ? 'You have no' : 'This user has no'} followers`}
-              />
+              <EmptyState>
+                {isOwn ? 'You have' : 'This user has'} no followers yet
+              </EmptyState>
             ) : (
               <UsersList
                 users={followers.map((user) => ({

@@ -71,10 +71,8 @@ const Profile = () => {
                 dispatch(openCreatePostModal());
               }}
             >
-              <span className="my-profile__content-buttons-newPost-content">
-                <FaPlus className="my-profile__content-buttons-newPost-content-icon" />
-                New Post
-              </span>
+              <FaPlus className="my-profile__content-buttons-newPost-content-icon" />
+              New Post
             </Button>
             <LogOut />
           </div>

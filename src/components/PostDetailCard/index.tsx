@@ -49,7 +49,7 @@ function PostDetailCard({
         onClick={onBack}
       >
         <IoIosArrowBack />
-        <span>Back</span>
+        Back
       </Button>
       <header className="post__detail-card-header">
         <img
