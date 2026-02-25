@@ -13,7 +13,13 @@ const Post = ({ post, showContent = true }: PostProps) => {
     <article className="post">
       <PostTitle title={title} />
       {showContent && <PostContent content={body} />}
-      <PostFooter publishedAt={publishedAt} />
+      <PostFooter
+        postId={post.id}
+        liked={post.liked}
+        publishedAt={publishedAt}
+        likesCount={post.likesCount}
+        commentsCount={post.commentsCount ?? 0}
+      />
     </article>
   );
 };

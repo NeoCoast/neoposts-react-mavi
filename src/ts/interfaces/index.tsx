@@ -52,7 +52,8 @@ export interface Post {
   title: string;
   body: string;
   publishedAt: string;
-  likesCount?: number;
+  liked: boolean;
+  likesCount: number;
   commentsCount?: number;
   comments?: PostComment[];
 }
@@ -102,9 +103,11 @@ export interface PostContentProps {
 }
 
 export interface PostFooterProps {
+  postId: string | number;
+  liked: boolean;
   publishedAt: string;
-  likesCount?: number;
-  commentsCount?: number;
+  likesCount: number;
+  commentsCount: number;
   label?: string;
 }
 

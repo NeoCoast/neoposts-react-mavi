@@ -147,6 +147,20 @@ export const api = createApi({
       }),
       invalidatesTags: (__result, __error, id) => [{ type: 'User', id }, 'User'],
     }),
+    likePost: builder.mutation<void, number>({
+      query: (id) => ({
+        method: 'POST',
+        url: `/posts/${id}/like`,
+      }),
+      invalidatesTags: (__result, __error, id) => [{ type: 'Post', id }, 'Post'],
+    }),
+    unlikePost: builder.mutation<void, number>({
+      query: (id) => ({
+        method: 'DELETE',
+        url: `/posts/${id}/like`,
+      }),
+      invalidatesTags: (__result, __error, id) => [{ type: 'Post', id }, 'Post'],
+    }),
   }),
 });
 
@@ -163,4 +177,6 @@ export const {
   useGetUsersQuery,
   useFollowUserMutation,
   useUnfollowUserMutation,
+  useLikePostMutation,
+  useUnlikePostMutation,
 } = api;
