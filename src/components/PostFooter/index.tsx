@@ -7,6 +7,7 @@ import type { PostFooterProps } from '@/ts/interfaces';
 
 import Button from '@/components/Button';
 import { notify } from '@/components/Toaster/notify';
+import Tooltip from '@/components/Tooltip';
 
 import './styles.scss';
 
@@ -17,6 +18,7 @@ const PostFooter = ({
   likesCount,
   commentsCount,
   label,
+  canLike,
 }: PostFooterProps) => {
   const [likePost, { isLoading: isLiking }] = useLikePostMutation();
   const [unlikePost, { isLoading: isUnliking }] = useUnlikePostMutation();
@@ -41,6 +43,10 @@ const PostFooter = ({
   const hasComments = commentsCount > 0;
 
   const handleLikeClick = async () => {
+    if (!canLike) {
+      return;
+    }
+
     if (isLoading) return;
 
     const previousLiked = isLiked;
@@ -51,9 +57,9 @@ const PostFooter = ({
 
     try {
       if (previousLiked) {
-        await unlikePost(Number(postId));
+        await unlikePost(Number(postId)).unwrap();
       } else {
-        await likePost(Number(postId));
+        await likePost(Number(postId)).unwrap();
       }
     } catch (error) {
       setIsLiked(previousLiked);
@@ -69,20 +75,47 @@ const PostFooter = ({
       </time>
 
       <div className="post__footer-icons">
-        <Button
-          variant="icon"
-          className={`post__footer-icons-heart ${isLiked ? 'liked' : ''}`}
-          disabled={isLoading}
-          aria-pressed={isLiked}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            handleLikeClick();
-          }}
-        >
-          {isLiked ? <IoIosHeart /> : <IoIosHeartEmpty />}
-          <span className="post__footer-count">{likesCountLocal}</span>
-        </Button>
+        {!canLike ? (
+          <Tooltip content={"You need to follow the user to like their posts"}>
+            <span>
+              <Button
+                variant="icon"
+                className={`post__footer-icons-heart 
+                  ${isLiked ? 'liked' : ''} 
+                  ${!canLike ? 'disabled-like' : ''}
+                `}
+                disabled={isLoading || !canLike}
+                aria-pressed={isLiked}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleLikeClick();
+                }}
+              >
+                {isLiked ? <IoIosHeart /> : <IoIosHeartEmpty />}
+                <span className="post__footer-count">{likesCountLocal}</span>
+              </Button>
+            </span>
+          </Tooltip>
+        ) : (
+          <Button
+            variant="icon"
+            className={`post__footer-icons-heart 
+              ${isLiked ? 'liked' : ''} 
+              ${!canLike ? 'disabled-like' : ''}
+            `}
+            disabled={isLoading || !canLike}
+            aria-pressed={isLiked}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleLikeClick();
+            }}
+          >
+            {isLiked ? <IoIosHeart /> : <IoIosHeartEmpty />}
+            <span className="post__footer-count">{likesCountLocal}</span>
+          </Button>
+        )}
 
         <Button
           variant="icon"

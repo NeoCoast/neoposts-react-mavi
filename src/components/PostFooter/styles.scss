@@ -39,6 +39,12 @@
         opacity: 0.6;
         cursor: not-allowed;
       }
+
+      &.disabled-like {
+        opacity: 0.6;
+        cursor: not-allowed;
+        position: relative;
+      }
     }
 
     &-comment {
@@ -58,5 +64,4 @@
       }
     }
   }
-
 }

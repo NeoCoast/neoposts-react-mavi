@@ -40,6 +40,9 @@ function PostDetailCard({
 }: PostDetailCardProps) {
   const hasAuth = Boolean(localStorage.getItem('access-token'));
   const { data: me } = useGetMeQuery(undefined, { skip: !hasAuth });
+  const isOwnPost = me && String(me.id) === String(post.author.id);
+  const isFollowing = post.author.followed ?? false;
+  const canLike = Boolean(isOwnPost || isFollowing);
 
   const authorFullName = getFullName(post.author.name);
   const authorAlt = authorFullName || 'Author avatar';
@@ -84,6 +87,7 @@ function PostDetailCard({
         commentsCount={commentsCount}
         publishedAt={publishedAtRaw || post.publishedAt}
         label={publishedAtLabel}
+        canLike={canLike}
       />
 
       <span className="post__detail-card-separator" />

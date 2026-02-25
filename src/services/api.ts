@@ -152,14 +152,14 @@ export const api = createApi({
         method: 'POST',
         url: `/posts/${id}/like`,
       }),
-      invalidatesTags: (__result, __error, id) => [{ type: 'Post', id }, 'Post'],
+      invalidatesTags: (__result, __error, id) => [{ type: 'Post', id }, 'Post', 'User'],
     }),
     unlikePost: builder.mutation<void, number>({
       query: (id) => ({
         method: 'DELETE',
         url: `/posts/${id}/like`,
       }),
-      invalidatesTags: (__result, __error, id) => [{ type: 'Post', id }, 'Post'],
+      invalidatesTags: (__result, __error, id) => [{ type: 'Post', id }, 'Post', 'User'],
     }),
   }),
 });

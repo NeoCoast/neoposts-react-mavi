@@ -72,8 +72,9 @@ export interface PostDetailRouteParams extends Record<string, string | undefined
 }
 
 export interface PostProps {
-  post: Post;
+  post: PostListItem;
   showContent?: boolean;
+  canLike?: boolean;
 }
 
 export interface PostsListProps {
@@ -85,6 +86,7 @@ export interface PostsListProps {
   pageError?: string | null;
   onRetry: VoidFunction;
   showContent?: boolean;
+  canLike?: boolean;
 }
 
 export interface AuthorDetailsProps {
@@ -109,6 +111,7 @@ export interface PostFooterProps {
   likesCount: number;
   commentsCount: number;
   label?: string;
+  canLike: boolean;
 }
 
 export interface InputProps {

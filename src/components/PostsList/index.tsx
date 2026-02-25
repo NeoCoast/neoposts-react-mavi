@@ -12,13 +12,14 @@ import './styles.scss';
 
 const PostsList = ({
   items,
-  fetchMore = () => {},
+  fetchMore = () => { },
   hasMore,
   loadedCount,
   totalCount,
   pageError,
   onRetry,
   showContent = false,
+  canLike = false,
 }: PostsListProps) => {
   const { pathname } = useLocation();
 
@@ -59,7 +60,7 @@ const PostsList = ({
                 profilePhoto={post.author?.profilePhoto}
               />
 
-              <Post post={post} showContent={showContent} />
+              <Post post={post} showContent={showContent} canLike={canLike} />
             </Link>
           </article>
         ))}
@@ -71,7 +72,9 @@ const PostsList = ({
           <Button
             variant="primary"
             onClick={onRetry}
-          />
+          >
+            Retry
+          </Button>
         </div>
       )}
 
