@@ -77,25 +77,23 @@ const PostFooter = ({
       <div className="post__footer-icons">
         {!canLike ? (
           <Tooltip content={"You need to follow the user to like their posts"}>
-            <span>
-              <Button
-                variant="icon"
-                className={`post__footer-icons-heart 
+            <Button
+              variant="icon"
+              className={`post__footer-icons-heart 
                   ${isLiked ? 'liked' : ''} 
                   ${!canLike ? 'disabled-like' : ''}
                 `}
-                disabled={isLoading || !canLike}
-                aria-pressed={isLiked}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  handleLikeClick();
-                }}
-              >
-                {isLiked ? <IoIosHeart /> : <IoIosHeartEmpty />}
-                <span className="post__footer-count">{likesCountLocal}</span>
-              </Button>
-            </span>
+              disabled={isLoading || !canLike}
+              aria-pressed={isLiked}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleLikeClick();
+              }}
+            >
+              {isLiked ? <IoIosHeart /> : <IoIosHeartEmpty />}
+              <span className="post__footer-count">{likesCountLocal}</span>
+            </Button>
           </Tooltip>
         ) : (
           <Button
