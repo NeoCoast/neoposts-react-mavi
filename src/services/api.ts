@@ -161,6 +161,14 @@ export const api = createApi({
       }),
       invalidatesTags: (__result, __error, id) => [{ type: 'Post', id }, 'Post', 'User'],
     }),
+    createComment: builder.mutation<any, { postId: number | string; content: string }>({
+      query: ({ postId, content }) => ({
+        method: 'POST',
+        url: `/posts/${postId}/comments`,
+        body: { body: content },
+      }),
+      invalidatesTags: (__result, __error, { postId }) => [{ type: 'Post', id: postId }, 'Post'],
+    }),
   }),
 });
 
@@ -179,4 +187,5 @@ export const {
   useUnfollowUserMutation,
   useLikePostMutation,
   useUnlikePostMutation,
+  useCreateCommentMutation,
 } = api;

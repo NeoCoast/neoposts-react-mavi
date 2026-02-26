@@ -41,7 +41,7 @@ export interface SignupFormData {
 
 export interface PostComment {
   id: string | number;
-  content: string;
+  comment: string;
   publishedAt?: string;
   likesCount?: number;
   author: UserData;
@@ -75,6 +75,7 @@ export interface PostProps {
   post: PostListItem;
   showContent?: boolean;
   canLike?: boolean;
+  canComment?: boolean;
 }
 
 export interface PostsListProps {
@@ -87,6 +88,7 @@ export interface PostsListProps {
   onRetry: VoidFunction;
   showContent?: boolean;
   canLike?: boolean;
+  canComment?: boolean;
 }
 
 export interface AuthorDetailsProps {
@@ -112,6 +114,8 @@ export interface PostFooterProps {
   commentsCount: number;
   label?: string;
   canLike: boolean;
+  canComment?: boolean;
+  onCommentCreated?: (comment: PostComment) => void;
 }
 
 export interface InputProps {

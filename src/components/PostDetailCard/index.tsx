@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { useGetMeQuery } from '@/services/api';
 import { ROUTES } from '@/constants/routes';
-import { PostComment, PostListItem } from '@/ts/interfaces';
+import { PostListItem } from '@/ts/interfaces';
 import { getFullName } from '@/utils/postUtils';
 
 import PostTitle from '@/components/PostTitle';
@@ -19,29 +19,18 @@ import './styles.scss';
 
 type PostDetailCardProps = {
   post: PostListItem;
-  postContent: string;
-  likesCount: number;
-  comments: PostComment[];
-  commentsCount: number;
-  publishedAtRaw: string;
-  publishedAtLabel: string;
   onBack: () => void;
 };
 
 function PostDetailCard({
   post,
-  postContent,
-  likesCount,
-  comments,
-  commentsCount,
-  publishedAtRaw,
-  publishedAtLabel,
   onBack,
 }: PostDetailCardProps) {
   const { data: me } = useGetMeQuery();
   const isOwnPost = me && String(me.id) === String(post.author.id);
   const isFollowing = post.author.followed ?? false;
   const canLike = Boolean(isOwnPost || isFollowing);
+  const canComment = Boolean(isFollowing);
 
   const authorFullName = getFullName(post.author.name);
   const authorAlt = authorFullName || 'Author avatar';
@@ -68,7 +57,6 @@ function PostDetailCard({
             src={post.author.profilePhoto || userProfilePlaceholder}
             alt={authorAlt}
           />
-
           <div className="post__detail-card-header-author">
             <h2 className="post__detail-card-header-author-name">{authorDisplayName}</h2>
             <p className="post__detail-card-header-author-email">{authorEmail}</p>
@@ -77,16 +65,15 @@ function PostDetailCard({
       </header>
 
       <PostTitle title={post.title} />
-      <PostContent content={postContent} />
-
+      <PostContent content={post.body} />
       <PostFooter
         postId={post.id}
         liked={post.liked}
-        likesCount={likesCount}
-        commentsCount={commentsCount}
-        publishedAt={publishedAtRaw || post.publishedAt}
-        label={publishedAtLabel}
+        likesCount={post.likesCount}
+        commentsCount={post.comments?.length ?? 0}
+        publishedAt={post.publishedAt}
         canLike={canLike}
+        canComment={canComment}
       />
 
       <span className="post__detail-card-separator" />
@@ -94,14 +81,14 @@ function PostDetailCard({
       <section className="post__detail-comments">
         <div className="post__detail-comments-header">
           <BiSolidComment />
-          <span>{commentsCount} comments</span>
+          <span>{post.comments?.length ?? 0} comments</span>
         </div>
 
         <div className="post__detail-comments-list">
-          {comments.length === 0 ? (
+          {post.comments?.length === 0 ? (
             <p className="post__detail-comments-list-empty">No comments yet.</p>
           ) : (
-            comments.map((comment) => (
+            post.comments?.map((comment) => (
               <CommentComponent key={comment.id} comment={comment} />
             ))
           )}

@@ -22,8 +22,7 @@
 
   &-header {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
   }
 
@@ -31,9 +30,11 @@
     font-weight: 600;
   }
 
-  &-mention {
-    color: $color-primary;
-    font-weight: 500;
+  &-email {
+    display: block;
+    font-size: 0.85rem;
+    color: $color-text-muted;
+    margin-top: 2px;
   }
 
   &-date {
@@ -46,11 +47,15 @@
     color: $color-text;
     white-space: pre-wrap;
     line-height: 1.5;
+    font-weight: 600;
   }
 
   &-actions {
     display: flex;
     gap: 12px;
+    width: 100%;
+    margin-top: auto;
+    justify-content: flex-end;
 
     &-like {
       display: inline-flex;

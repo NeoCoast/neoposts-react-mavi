@@ -6,7 +6,7 @@ import PostFooter from '@/components/PostFooter';
 
 import './styles.scss';
 
-const Post = ({ post, showContent = true, canLike = false }: PostProps) => {
+const Post = ({ post, showContent = true, canLike = false, canComment = false }: PostProps) => {
   const { id, title, body, publishedAt, liked, likesCount, commentsCount } = post;
 
   return (
@@ -20,6 +20,7 @@ const Post = ({ post, showContent = true, canLike = false }: PostProps) => {
         likesCount={likesCount}
         commentsCount={commentsCount ?? 0}
         canLike={canLike}
+        canComment={canComment}
       />
     </article>
   );

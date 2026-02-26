@@ -3,6 +3,7 @@ import { Oval } from 'react-loader-spinner';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { ROUTES } from '@/constants/routes';
+import { useGetPostQuery } from '@/services/api';
 
 import Navbar from '@/components/Navbar';
 import UserBar from '@/components/UserBar';
@@ -11,29 +12,17 @@ import PostDetailCard from '@/components/PostDetailCard';
 
 import { PostDetailLocationState, PostDetailRouteParams } from '@/ts/interfaces';
 
-import { usePostDetailData } from '@/hooks/usePostDetailData';
-
 import './styles.scss';
 
 function PostDetail() {
   const navigate = useNavigate();
-  const { id: idParam = '' } = useParams<PostDetailRouteParams>();
+  const { id } = useParams<PostDetailRouteParams>();
   const location = useLocation();
-  const locationState = location.state as PostDetailLocationState | null;
-
-  const postFromState = locationState?.post;
-
   const {
-    post,
-    content: postContent,
-    likesCount,
-    comments,
-    commentsCount,
-    publishedAtRaw,
-    publishedAt,
+    data: post,
     isLoading,
-    hasError,
-  } = usePostDetailData({ id: idParam, postFromState });
+    error,
+  } = useGetPostQuery(Number(id));
 
   const handleBack = useCallback(() => {
     const from = (location.state as PostDetailLocationState)?.from;
@@ -66,7 +55,7 @@ function PostDetail() {
       );
     }
 
-    if (hasError) {
+    if (!!error) {
       return (
         <div className="post__detail-error">
           <p>We couldn&apos;t load this post. Please try again later.</p>
@@ -93,12 +82,6 @@ function PostDetail() {
     return (
       <PostDetailCard
         post={post}
-        postContent={postContent}
-        likesCount={likesCount}
-        comments={comments}
-        commentsCount={commentsCount}
-        publishedAtRaw={publishedAtRaw}
-        publishedAtLabel={publishedAt}
         onBack={handleBack}
       />
     );

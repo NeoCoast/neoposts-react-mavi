@@ -110,6 +110,7 @@ const Home = () => {
               pageError={pageError}
               onRetry={retryFetch}
               canLike
+              canComment
             />
           )}
         </div>

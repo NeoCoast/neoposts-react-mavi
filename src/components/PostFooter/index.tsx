@@ -7,6 +7,7 @@ import type { PostFooterProps } from '@/ts/interfaces';
 import Button from '@/components/Button';
 import LikeButton from '@/components/LikeButton';
 import { notify } from '@/components/Toaster/notify';
+import CommentModal from '@/components/CommentModal';
 
 import './styles.scss';
 
@@ -39,7 +40,15 @@ const PostFooter = ({
   const formattedDate = isValidDate ? parsedDate.toLocaleString() : publishedAt;
   const displayDate = label ?? formattedDate;
 
-  const hasComments = commentsCount > 0;
+  const [commentsCountLocal, setCommentsCountLocal] = useState(commentsCount ?? 0);
+
+  useEffect(() => {
+    setCommentsCountLocal(commentsCount ?? 0);
+  }, [commentsCount]);
+
+  const hasComments = commentsCountLocal > 0;
+
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
 
   const handleLikeClick = async () => {
     if (!canLike || isLoading) {
@@ -91,12 +100,21 @@ const PostFooter = ({
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
+            setIsCommentOpen(true);
           }}
         >
           <BiSolidComment />
-          {hasComments && commentsCount}
+          {hasComments && commentsCountLocal}
         </Button>
       </div>
+      {isCommentOpen && (
+        <CommentModal
+          isOpen={isCommentOpen}
+          closeModal={() => setIsCommentOpen(false)}
+          postId={postId}
+          onSuccess={() => setCommentsCountLocal((c) => c + 1)}
+        />
+      )}
     </footer>
   );
 };
