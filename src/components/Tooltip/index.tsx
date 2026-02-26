@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import { useId } from 'react';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 type TooltipProps = {

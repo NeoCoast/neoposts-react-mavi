@@ -61,6 +61,7 @@ const PostFooter = ({
     } catch (error) {
       setIsLiked(previousLiked);
       setLikesCountLocal(previousLikes);
+
       notify.error('An error occurred while updating your like. Please try again.');
     }
   };

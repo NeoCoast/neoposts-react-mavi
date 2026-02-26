@@ -38,8 +38,7 @@ function PostDetailCard({
   publishedAtLabel,
   onBack,
 }: PostDetailCardProps) {
-  const hasAuth = Boolean(localStorage.getItem('access-token'));
-  const { data: me } = useGetMeQuery(undefined, { skip: !hasAuth });
+  const { data: me } = useGetMeQuery();
   const isOwnPost = me && String(me.id) === String(post.author.id);
   const isFollowing = post.author.followed ?? false;
   const canLike = Boolean(isOwnPost || isFollowing);
@@ -49,7 +48,7 @@ function PostDetailCard({
   const authorEmail = post.author.email ?? 'email unavailable';
   const authorDisplayName = authorFullName || 'Unknown Author';
   const authorRoute = `${ROUTES.USERS}/${post.author.id}`;
-  const destination = me && String(me.id) === String(post.author.id) ? ROUTES.MY_PROFILE : authorRoute;
+  const destination = isOwnPost ? ROUTES.MY_PROFILE : authorRoute;
 
   return (
     <article className="post__detail-card">

@@ -7,18 +7,18 @@ import PostFooter from '@/components/PostFooter';
 import './styles.scss';
 
 const Post = ({ post, showContent = true, canLike = false }: PostProps) => {
-  const { title, body, publishedAt } = post;
+  const { id, title, body, publishedAt, liked, likesCount, commentsCount } = post;
 
   return (
     <article className="post">
       <PostTitle title={title} />
       {showContent && <PostContent content={body} />}
       <PostFooter
-        postId={post.id}
-        liked={post.liked}
+        postId={id}
+        liked={liked}
         publishedAt={publishedAt}
-        likesCount={post.likesCount}
-        commentsCount={post.commentsCount ?? 0}
+        likesCount={likesCount}
+        commentsCount={commentsCount ?? 0}
         canLike={canLike}
       />
     </article>

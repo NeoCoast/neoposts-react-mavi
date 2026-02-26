@@ -14,6 +14,8 @@ type LikeButtonProps = {
 };
 
 const LikeButton = ({ isLiked, count, disabled, canLike, onClick }: LikeButtonProps) => {
+  const Icon = isLiked ? GoHeartFill : GoHeart;
+
   const content = (
     <Button
       variant="icon"
@@ -22,20 +24,12 @@ const LikeButton = ({ isLiked, count, disabled, canLike, onClick }: LikeButtonPr
       aria-pressed={isLiked}
       onClick={onClick}
     >
-      {isLiked ? (
-        <GoHeartFill className="icon-heart-filled" aria-hidden="false" />
-      ) : (
-        <GoHeart className="icon-heart-empty" aria-hidden="false" />
-      )}
+      <Icon className={cn('icon-heart', { 'icon-heart-filled': isLiked, 'icon-heart-empty': !isLiked })} />
       <span className="post__footer-count">{count}</span>
     </Button>
   );
 
-  if (!canLike) {
-    return <Tooltip content={"You need to follow the user to like their posts"}>{content}</Tooltip>;
-  }
-
-  return <>{content}</>;
+  return <Tooltip content={canLike ? "" : "You need to follow the user to like their posts"}>{content}</Tooltip>;
 };
 
 export default LikeButton;
