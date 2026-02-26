@@ -20,7 +20,8 @@ const UserProfile = () => {
   const [searchParams] = useSearchParams();
   const location = useLocation();
 
-  const backTarget = location.state && (location.state).from === 'post' ? ROUTES.HOME : ROUTES.USERS;
+  const locationState = location.state as { from?: string } | null;
+  const backTarget = locationState?.from === 'post' ? ROUTES.HOME : ROUTES.USERS;
 
   const { data, error, isLoading, refetch } = useGetUserQuery(id ?? '');
 

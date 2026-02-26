@@ -6,7 +6,7 @@ import PostFooter from '@/components/PostFooter';
 
 import './styles.scss';
 
-const Post = ({ post, showContent = true , canLike = false}: PostProps) => {
+const Post = ({ post, showContent = true, canLike = false }: PostProps) => {
   const { title, body, publishedAt } = post;
 
   return (

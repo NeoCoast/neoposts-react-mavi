@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import { IoIosHeart, IoIosHeartEmpty } from 'react-icons/io';
 import { BiSolidComment } from 'react-icons/bi';
 
 import { useLikePostMutation, useUnlikePostMutation } from '@/services/api';
 import type { PostFooterProps } from '@/ts/interfaces';
 
 import Button from '@/components/Button';
+import LikeButton from '@/components/LikeButton';
 import { notify } from '@/components/Toaster/notify';
-import Tooltip from '@/components/Tooltip';
 
 import './styles.scss';
 
@@ -43,23 +42,21 @@ const PostFooter = ({
   const hasComments = commentsCount > 0;
 
   const handleLikeClick = async () => {
-    if (!canLike) {
+    if (!canLike || isLoading) {
       return;
     }
-
-    if (isLoading) return;
 
     const previousLiked = isLiked;
     const previousLikes = likesCountLocal;
 
     setIsLiked(!previousLiked);
-    setLikesCountLocal(previousLiked ? previousLikes - 1 : previousLikes + 1);
+    setLikesCountLocal(previousLikes + (previousLiked ? -1 : 1));
 
     try {
       if (previousLiked) {
-        await unlikePost(Number(postId)).unwrap();
+        await unlikePost(Number(postId));
       } else {
-        await likePost(Number(postId)).unwrap();
+        await likePost(Number(postId));
       }
     } catch (error) {
       setIsLiked(previousLiked);
@@ -75,45 +72,17 @@ const PostFooter = ({
       </time>
 
       <div className="post__footer-icons">
-        {!canLike ? (
-          <Tooltip content={"You need to follow the user to like their posts"}>
-            <Button
-              variant="icon"
-              className={`post__footer-icons-heart 
-                  ${isLiked ? 'liked' : ''} 
-                  ${!canLike ? 'disabled-like' : ''}
-                `}
-              disabled={isLoading || !canLike}
-              aria-pressed={isLiked}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleLikeClick();
-              }}
-            >
-              {isLiked ? <IoIosHeart /> : <IoIosHeartEmpty />}
-              <span className="post__footer-count">{likesCountLocal}</span>
-            </Button>
-          </Tooltip>
-        ) : (
-          <Button
-            variant="icon"
-            className={`post__footer-icons-heart 
-              ${isLiked ? 'liked' : ''} 
-              ${!canLike ? 'disabled-like' : ''}
-            `}
-            disabled={isLoading || !canLike}
-            aria-pressed={isLiked}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              handleLikeClick();
-            }}
-          >
-            {isLiked ? <IoIosHeart /> : <IoIosHeartEmpty />}
-            <span className="post__footer-count">{likesCountLocal}</span>
-          </Button>
-        )}
+        <LikeButton
+          isLiked={isLiked}
+          count={likesCountLocal}
+          disabled={isLoading || !canLike}
+          canLike={!!canLike}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleLikeClick();
+          }}
+        />
 
         <Button
           variant="icon"
@@ -124,7 +93,7 @@ const PostFooter = ({
           }}
         >
           <BiSolidComment />
-          {hasComments && <>{commentsCount}</>}
+          {hasComments && commentsCount}
         </Button>
       </div>
     </footer>

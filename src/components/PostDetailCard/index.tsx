@@ -1,17 +1,17 @@
 import { IoIosArrowBack } from 'react-icons/io';
 import { BiSolidComment } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
+
 import { useGetMeQuery } from '@/services/api';
+import { ROUTES } from '@/constants/routes';
+import { PostComment, PostListItem } from '@/ts/interfaces';
+import { getFullName } from '@/utils/postUtils';
 
 import PostTitle from '@/components/PostTitle';
 import PostContent from '@/components/PostContent';
 import PostFooter from '@/components/PostFooter';
 import CommentComponent from '@/components/Comment';
 import Button from '@/components/Button';
-
-import { ROUTES } from '@/constants/routes';
-import { PostComment, PostListItem } from '@/ts/interfaces';
-import { getFullName } from '@/utils/postUtils';
 
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 
