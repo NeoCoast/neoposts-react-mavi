@@ -1,0 +1,29 @@
+.post__footer-icons-heart {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  .icon-heart {
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: 1.2rem;
+    line-height: 1;
+    color: $color-text-muted;
+
+    &--filled {
+      color: $color-red;
+    }
+  }
+
+  &.disabled-like {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .post__footer-count {
+    margin-left: 0.125rem;
+    font-size: 0.95rem;
+    color: $color-text;
+  }
+}

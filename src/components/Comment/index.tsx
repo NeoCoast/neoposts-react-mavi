@@ -11,6 +11,8 @@ import Button from '@/components/Button';
 
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 
+import './styles.scss';
+
 type CommentComponentProps = {
   comment: PostComment;
 };

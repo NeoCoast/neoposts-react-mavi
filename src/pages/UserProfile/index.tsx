@@ -18,7 +18,10 @@ const UserProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const location = useLocation();
+  const { state } = useLocation();
+
+  const locationState = state as { from?: string } | null;
+  const backTarget = locationState?.from === 'post' ? ROUTES.HOME : ROUTES.USERS;
 
   const { data, error, isLoading, refetch } = useGetUserQuery(id ?? '');
 
@@ -26,7 +29,7 @@ const UserProfile = () => {
     const tab = searchParams.get('tab');
     const allowedTabs = ['posts', 'following', 'followers'];
     if (!allowedTabs.includes(tab ?? '') && location.pathname === `${ROUTES.USERS}/${id}`) {
-      navigate(`${ROUTES.USERS}/${id}?tab=posts`, { replace: true });
+      navigate(`${ROUTES.USERS}/${id}?tab=posts`, { replace: true, state: locationState });
     }
   }, [searchParams, navigate, id, location.pathname]);
 
@@ -74,7 +77,7 @@ const UserProfile = () => {
               <p>{errorMessage}</p>
               <Button
                 variant="primary"
-                onClick={() => navigate(ROUTES.USERS)}
+                onClick={() => navigate(backTarget)}
               >
                 Back to Users
               </Button>
@@ -95,7 +98,7 @@ const UserProfile = () => {
               followed={data.followed}
               isOwn={false}
               userId={data.id}
-              onBack={() => navigate(ROUTES.USERS)}
+              onBack={() => navigate(backTarget)}
               onRetry={refetch}
             />
           )}

@@ -52,7 +52,8 @@ export interface Post {
   title: string;
   body: string;
   publishedAt: string;
-  likesCount?: number;
+  liked: boolean;
+  likesCount: number;
   commentsCount?: number;
   comments?: PostComment[];
 }
@@ -71,8 +72,9 @@ export interface PostDetailRouteParams extends Record<string, string | undefined
 }
 
 export interface PostProps {
-  post: Post;
+  post: PostListItem;
   showContent?: boolean;
+  canLike?: boolean;
 }
 
 export interface PostsListProps {
@@ -84,6 +86,7 @@ export interface PostsListProps {
   pageError?: string | null;
   onRetry: VoidFunction;
   showContent?: boolean;
+  canLike?: boolean;
 }
 
 export interface AuthorDetailsProps {
@@ -102,10 +105,13 @@ export interface PostContentProps {
 }
 
 export interface PostFooterProps {
+  postId: string | number;
+  liked: boolean;
   publishedAt: string;
-  likesCount?: number;
-  commentsCount?: number;
+  likesCount: number;
+  commentsCount: number;
   label?: string;
+  canLike: boolean;
 }
 
 export interface InputProps {

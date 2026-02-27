@@ -1,19 +1,69 @@
-import { IoIosHeartEmpty } from 'react-icons/io';
+import { useState, useEffect } from 'react';
 import { BiSolidComment } from 'react-icons/bi';
 
+import { useLikePostMutation, useUnlikePostMutation } from '@/services/api';
 import type { PostFooterProps } from '@/ts/interfaces';
 
 import Button from '@/components/Button';
+import LikeButton from '@/components/LikeButton';
+import { notify } from '@/components/Toaster/notify';
 
 import './styles.scss';
 
-const PostFooter = ({ publishedAt, likesCount, commentsCount, label }: PostFooterProps) => {
+const PostFooter = ({
+  postId,
+  liked,
+  publishedAt,
+  likesCount,
+  commentsCount,
+  label,
+  canLike,
+}: PostFooterProps) => {
+  const [likePost, { isLoading: isLiking }] = useLikePostMutation();
+  const [unlikePost, { isLoading: isUnliking }] = useUnlikePostMutation();
+  const [isLiked, setIsLiked] = useState(liked);
+  const [likesCountLocal, setLikesCountLocal] = useState(likesCount ?? 0);
+
+  const isLoading = isLiking || isUnliking;
+
+  useEffect(() => {
+    setIsLiked(liked);
+  }, [liked]);
+
+  useEffect(() => {
+    setLikesCountLocal(likesCount ?? 0);
+  }, [likesCount]);
+
   const parsedDate = new Date(publishedAt);
   const isValidDate = !Number.isNaN(parsedDate.getTime());
   const formattedDate = isValidDate ? parsedDate.toLocaleString() : publishedAt;
   const displayDate = label ?? formattedDate;
-  const hasLikes = typeof likesCount === 'number';
-  const hasComments = typeof commentsCount === 'number';
+  const hasComments = commentsCount > 0;
+
+  const handleLikeClick = async () => {
+    if (!canLike || isLoading) {
+      return;
+    }
+
+    const previousLiked = isLiked;
+    const previousLikes = likesCountLocal;
+
+    setIsLiked(!previousLiked);
+    setLikesCountLocal(previousLikes + (previousLiked ? -1 : 1));
+
+    try {
+      if (previousLiked) {
+        await unlikePost(Number(postId));
+      } else {
+        await likePost(Number(postId));
+      }
+    } catch (error) {
+      setIsLiked(previousLiked);
+      setLikesCountLocal(previousLikes);
+
+      notify.error('An error occurred while updating your like. Please try again.');
+    }
+  };
 
   return (
     <footer className="post__footer">
@@ -22,20 +72,28 @@ const PostFooter = ({ publishedAt, likesCount, commentsCount, label }: PostFoote
       </time>
 
       <div className="post__footer-icons">
-        <Button
-          variant="icon"
-          className="post__footer-icons-heart"
-        >
-          <IoIosHeartEmpty />
-          {hasLikes && <span className="post__footer-count">{likesCount}</span>}
-        </Button>
+        <LikeButton
+          isLiked={isLiked}
+          count={likesCountLocal}
+          disabled={isLoading || !canLike}
+          canLike={!!canLike}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleLikeClick();
+          }}
+        />
 
         <Button
           variant="icon"
           className="post__footer-icons-comment"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
         >
           <BiSolidComment />
-          {hasComments && <span className="post__footer-count">{commentsCount}</span>}
+          {hasComments && commentsCount}
         </Button>
       </div>
     </footer>

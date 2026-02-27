@@ -109,6 +109,7 @@ const Home = () => {
               totalCount={totalCount}
               pageError={pageError}
               onRetry={retryFetch}
+              canLike
             />
           )}
         </div>

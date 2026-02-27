@@ -194,6 +194,7 @@ const ProfileInfo = ({
                 loadedCount={posts.length}
                 totalCount={posts.length}
                 onRetry={onRetry}
+                canLike={followed}
               />
             )}
           </TabPanel>
