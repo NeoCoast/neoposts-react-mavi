@@ -1,4 +1,4 @@
-import React from 'react';
+import type { MouseEvent } from 'react';
 import cn from 'classnames';
 import { GoHeart, GoHeartFill } from 'react-icons/go';
 
@@ -10,7 +10,7 @@ type LikeButtonProps = {
   count: number;
   disabled?: boolean;
   canLike: boolean;
-  onClick: (e: React.MouseEvent) => void;
+  onClick: (e: MouseEvent) => void;
 };
 
 const LikeButton = ({ isLiked, count, disabled, canLike, onClick }: LikeButtonProps) => {
@@ -24,12 +24,16 @@ const LikeButton = ({ isLiked, count, disabled, canLike, onClick }: LikeButtonPr
       aria-pressed={isLiked}
       onClick={onClick}
     >
-      <Icon className={cn('icon-heart', { 'icon-heart-filled': isLiked, 'icon-heart-empty': !isLiked })} />
+      <Icon className={cn('icon-heart', { 'icon-heart--filled': isLiked })} />
       <span className="post__footer-count">{count}</span>
     </Button>
   );
 
-  return <Tooltip content={canLike ? "" : "You need to follow the user to like their posts"}>{content}</Tooltip>;
+  return (
+    <Tooltip content={canLike ? "" : "You need to follow the user to like their posts"}>
+      {content}
+    </Tooltip>
+  );
 };
 
 export default LikeButton;
