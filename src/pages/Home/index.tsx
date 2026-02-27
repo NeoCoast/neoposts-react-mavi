@@ -42,11 +42,18 @@ const Home = () => {
 
   useEffect(() => {
     if (data?.posts) {
-      setAllPosts((prev) => [...prev, ...data.posts]);
+      setAllPosts((prev) => {
+        if (page === 1) return data.posts;
+
+        const existingIds = new Set(prev.map((post) => String(post.id)));
+        const newUnique = data.posts.filter((post: PostListItem) => !existingIds.has(String(post.id)));
+
+        return [...prev, ...newUnique];
+      });
     } else if (page === 1) {
       setAllPosts([]);
     }
-  }, [data]);
+  }, [data, page]);
 
   const fetchMore = () => {
     if (isFetching || !data?.pagination?.nextPage) return;

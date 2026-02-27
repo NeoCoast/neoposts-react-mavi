@@ -51,7 +51,7 @@ const CreateModal = ({ isOpen, closeModal }: CreateModalProps) => {
       closeModal();
 
       notify.success('Post created successfully!');
-    } catch (err: unknown) {
+    } catch (err) {
       const apiError = err as ApiErrorResponse;
       notify.error(apiError.data?.message || 'Something went wrong. Please try again');
     }

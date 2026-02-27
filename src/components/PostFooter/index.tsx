@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import cn from 'classnames';
 import { BiSolidComment } from 'react-icons/bi';
 
@@ -30,6 +30,7 @@ const PostFooter = ({
 
   const [likesCountLocal, setLikesCountLocal] = useState(likesCount ?? 0);
   const [commentsCountLocal, setCommentsCountLocal] = useState(commentsCount ?? 0);
+  const [likedLocal, setLikedLocal] = useState<boolean>(liked ?? false);
 
   const parsedDate = new Date(publishedAt);
   const isValidDate = !Number.isNaN(parsedDate.getTime());
@@ -44,22 +45,34 @@ const PostFooter = ({
     setCommentsCountLocal(commentsCount ?? 0);
   }, [commentsCount]);
 
+  useEffect(() => {
+    setLikedLocal(liked ?? false);
+  }, [liked]);
+
   const [isCommentOpen, setIsCommentOpen] = useState(false);
 
-  const handleLikeClick = async () => {
-    if (!canLike || isLoading) {
-      return;
-    }
+  const handleLikeClick = useCallback(async () => {
+    if (!canLike || isLoading) return;
+
+    const prevCount = likesCountLocal;
+    const nextLiked = !likedLocal;
+    const nextCount = nextLiked ? prevCount + 1 : Math.max(0, prevCount - 1);
+
+    setLikedLocal(nextLiked);
+    setLikesCountLocal(nextCount);
+
     try {
-      if (liked) {
-        await unlikePost(Number(postId));
-      } else {
+      if (nextLiked) {
         await likePost(Number(postId));
+      } else {
+        await unlikePost(Number(postId));
       }
-    } catch (error) {
+    } catch (err) {
+      setLikedLocal(likedLocal);
+      setLikesCountLocal(prevCount);
       notify.error('An error occurred while updating your like. Please try again.');
     }
-  };
+  }, [canLike, isLoading, likedLocal, likesCountLocal, likePost, unlikePost, postId]);
 
   return (
     <footer className="post__footer">
@@ -69,7 +82,7 @@ const PostFooter = ({
 
       <div className="post__footer-icons">
         <LikeButton
-          isLiked={liked}
+          isLiked={likedLocal}
           count={likesCountLocal}
           disabled={isLoading || !canLike}
           canLike={!!canLike}
