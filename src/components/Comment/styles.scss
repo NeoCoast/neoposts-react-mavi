@@ -4,6 +4,7 @@
   padding: 18px;
   border-radius: 18px;
   background-color: rgba($color-primary, 0.05);
+  position: relative;
 
   &-avatar {
     width: 48px;
@@ -18,22 +19,25 @@
     flex-direction: column;
     gap: 8px;
     width: 100%;
+    padding-bottom: 44px;
   }
 
   &-header {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
   }
 
   &-name {
     font-weight: 600;
   }
 
-  &-mention {
-    color: $color-primary;
-    font-weight: 500;
+  &-email {
+    display: block;
+    font-size: 0.85rem;
+    color: $color-text-muted;
+    margin-top: 2px;
   }
 
   &-date {
@@ -46,11 +50,18 @@
     color: $color-text;
     white-space: pre-wrap;
     line-height: 1.5;
+    font-weight: 600;
   }
 
   &-actions {
     display: flex;
     gap: 12px;
+    width: auto;
+    margin-top: 0;
+    justify-content: flex-end;
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
 
     &-like {
       display: inline-flex;
@@ -66,6 +77,76 @@
       svg {
         font-size: 1.1rem;
       }
+    }
+  }
+
+  @include laptop {
+    padding: 16px;
+    gap: 12px;
+
+    &-avatar {
+      width: 44px;
+      height: 44px;
+    }
+
+    &-content {
+      font-size: 0.95rem;
+    }
+
+    &-actions {
+      gap: 10px;
+      right: 16px;
+      bottom: 16px;
+
+      &-like {
+        svg {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  @include tablet {
+    padding: 14px;
+    gap: 10px;
+
+    &-avatar {
+      width: 40px;
+      height: 40px;
+    }
+
+    &-content {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    &-actions {
+      right: 14px;
+      bottom: 14px;
+    }
+  }
+
+  @include mobile {
+    padding: 12px;
+    gap: 10px;
+
+    &-avatar {
+      width: 36px;
+      height: 36px;
+    }
+
+    &-body {
+      gap: 6px;
+    }
+
+    &-content {
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    &-actions {
+      right: 12px;
+      bottom: 12px;
     }
   }
 }

@@ -3,7 +3,6 @@ import { IoIosHeartEmpty } from 'react-icons/io';
 import { PostComment } from '@/ts/interfaces';
 import {
   formatAuthorName,
-  formatMention,
   formatRelativeDate,
   getFullName,
 } from '@/utils/postUtils';
@@ -20,7 +19,6 @@ type CommentComponentProps = {
 const CommentComponent = ({ comment }: CommentComponentProps) => {
   const commentFullName = getFullName(comment.author.name);
   const commentAlt = commentFullName || 'Comment author';
-  const mention = formatMention(comment.author);
 
   return (
     <article className="post__detail-list-comment">
@@ -34,8 +32,8 @@ const CommentComponent = ({ comment }: CommentComponentProps) => {
           <span className="post__detail-list-comment-name">
             {formatAuthorName(comment.author)}
           </span>
-          {mention && (
-            <span className="post__detail-list-comment-mention">@{mention}</span>
+          {comment.author.email && (
+            <span className="post__detail-list-comment-email">{comment.author.email}</span>
           )}
           {comment.publishedAt && (
             <time
@@ -46,7 +44,9 @@ const CommentComponent = ({ comment }: CommentComponentProps) => {
             </time>
           )}
         </div>
-        <p className="post__detail-list-comment-content">{comment.content}</p>
+        <p className="post__detail-list-comment-content">
+          {comment.comment}
+        </p>
         <div className="post__detail-list-comment-actions">
           <Button
             variant="icon"
