@@ -6,8 +6,8 @@ import PostFooter from '@/components/PostFooter';
 
 import './styles.scss';
 
-const Post = ({ post, showContent = true, canLike = false, canComment = false }: PostProps) => {
-  const { id, title, body, publishedAt, liked, likesCount, commentsCount } = post;
+const Post = ({ post, showContent = true, canLike = false, canComment = false, onCommentCreated }: PostProps) => {
+  const { id, title, body, publishedAt, liked, likesCount } = post;
 
   return (
     <article className="post">
@@ -18,9 +18,10 @@ const Post = ({ post, showContent = true, canLike = false, canComment = false }:
         liked={liked}
         publishedAt={publishedAt}
         likesCount={likesCount}
-        commentsCount={commentsCount ?? 0}
+        commentsCount={post.comments?.length ?? 0}
         canLike={canLike}
         canComment={canComment}
+        onCommentCreated={onCommentCreated}
       />
     </article>
   );

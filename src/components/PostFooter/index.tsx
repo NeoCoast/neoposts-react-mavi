@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import cn from 'classnames';
 import { BiSolidComment } from 'react-icons/bi';
 
 import { useLikePostMutation, useUnlikePostMutation } from '@/services/api';
@@ -6,6 +7,7 @@ import type { PostFooterProps } from '@/ts/interfaces';
 
 import Button from '@/components/Button';
 import LikeButton from '@/components/LikeButton';
+import Tooltip from '@/components/Tooltip';
 import { notify } from '@/components/Toaster/notify';
 import CommentModal from '@/components/CommentModal';
 
@@ -19,34 +21,28 @@ const PostFooter = ({
   commentsCount,
   label,
   canLike,
+  canComment,
+  onCommentCreated,
 }: PostFooterProps) => {
   const [likePost, { isLoading: isLiking }] = useLikePostMutation();
   const [unlikePost, { isLoading: isUnliking }] = useUnlikePostMutation();
   const isLoading = isLiking || isUnliking;
 
-  const [isLiked, setIsLiked] = useState(liked);
   const [likesCountLocal, setLikesCountLocal] = useState(likesCount ?? 0);
-
-  useEffect(() => {
-    setIsLiked(liked);
-  }, [liked]);
-
-  useEffect(() => {
-    setLikesCountLocal(likesCount ?? 0);
-  }, [likesCount]);
+  const [commentsCountLocal, setCommentsCountLocal] = useState(commentsCount ?? 0);
 
   const parsedDate = new Date(publishedAt);
   const isValidDate = !Number.isNaN(parsedDate.getTime());
   const formattedDate = isValidDate ? parsedDate.toLocaleString() : publishedAt;
   const displayDate = label ?? formattedDate;
 
-  const [commentsCountLocal, setCommentsCountLocal] = useState(commentsCount ?? 0);
+  useEffect(() => {
+    setLikesCountLocal(likesCount ?? 0);
+  }, [likesCount]);
 
   useEffect(() => {
     setCommentsCountLocal(commentsCount ?? 0);
   }, [commentsCount]);
-
-  const hasComments = commentsCountLocal > 0;
 
   const [isCommentOpen, setIsCommentOpen] = useState(false);
 
@@ -54,23 +50,13 @@ const PostFooter = ({
     if (!canLike || isLoading) {
       return;
     }
-
-    const previousLiked = isLiked;
-    const previousLikes = likesCountLocal;
-
-    setIsLiked(!previousLiked);
-    setLikesCountLocal(previousLikes + (previousLiked ? -1 : 1));
-
     try {
-      if (previousLiked) {
+      if (liked) {
         await unlikePost(Number(postId));
       } else {
         await likePost(Number(postId));
       }
     } catch (error) {
-      setIsLiked(previousLiked);
-      setLikesCountLocal(previousLikes);
-
       notify.error('An error occurred while updating your like. Please try again.');
     }
   };
@@ -83,7 +69,7 @@ const PostFooter = ({
 
       <div className="post__footer-icons">
         <LikeButton
-          isLiked={isLiked}
+          isLiked={liked}
           count={likesCountLocal}
           disabled={isLoading || !canLike}
           canLike={!!canLike}
@@ -94,25 +80,32 @@ const PostFooter = ({
           }}
         />
 
-        <Button
-          variant="icon"
-          className="post__footer-icons-comment"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setIsCommentOpen(true);
-          }}
-        >
-          <BiSolidComment />
-          {hasComments && commentsCountLocal}
-        </Button>
+        <Tooltip content={canComment ? '' : 'You need to follow the user to comment their posts'}>
+          <Button
+            variant="icon"
+            className={cn('post__footer-icons-comment', { 'disabled-comment': !canComment })}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (!canComment) return;
+              setIsCommentOpen(true);
+            }}
+            disabled={!canComment}
+          >
+            <BiSolidComment />
+            <span className="post__footer-count">{commentsCountLocal}</span>
+          </Button>
+        </Tooltip>
       </div>
       {isCommentOpen && (
         <CommentModal
           isOpen={isCommentOpen}
           closeModal={() => setIsCommentOpen(false)}
           postId={postId}
-          onSuccess={() => setCommentsCountLocal((c) => c + 1)}
+          onSuccess={(comment) => {
+            setCommentsCountLocal((c) => c + 1);
+            if (onCommentCreated) onCommentCreated(comment);
+          }}
         />
       )}
     </footer>

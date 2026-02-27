@@ -76,6 +76,7 @@ export interface PostProps {
   showContent?: boolean;
   canLike?: boolean;
   canComment?: boolean;
+  onCommentCreated?: (comment: PostComment) => void;
 }
 
 export interface PostsListProps {
@@ -89,6 +90,7 @@ export interface PostsListProps {
   showContent?: boolean;
   canLike?: boolean;
   canComment?: boolean;
+  onCommentCreated?: (postId: string | number, comment: PostComment) => void;
 }
 
 export interface AuthorDetailsProps {
@@ -114,7 +116,7 @@ export interface PostFooterProps {
   commentsCount: number;
   label?: string;
   canLike: boolean;
-  canComment?: boolean;
+  canComment: boolean;
   onCommentCreated?: (comment: PostComment) => void;
 }
 

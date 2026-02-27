@@ -131,7 +131,7 @@ export const api = createApi({
         method: 'GET',
         url: `/users/${id}`,
       }),
-      providesTags: (__result, __error, id) => [{ type: 'User', id }],
+      providesTags: (__result, __error, id) => [{ type: 'User', id }, 'User'],
     }),
     followUser: builder.mutation<void, string | number>({
       query: (id) => ({
@@ -167,7 +167,7 @@ export const api = createApi({
         url: `/posts/${postId}/comments`,
         body: { body: content },
       }),
-      invalidatesTags: (__result, __error, { postId }) => [{ type: 'Post', id: postId }, 'Post'],
+      invalidatesTags: (__result, __error, { postId }) => [{ type: 'Post', id: postId }, 'Post', 'User'],
     }),
   }),
 });

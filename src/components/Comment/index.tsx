@@ -44,7 +44,9 @@ const CommentComponent = ({ comment }: CommentComponentProps) => {
             </time>
           )}
         </div>
-        <p className="post__detail-list-comment-content">{comment.comment}</p>
+        <p className="post__detail-list-comment-content">
+          {comment.comment}
+        </p>
         <div className="post__detail-list-comment-actions">
           <Button
             variant="icon"
