@@ -41,7 +41,7 @@ function PostDetailCard({
   const { data: me } = useGetMeQuery();
   const isOwnPost = me && String(me.id) === String(post.author.id);
   const isFollowing = post.author.followed ?? false;
-  const canLike = Boolean(isOwnPost || isFollowing);
+  const canLike = isOwnPost || isFollowing;
 
   const authorFullName = getFullName(post.author.name);
   const authorAlt = authorFullName || 'Author avatar';

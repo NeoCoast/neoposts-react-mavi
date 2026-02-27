@@ -21,10 +21,10 @@ const PostFooter = ({
 }: PostFooterProps) => {
   const [likePost, { isLoading: isLiking }] = useLikePostMutation();
   const [unlikePost, { isLoading: isUnliking }] = useUnlikePostMutation();
-  const isLoading = isLiking || isUnliking;
-
   const [isLiked, setIsLiked] = useState(liked);
   const [likesCountLocal, setLikesCountLocal] = useState(likesCount ?? 0);
+
+  const isLoading = isLiking || isUnliking;
 
   useEffect(() => {
     setIsLiked(liked);
@@ -38,7 +38,6 @@ const PostFooter = ({
   const isValidDate = !Number.isNaN(parsedDate.getTime());
   const formattedDate = isValidDate ? parsedDate.toLocaleString() : publishedAt;
   const displayDate = label ?? formattedDate;
-
   const hasComments = commentsCount > 0;
 
   const handleLikeClick = async () => {

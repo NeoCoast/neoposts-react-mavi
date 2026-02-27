@@ -3,17 +3,16 @@
   align-items: center;
   gap: 0.4rem;
 
-  .icon-heart-empty,
-  .icon-heart-filled {
+  .icon-heart {
     width: 1.2rem;
     height: 1.2rem;
     font-size: 1.2rem;
     line-height: 1;
     color: $color-text-muted;
-  }
 
-  .icon-heart-filled {
-    color: $color-red;
+    &--filled {
+      color: $color-red;
+    }
   }
 
   &.disabled-like {
