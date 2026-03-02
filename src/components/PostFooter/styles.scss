@@ -62,6 +62,17 @@
       &:hover {
         background-color: transparent !important;
       }
+      
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      &.disabled-comment {
+        opacity: 0.6;
+        cursor: not-allowed;
+        position: relative;
+      }
     }
   }
 }

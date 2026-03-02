@@ -20,6 +20,8 @@ const PostsList = ({
   onRetry,
   showContent = false,
   canLike = false,
+  canComment = false,
+  onCommentCreated,
 }: PostsListProps) => {
   const { pathname } = useLocation();
 
@@ -60,7 +62,13 @@ const PostsList = ({
                 profilePhoto={post.author?.profilePhoto}
               />
 
-              <Post post={post} showContent={showContent} canLike={canLike} />
+              <Post
+                post={post}
+                showContent={showContent}
+                canLike={canLike}
+                canComment={canComment}
+                onCommentCreated={(comment) => onCommentCreated?.(post.id, comment)}
+              />
             </Link>
           </article>
         ))}

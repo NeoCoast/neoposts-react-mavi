@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 
 import { setAuthHeaders } from '@/utils/setHeaders';
-import { User } from '@/ts/interfaces';
+import { User, PostComment } from '@/ts/interfaces';
 
 const apiBaseUrl = import.meta.env.VITE_API_URL;
 
@@ -131,7 +131,7 @@ export const api = createApi({
         method: 'GET',
         url: `/users/${id}`,
       }),
-      providesTags: (__result, __error, id) => [{ type: 'User', id }],
+      providesTags: (__result, __error, id) => [{ type: 'User', id }, 'User'],
     }),
     followUser: builder.mutation<void, string | number>({
       query: (id) => ({
@@ -161,6 +161,14 @@ export const api = createApi({
       }),
       invalidatesTags: (__result, __error, id) => [{ type: 'Post', id }, 'Post', 'User'],
     }),
+    createComment: builder.mutation<PostComment, { postId: number | string; content: string }>({
+      query: ({ postId, content }) => ({
+        method: 'POST',
+        url: `/posts/${postId}/comments`,
+        body: { body: content },
+      }),
+      invalidatesTags: (__result, __error, { postId }) => [{ type: 'Post', id: postId }, 'Post', 'User'],
+    }),
   }),
 });
 
@@ -179,4 +187,5 @@ export const {
   useUnfollowUserMutation,
   useLikePostMutation,
   useUnlikePostMutation,
+  useCreateCommentMutation,
 } = api;

@@ -39,3 +39,7 @@ export const createPostSchema = z.object({
   title: z.string().trim().min(1, 'Title is required').max(100, 'Title must be 100 characters max'),
   body: z.string().trim().min(1, 'Body is required'),
 });
+
+export const createCommentSchema = z.object({
+  content: z.string().trim().min(1, 'Comment is required').max(300, 'Comment must be 300 characters max'),
+});
