@@ -5,7 +5,7 @@ import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 import './author.scss';
 
 const AuthorDetails = ({ name, email, profilePhoto, className }: AuthorDetailsProps) => {
-  const rootClass = `post-author${className ? ` ${className}` : ''}`;
+  const rootClass = `post-author ${className ?? ''}`;
   return (
     <div className={rootClass}>
       <img
