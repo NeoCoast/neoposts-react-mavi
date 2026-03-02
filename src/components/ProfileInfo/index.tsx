@@ -8,7 +8,7 @@ import 'react-tabs/style/react-tabs.css';
 
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 import { useFollowUserMutation, useUnfollowUserMutation } from '@/services/api';
-import { PostListItem, UserData } from '@/ts/interfaces';
+import { PostComment, PostListItem, UserData } from '@/ts/interfaces';
 
 import { notify } from '@/components/Toaster/notify';
 import Button from '@/components/Button';
@@ -120,8 +120,8 @@ const ProfileInfo = ({
     await followUser(id);
   };
 
-  const handleOnCommentCreated = (postId: string | number, comment: any) => {
-    setPostsState((prev) => prev.map((p) => p.id === postId ? { ...p, comments: (p.comments ?? []).concat(comment) } : p));
+  const handleOnCommentCreated = (postId: string | number, comment: PostComment) => {
+    setPostsState((prev) => prev.map((post) => String(post.id) === String(postId) ? { ...post, comments: (post.comments ?? []).concat(comment) } : post));
   };
 
   return (
@@ -202,10 +202,10 @@ const ProfileInfo = ({
                 hasMore={false}
                 showContent
                 loadedCount={postsState.length}
-                totalCount={postsState.length}
+                totalCount={postsCount}
                 onRetry={onRetry}
-                canLike={followed}
-                canComment={followed}
+                canLike={isFollowedState}
+                canComment={isFollowedState}
                 onCommentCreated={handleOnCommentCreated}
               />
             )}

@@ -17,7 +17,6 @@ export const getFullName = (name?: string | null): string => {
 export const formatAuthorName = (author: PostComment['author']): string => {
   const base = [author.name].filter(Boolean).join(' ').trim();
   if (base) return base;
-  if (author.name) return author.name;
   if (author.email) return author.email.split('@')[0];
   return 'Unknown';
 };

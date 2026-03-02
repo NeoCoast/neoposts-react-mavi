@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Oval } from 'react-loader-spinner';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -18,11 +18,20 @@ function PostDetail() {
   const navigate = useNavigate();
   const { id } = useParams<PostDetailRouteParams>();
   const location = useLocation();
+
+  const parsedId = Number(id);
+  const isValidId = Number.isInteger(parsedId) && parsedId > 0;
+  const shouldSkip = !isValidId;
+
+  useEffect(() => {
+    if (shouldSkip) navigate(ROUTES.HOME);
+  }, [shouldSkip, navigate]);
+
   const {
     data: post,
     isLoading,
     error,
-  } = useGetPostQuery(Number(id));
+  } = useGetPostQuery(parsedId, { skip: shouldSkip });
 
   const handleBack = useCallback(() => {
     const from = (location.state as PostDetailLocationState)?.from;
@@ -62,7 +71,9 @@ function PostDetail() {
           <Button
             className="post__detail-empty-home"
             onClick={handleGoHome}
-          />
+          >
+            Go Home
+          </Button>
         </div>
       );
     }

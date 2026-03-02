@@ -18,7 +18,7 @@ const Post = ({ post, showContent = true, canLike = false, canComment = false, o
         liked={liked}
         publishedAt={publishedAt}
         likesCount={likesCount}
-        commentsCount={post.comments?.length ?? 0}
+        commentsCount={post.commentsCount ?? post.comments?.length ?? 0}
         canLike={canLike}
         canComment={canComment}
         onCommentCreated={onCommentCreated}

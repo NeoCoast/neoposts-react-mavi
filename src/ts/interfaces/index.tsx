@@ -97,6 +97,7 @@ export interface AuthorDetailsProps {
   name?: UserData['name'];
   email?: UserData['email'];
   profilePhoto?: UserData['profilePhoto'];
+  className?: string;
 }
 
 export interface PostTitleProps {

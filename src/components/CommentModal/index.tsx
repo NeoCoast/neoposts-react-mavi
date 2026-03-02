@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 import cn from 'classnames';
 
 import { useCreateCommentMutation } from '@/services/api';
+import { PostComment } from '@/ts/interfaces';
 import { createCommentSchema } from '@/utils/validationSchemas';
 import { ROUTES } from '@/constants/routes';
 
@@ -21,7 +22,7 @@ type Props = {
   isOpen: boolean;
   closeModal: VoidFunction;
   postId: string | number;
-  onSuccess?: (comment: any) => void;
+  onSuccess?: (comment: PostComment) => void;
 };
 
 const MAX_LENGTH = 300;
@@ -89,14 +90,14 @@ const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
       isOpen={isOpen}
       onRequestClose={handleClose}
       contentLabel="Add comment"
-      className="modal"
-      overlayClassName="modal__background"
+      className="comment-modal"
+      overlayClassName="comment-modal__background"
     >
-      <div className="modal__header">
-        <h1 className="modal__header-title">Create comment</h1>
+      <div className="comment-modal__header">
+        <h1 className="comment-modal__header-title">Create comment</h1>
         <Button
           variant="icon"
-          className="modal__header-title-close"
+          className="comment-modal__header-title-close"
           onClick={handleClose}
           aria-label="Close"
         >
@@ -105,7 +106,7 @@ const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
       </div>
 
       <form
-        className="modal__main"
+        className="comment-modal__main"
         onSubmit={handleSubmit(onSubmit)}
         onMouseDown={(e) => e.stopPropagation()}
         onClick={(e) => e.stopPropagation()}
@@ -113,21 +114,21 @@ const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
         <TextArea
           inputName="content"
           register={register}
-          className="modal__main-textarea"
+          className="comment-modal__main-textarea"
           placeholder="Write your comment"
           required
         />
 
-        <div className="modal__main-meta">
-          <div className={cn('modal__main-meta-counter', { 'modal__main-meta-counter-error': isTooLong })}>{commentLength}/{MAX_LENGTH}</div>
+        <div className="comment-modal__main-meta">
+          <div className={cn('comment-modal__main-meta-counter', { 'comment-modal__main-meta-counter-error': isTooLong })}>{commentLength}/{MAX_LENGTH}</div>
           {(errors?.content || isTooLong) && (
-            <div className="modal__main-meta-counter-error">
+            <div className="comment-modal__main-meta-counter-error">
               {isTooLong ? `Comment cannot exceed ${MAX_LENGTH} characters.` : (errors?.content as any)?.message}
             </div>
           )}
         </div>
 
-        <div className="modal__main-actions">
+        <div className="comment-modal__main-actions">
           <Button variant="secondary" onClick={handleClose} disabled={isLoading}>
             Cancel
           </Button>

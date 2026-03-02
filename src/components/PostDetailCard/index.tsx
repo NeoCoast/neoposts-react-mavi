@@ -39,6 +39,11 @@ function PostDetailCard({
   const authorRoute = `${ROUTES.USERS}/${post.author.id}`;
   const destination = isOwnPost ? ROUTES.MY_PROFILE : authorRoute;
 
+  const comments = post.comments ?? [];
+  const commentsCount = post.comments?.length ?? post.commentsCount ?? 0;
+  const likesCount = post.likesCount ?? 0;
+  const body = post.body ?? '';
+
   return (
     <article className="post__detail-card">
       <Button
@@ -65,12 +70,12 @@ function PostDetailCard({
       </header>
 
       <PostTitle title={post.title} />
-      <PostContent content={post.body} />
+      <PostContent content={body} />
       <PostFooter
         postId={post.id}
         liked={post.liked}
-        likesCount={post.likesCount}
-        commentsCount={post.comments?.length ?? 0}
+        likesCount={likesCount}
+        commentsCount={commentsCount}
         publishedAt={post.publishedAt}
         canLike={canLike}
         canComment={canComment}
@@ -81,14 +86,14 @@ function PostDetailCard({
       <section className="post__detail-comments">
         <div className="post__detail-comments-header">
           <BiSolidComment />
-          <span>{post.comments?.length ?? 0} comments</span>
+          <span>{commentsCount} comments</span>
         </div>
 
         <div className="post__detail-comments-list">
-          {post.comments?.length === 0 ? (
+          {commentsCount === 0 ? (
             <p className="post__detail-comments-list-empty">No comments yet.</p>
           ) : (
-            post.comments?.map((comment) => (
+            comments.map((comment) => (
               <CommentComponent key={comment.id} comment={comment} />
             ))
           )}

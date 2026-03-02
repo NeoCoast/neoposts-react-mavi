@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
 
 import { setAuthHeaders } from '@/utils/setHeaders';
-import { User } from '@/ts/interfaces';
+import { User, PostComment } from '@/ts/interfaces';
 
 const apiBaseUrl = import.meta.env.VITE_API_URL;
 
@@ -161,7 +161,7 @@ export const api = createApi({
       }),
       invalidatesTags: (__result, __error, id) => [{ type: 'Post', id }, 'Post', 'User'],
     }),
-    createComment: builder.mutation<any, { postId: number | string; content: string }>({
+    createComment: builder.mutation<PostComment, { postId: number | string; content: string }>({
       query: ({ postId, content }) => ({
         method: 'POST',
         url: `/posts/${postId}/comments`,

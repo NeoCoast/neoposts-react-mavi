@@ -55,12 +55,6 @@ const PostFooter = ({
     setLikedLocal(liked ?? false);
   }, [liked]);
 
-  const parsedDate = new Date(publishedAt);
-  const isValidDate = !Number.isNaN(parsedDate.getTime());
-  const formattedDate = isValidDate ? parsedDate.toLocaleString() : publishedAt;
-  const displayDate = label ?? formattedDate;
-  const hasComments = commentsCount > 0;
-
   const handleLikeClick = useCallback(async () => {
     if (!canLike || isLoading) return;
 
@@ -103,7 +97,24 @@ const PostFooter = ({
           }}
         />
 
-        <Tooltip content={canComment ? '' : 'You need to follow the user to comment their posts'}>
+        {!canComment ? (
+          <Tooltip content="You need to follow the user to comment their posts">
+            <Button
+              variant="icon"
+              className={cn('post__footer-icons-comment', { 'disabled-comment': !canComment })}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (!canComment) return;
+                setIsCommentOpen(true);
+              }}
+              disabled={!canComment}
+            >
+              <BiSolidComment />
+              <span className="post__footer-count">{commentsCountLocal}</span>
+            </Button>
+          </Tooltip>
+        ) : (
           <Button
             variant="icon"
             className={cn('post__footer-icons-comment', { 'disabled-comment': !canComment })}
@@ -118,7 +129,7 @@ const PostFooter = ({
             <BiSolidComment />
             <span className="post__footer-count">{commentsCountLocal}</span>
           </Button>
-        </Tooltip>
+        )}
       </div>
       {isCommentOpen && (
         <CommentModal
@@ -127,7 +138,7 @@ const PostFooter = ({
           postId={postId}
           onSuccess={(comment) => {
             setCommentsCountLocal((c) => c + 1);
-            if (onCommentCreated) onCommentCreated(comment);
+            onCommentCreated?.(comment);
           }}
         />
       )}

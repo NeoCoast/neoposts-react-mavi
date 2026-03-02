@@ -3,10 +3,10 @@ import { IoIosHeartEmpty } from 'react-icons/io';
 import { PostComment } from '@/ts/interfaces';
 import {
   formatAuthorName,
-  formatRelativeDate,
   getFullName,
 } from '@/utils/postUtils';
 import Button from '@/components/Button';
+import AuthorDetails from '@/components/Post/AuthorDetails';
 
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 
@@ -22,28 +22,13 @@ const CommentComponent = ({ comment }: CommentComponentProps) => {
 
   return (
     <article className="post__detail-list-comment">
-      <img
-        className="post__detail-list-comment-avatar"
-        src={comment.author.profilePhoto || userProfilePlaceholder}
-        alt={commentAlt}
+      <AuthorDetails
+        name={formatAuthorName(comment.author)}
+        email={comment.author.email}
+        profilePhoto={comment.author.profilePhoto || userProfilePlaceholder}
+        className="post__detail-list-comment-author"
       />
       <div className="post__detail-list-comment-body">
-        <div className="post__detail-list-comment-header">
-          <span className="post__detail-list-comment-name">
-            {formatAuthorName(comment.author)}
-          </span>
-          {comment.author.email && (
-            <span className="post__detail-list-comment-email">{comment.author.email}</span>
-          )}
-          {comment.publishedAt && (
-            <time
-              className="post__detail-list-comment-date"
-              dateTime={comment.publishedAt}
-            >
-              {formatRelativeDate(comment.publishedAt)}
-            </time>
-          )}
-        </div>
         <p className="post__detail-list-comment-content">
           {comment.comment}
         </p>
