@@ -41,7 +41,7 @@ export interface SignupFormData {
 
 export interface PostComment {
   id: string | number;
-  content: string;
+  comment: string;
   publishedAt?: string;
   likesCount?: number;
   author: UserData;
@@ -52,7 +52,8 @@ export interface Post {
   title: string;
   body: string;
   publishedAt: string;
-  likesCount?: number;
+  liked: boolean;
+  likesCount: number;
   commentsCount?: number;
   comments?: PostComment[];
 }
@@ -71,8 +72,11 @@ export interface PostDetailRouteParams extends Record<string, string | undefined
 }
 
 export interface PostProps {
-  post: Post;
+  post: PostListItem;
   showContent?: boolean;
+  canLike?: boolean;
+  canComment?: boolean;
+  onCommentCreated?: (comment: PostComment) => void;
 }
 
 export interface PostsListProps {
@@ -84,12 +88,16 @@ export interface PostsListProps {
   pageError?: string | null;
   onRetry: VoidFunction;
   showContent?: boolean;
+  canLike?: boolean;
+  canComment?: boolean;
+  onCommentCreated?: (postId: string | number, comment: PostComment) => void;
 }
 
 export interface AuthorDetailsProps {
   name?: UserData['name'];
   email?: UserData['email'];
   profilePhoto?: UserData['profilePhoto'];
+  className?: string;
 }
 
 export interface PostTitleProps {
@@ -102,10 +110,15 @@ export interface PostContentProps {
 }
 
 export interface PostFooterProps {
+  postId: string | number;
+  liked: boolean;
   publishedAt: string;
-  likesCount?: number;
-  commentsCount?: number;
+  likesCount: number;
+  commentsCount: number;
   label?: string;
+  canLike: boolean;
+  canComment: boolean;
+  onCommentCreated?: (comment: PostComment) => void;
 }
 
 export interface InputProps {

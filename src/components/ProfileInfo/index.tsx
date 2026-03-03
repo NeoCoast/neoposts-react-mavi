@@ -8,7 +8,7 @@ import 'react-tabs/style/react-tabs.css';
 
 import userProfilePlaceholder from '@/assets/Icons/userProfilePhoto.svg';
 import { useFollowUserMutation, useUnfollowUserMutation } from '@/services/api';
-import { PostListItem, UserData } from '@/ts/interfaces';
+import { PostComment, PostListItem, UserData } from '@/ts/interfaces';
 
 import { notify } from '@/components/Toaster/notify';
 import Button from '@/components/Button';
@@ -62,6 +62,12 @@ const ProfileInfo = ({
   const indexToTab = ['posts', 'following', 'followers'];
   const selectedIndex = tabToIndex[tabParam] ?? 0;
 
+  const [postsState, setPostsState] = useState<PostListItem[]>(posts);
+
+  useEffect(() => {
+    setPostsState(posts);
+  }, [posts]);
+
   useEffect(() => {
     setIsFollowedState(followed);
   }, [followed]);
@@ -112,6 +118,10 @@ const ProfileInfo = ({
 
   const handleFollowFromList = async (id: string | number) => {
     await followUser(id);
+  };
+
+  const handleOnCommentCreated = (postId: string | number, comment: PostComment) => {
+    setPostsState((prev) => prev.map((post) => String(post.id) === String(postId) ? { ...post, comments: (post.comments ?? []).concat(comment) } : post));
   };
 
   return (
@@ -182,18 +192,21 @@ const ProfileInfo = ({
 
         <section className="my-profile__card-posts">
           <TabPanel>
-            {posts.length === 0 ? (
+            {postsState.length === 0 ? (
               <EmptyState>
                 {isOwn ? 'You have' : 'This user has'} no posts yet
               </EmptyState>
             ) : (
               <PostsList
-                items={posts}
+                items={postsState}
                 hasMore={false}
                 showContent
-                loadedCount={posts.length}
-                totalCount={posts.length}
+                loadedCount={postsState.length}
+                totalCount={postsCount}
                 onRetry={onRetry}
+                canLike={isFollowedState}
+                canComment={isFollowedState}
+                onCommentCreated={handleOnCommentCreated}
               />
             )}
           </TabPanel>

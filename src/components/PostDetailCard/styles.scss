@@ -38,9 +38,14 @@
   }
 
   &-header {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+    &-link {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
 
     &-avatar {
       width: 72px;
@@ -111,78 +116,6 @@
       margin: 0;
       color: $color-text-muted;
       font-size: 0.95rem;
-    }
-  }
-}
-
-.post__detail-list-comment {
-  display: flex;
-  gap: 14px;
-  padding: 18px;
-  border-radius: 18px;
-  background-color: rgba($color-primary, 0.05);
-
-  &-avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba($color-primary, 0.2);
-  }
-
-  &-body {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
-  }
-
-  &-header {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-  }
-
-  &-name {
-    font-weight: 600;
-  }
-
-  &-mention {
-    color: $color-primary;
-    font-weight: 500;
-  }
-
-  &-date {
-    font-size: 0.85rem;
-    color: $color-text-muted;
-  }
-
-  &-content {
-    margin: 0;
-    color: $color-text;
-    white-space: pre-wrap;
-    line-height: 1.5;
-  }
-
-  &-actions {
-    display: flex;
-    gap: 12px;
-
-    &-like {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      border: none;
-      background: transparent;
-      color: $color-primary;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 0;
-
-      svg {
-        font-size: 1.1rem;
-      }
     }
   }
 }
