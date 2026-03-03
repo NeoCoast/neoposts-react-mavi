@@ -1,4 +1,4 @@
-import { ReactNode, FormEventHandler } from 'react';
+import { ReactNode, FormEventHandler, MouseEventHandler } from 'react';
 import Modal from 'react-modal';
 
 import Button from '@/components/Button';
@@ -33,15 +33,26 @@ const BaseModal = ({
     ? 'Comment'
     : 'Post';
 
+  const stopModalEventPropagation: MouseEventHandler<HTMLFormElement> = (event) => {
+    event.stopPropagation();
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
+      shouldCloseOnOverlayClick={false}
+      shouldCloseOnEsc={false}
       contentLabel={contentLabel}
       className="base-modal"
       overlayClassName="base-modal__overlay"
     >
-      <form className="base-modal__form" onSubmit={onSubmit}>
+      <form
+        className="base-modal__form"
+        onSubmit={onSubmit}
+        onClick={stopModalEventPropagation}
+        onMouseDown={stopModalEventPropagation}
+      >
         <div className="base-modal__header">
           {headerContent ?? <h2 className="base-modal__title">{contentLabel}</h2>}
 

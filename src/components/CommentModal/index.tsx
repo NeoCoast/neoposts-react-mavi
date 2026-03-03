@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import cn from 'classnames';
 
 import { PostComment } from '@/ts/interfaces';
@@ -35,6 +36,7 @@ const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
     defaultValues: { content: '' },
   });
 
+  const navigate = useNavigate();
   const [createComment, { isLoading }] = useCreateCommentMutation();
 
   const commentValue = watch('content') || '';
@@ -62,6 +64,7 @@ const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
       notify.success('Comment posted');
       onSuccess?.(result);
       handleClose();
+      navigate(`/posts/${postId}`);
     } catch {
       notify.error('Failed to post comment. Please try again.');
     }
