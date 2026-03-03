@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import cn from 'classnames';
@@ -18,6 +18,8 @@ const userProfilePhoto = new URL('@/assets/Icons/userProfilePhoto.svg', import.m
 import './styles.scss';
 
 const CreatePostModal = ({ isOpen, closeModal }: CreateModalProps) => {
+  const previousIsOpenRef = useRef(isOpen);
+
   const {
     register,
     handleSubmit,
@@ -30,6 +32,14 @@ const CreatePostModal = ({ isOpen, closeModal }: CreateModalProps) => {
   });
 
   const [createPost, { isLoading }] = useCreatePostMutation();
+
+  useEffect(() => {
+    if (previousIsOpenRef.current && !isOpen) {
+      reset();
+    }
+
+    previousIsOpenRef.current = isOpen;
+  }, [isOpen, reset]);
 
   const titleValue = watch('title') || '';
   const { titleLength, isTitleTooLong } = useMemo(
@@ -63,6 +73,7 @@ const CreatePostModal = ({ isOpen, closeModal }: CreateModalProps) => {
       isOpen={isOpen}
       closeModal={handleClose}
       contentLabel="New Post"
+      submitLabel="Post"
       onSubmit={handleSubmit(onSubmit)}
       isSubmitLoading={isLoading}
       isSubmitDisabled={!isValid || isTitleTooLong}
@@ -73,7 +84,7 @@ const CreatePostModal = ({ isOpen, closeModal }: CreateModalProps) => {
             src={userProfilePhoto}
             alt="user profile"
           />
-          <span className="modal__header-top-title">New Post</span>
+          <h1 className="modal__header-top-title">New Post</h1>
         </div>
       )}
     >
@@ -107,7 +118,6 @@ const CreatePostModal = ({ isOpen, closeModal }: CreateModalProps) => {
           placeholder="Share something with your team!"
         />
       </div>
-
     </BaseModal>
   );
 };

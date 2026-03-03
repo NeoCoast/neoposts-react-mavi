@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 import { PostComment } from '@/ts/interfaces';
 import { createCommentSchema } from '@/utils/validationSchemas';
 import { useCreateCommentMutation } from '@/services/api';
+import { ROUTES } from '@/constants/routes';
 
 import BaseModal from '@/components/BaseModal';
 import TextArea from '@/components/TextArea';
@@ -64,7 +65,7 @@ const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
       notify.success('Comment posted');
       onSuccess?.(result);
       handleClose();
-      navigate(`/posts/${postId}`);
+      navigate(ROUTES.POST.replace(':id', String(postId)));
     } catch {
       notify.error('Failed to post comment. Please try again.');
     }
@@ -75,6 +76,7 @@ const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
       isOpen={isOpen}
       closeModal={handleClose}
       contentLabel="Add comment"
+      submitLabel="Comment"
       onSubmit={handleSubmit(onSubmit)}
       isSubmitLoading={isCommentLoading}
       isSubmitDisabled={isCommentSubmitDisabled}

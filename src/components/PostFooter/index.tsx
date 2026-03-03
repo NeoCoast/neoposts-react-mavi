@@ -107,6 +107,7 @@ const PostFooter = ({
                 e.stopPropagation();
                 if (!canComment) return;
                 setIsCommentOpen(true);
+                (e.currentTarget)?.blur();
               }}
               disabled={!canComment}
             >
@@ -123,6 +124,7 @@ const PostFooter = ({
               e.stopPropagation();
               if (!canComment) return;
               setIsCommentOpen(true);
+              (e.currentTarget)?.blur();
             }}
             disabled={!canComment}
           >

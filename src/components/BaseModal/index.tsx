@@ -5,12 +5,12 @@ import Button from '@/components/Button';
 
 import './styles.scss';
 
-Modal.setAppElement('#root');
 
 export type BaseModalProps = {
   isOpen: boolean;
   closeModal: VoidFunction;
   contentLabel?: string;
+  submitLabel?: string;
   headerContent?: ReactNode;
   children: ReactNode;
   onSubmit?: FormEventHandler<HTMLFormElement>;
@@ -22,17 +22,13 @@ const BaseModal = ({
   isOpen,
   closeModal,
   contentLabel,
+  submitLabel = 'Submit',
   headerContent,
   children,
   onSubmit,
   isSubmitDisabled = false,
   isSubmitLoading = false,
 }: BaseModalProps) => {
-  const normalizedContentLabel = contentLabel?.toLowerCase() || '';
-  const submitLabel = normalizedContentLabel.includes('comment')
-    ? 'Comment'
-    : 'Post';
-
   const stopModalEventPropagation: MouseEventHandler<HTMLFormElement> = (event) => {
     event.stopPropagation();
   };
@@ -41,8 +37,6 @@ const BaseModal = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
-      shouldCloseOnOverlayClick={false}
-      shouldCloseOnEsc={false}
       contentLabel={contentLabel}
       className="base-modal"
       overlayClassName="base-modal__overlay"
@@ -61,6 +55,7 @@ const BaseModal = ({
             variant="icon"
             className="base-modal__close"
             onClick={closeModal}
+            aria-label="Close modal"
           >
             &times;
           </Button>
