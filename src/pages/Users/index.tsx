@@ -138,7 +138,9 @@ const Users = () => {
                 <p>Unable to load users. Please try again.</p>
                 <Button
                   onClick={refetch}
-                />
+                >
+                  Retry
+                </Button>
               </div>
             </div>
           )}

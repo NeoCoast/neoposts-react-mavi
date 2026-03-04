@@ -83,7 +83,9 @@ function PostDetail() {
           <Button
             className="post__detail-empty-home"
             onClick={handleGoHome}
-          />
+          >
+            Go Home
+          </Button>
         </div>
       );
     }
@@ -98,9 +100,7 @@ function PostDetail() {
 
   return (
     <div className="post__detail">
-      <div className="post__detail-layout-sidebar-content">
-        {renderMainContent()}
-      </div>
+      {renderMainContent()}
     </div>
   );
 }

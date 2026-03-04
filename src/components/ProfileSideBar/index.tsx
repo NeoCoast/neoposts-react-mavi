@@ -35,7 +35,7 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
 
   return (
     <aside
-      className={cn("profile__sidebar", className, { 'profile__sidebar--actions-only': actionsOnly })}
+      className={cn("profile__sidebar", className)}
       aria-label="Profile sidebar"
     >
       <div className={cn("profile__sidebar-card", { 'profile__sidebar-card--actions-only': actionsOnly })}>

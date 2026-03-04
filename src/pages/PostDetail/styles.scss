@@ -1,5 +1,13 @@
 .post__detail {
   color: $color-text;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+
+  @include tablet {
+    padding: 0;
+  }
 
   &-loader,
   &-error,
