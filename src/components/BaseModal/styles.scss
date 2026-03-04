@@ -1,0 +1,99 @@
+.base-modal {
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  padding: 28px 32px;
+  background-color: $color-white;
+  color: $color-text;
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(29, 49, 91, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+
+  &__overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(18, 24, 40, 0.35);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 16px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  &__close {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid $color-text;
+    color: $color-text;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  @include tablet {
+    max-width: 90vw;
+    padding: 20px;
+
+    &__title {
+      font-size: 22px;
+    }
+  }
+
+  @include mobile {
+    max-width: 95vw;
+    padding: 16px;
+    border-radius: 16px;
+
+    &__title {
+      font-size: 20px;
+    }
+
+    &__footer {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+}
+
+.ReactModalPortal {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+}
