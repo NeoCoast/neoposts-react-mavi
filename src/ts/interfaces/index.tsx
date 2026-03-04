@@ -143,6 +143,7 @@ export interface TextProps {
 
 export interface ProfileSideBarProps {
   className?: string;
+  actionsOnly?: boolean;
   name: string;
   email: string;
   posts: number;

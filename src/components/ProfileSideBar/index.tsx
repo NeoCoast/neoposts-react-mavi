@@ -17,6 +17,7 @@ import './styles.scss';
 
 const ProfileSideBar: FC<ProfileSideBarProps> = ({
   className = '',
+  actionsOnly = false,
   name,
   email,
   posts,
@@ -33,20 +34,28 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
   ];
 
   return (
-    <aside className={cn("profile__sidebar", className)} aria-label="Profile sidebar">
-      <div className="profile__sidebar-card">
-        <Link to={ROUTES.MY_PROFILE} aria-label="Go to my profile" className="profile__sidebar-link">
-          <div className="profile__sidebar-card-avatar" aria-hidden="true" />
-        </Link>
+    <aside
+      className={cn("profile__sidebar", className, { 'profile__sidebar--actions-only': actionsOnly })}
+      aria-label="Profile sidebar"
+    >
+      <div className={cn("profile__sidebar-card", { 'profile__sidebar-card--actions-only': actionsOnly })}>
+        {!actionsOnly && (
+          <>
+            <Link to={ROUTES.MY_PROFILE} aria-label="Go to my profile" className="profile__sidebar-link">
+              <div className="profile__sidebar-card-avatar" aria-hidden="true" />
+            </Link>
 
-        <Link to={ROUTES.MY_PROFILE} aria-label="Go to my profile" className="profile__sidebar-link">
-          <div className="profile__sidebar-card-info">
-            <h3 className="profile__sidebar-card-info-name">{name}</h3>
-            <p className="profile__sidebar-card-info-email">{email}</p>
-          </div>
-        </Link>
+            <Link to={ROUTES.MY_PROFILE} aria-label="Go to my profile" className="profile__sidebar-link">
+              <div className="profile__sidebar-card-info">
+                <h3 className="profile__sidebar-card-info-name">{name}</h3>
+                <p className="profile__sidebar-card-info-email">{email}</p>
+              </div>
+            </Link>
+          </>
+        )}
 
         <Button
+          variant="primary"
           className="profile__sidebar-card-newPost"
           onClick={() => {
             dispatch(openCreatePostModal());
@@ -60,20 +69,22 @@ const ProfileSideBar: FC<ProfileSideBarProps> = ({
           isOpen={isOpen}
           closeModal={() => dispatch(closeCreatePostModal())}
         />
-        <div className="profile__sidebar-card-stats">
-          {stats.map(({ title, value, tab }) => (
-            <Link
-              to={{ pathname: ROUTES.MY_PROFILE, search: `?tab=${tab}` }}
-              key={title}
-              className="profile__sidebar-card-stats-stat profile__sidebar-card-stats-link"
-            >
-              <span className="profile__sidebar-card-stats-stat-span">{title}</span>
-              <span className="profile__sidebar-card-stats-stat-value">{value}</span>
-            </Link>
-          ))}
-        </div>
+        {!actionsOnly && (
+          <div className="profile__sidebar-card-stats">
+            {stats.map(({ title, value, tab }) => (
+              <Link
+                to={{ pathname: ROUTES.MY_PROFILE, search: `?tab=${tab}` }}
+                key={title}
+                className="profile__sidebar-card-stats-stat profile__sidebar-card-stats-link"
+              >
+                <span className="profile__sidebar-card-stats-stat-span">{title}</span>
+                <span className="profile__sidebar-card-stats-stat-value">{value}</span>
+              </Link>
+            ))}
+          </div>
+        )}
 
-        <div className="profile__sidebar-card-logout">
+        <div className={cn("profile__sidebar-card-logout", { 'profile__sidebar-card-logout--actions-only': actionsOnly })}>
           <LogOut />
         </div>
       </div>

@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import ProfileSideBar from '@/components/ProfileSideBar';
 import { useGetMeQuery } from '@/services/api';
 import { User, Profile } from '@/ts/interfaces';
+import { ROUTES } from '@/constants/routes';
 
 const getCount = (value: unknown): number => {
   if (Array.isArray(value)) return value.length;
@@ -20,6 +22,7 @@ const mapUserToProfile = (u: User): Profile => ({
 });
 
 const UserBar = ({ className }: { className: string }) => {
+  const { pathname } = useLocation();
   const [profile, setProfile] = useState<Profile>({
     name: '-',
     email: '-',
@@ -39,8 +42,10 @@ const UserBar = ({ className }: { className: string }) => {
     setProfile(mapUserToProfile(meData as User));
   }, [meData]);
 
+  const actionsOnly = pathname === ROUTES.MY_PROFILE;
+
   return (
-    <ProfileSideBar className={className} {...profile} />
+    <ProfileSideBar className={className} actionsOnly={actionsOnly} {...profile} />
   );
 };
 

@@ -7,8 +7,6 @@ import { useGetUsersQuery } from '@/services/api';
 import { User } from '@/ts/interfaces';
 import { ROUTES } from '@/constants/routes';
 
-import Navbar from '@/components/Navbar';
-import UserBar from '@/components/UserBar';
 import UsersList from '@/components/UsersList';
 import SearchInput from '@/components/SearchInput';
 import Button from '@/components/Button';
@@ -95,78 +93,72 @@ const Users = () => {
 
   return (
     <div className="users">
-      <Navbar />
-
-      <div className="users__layout">
-        <UserBar className="users__layout-sidebar" />
-
-        <div className="users__layout-usersList">
-          <div className="users__layout-usersList-card">
-            <div className="users__layout-usersList-header">
-              <div className="users__layout-usersList-header-back">
-                <Button
-                  variant='icon'
-                  className="users__layout-usersList-header-button"
-                  onClick={() => navigate(ROUTES.HOME)}
-                >
-                  <IoIosArrowBack />
-                  <span>Back</span>
-                </Button>
-              </div>
-              <h2>Users</h2>
+      <div className="users__layout-usersList">
+        <div className="users__layout-usersList-card">
+          <div className="users__layout-usersList-header">
+            <div className="users__layout-usersList-header-back">
+              <Button
+                variant='icon'
+                className="users__layout-usersList-header-button"
+                onClick={() => navigate(ROUTES.HOME)}
+              >
+                <IoIosArrowBack />
+                <span>Back</span>
+              </Button>
             </div>
+            <h2>Users</h2>
+          </div>
 
-            <SearchInput
-              value={search}
-              onChange={handleSearchChange}
-              onClear={handleClearSearch}
-              placeholder="Search"
-              ariaLabel="Search users"
-              inputName="searchUsers"
-              wrapperClass="users__layout-usersList-search"
-              setDebouncedSearch={setDebouncedSearch}
-            />
+          <SearchInput
+            value={search}
+            onChange={handleSearchChange}
+            onClear={handleClearSearch}
+            placeholder="Search"
+            ariaLabel="Search users"
+            inputName="searchUsers"
+            wrapperClass="users__layout-usersList-search"
+            setDebouncedSearch={setDebouncedSearch}
+          />
 
-            {isLoading && (
-              <div className="users__layout-usersList-loader">
-                <Oval
-                  visible
-                  height="60"
-                  width="60"
-                  color="#0F31AA"
-                  secondaryColor="#1445D8"
+          {isLoading && (
+            <div className="users__layout-usersList-loader">
+              <Oval
+                visible
+                height="60"
+                width="60"
+                color="#0F31AA"
+                secondaryColor="#1445D8"
+              />
+            </div>
+          )}
+
+          {!isLoading && error && (
+            <div className="users__layout-usersList-loader">
+              <div>
+                <p>Unable to load users. Please try again.</p>
+                <Button
+                  onClick={refetch}
                 />
               </div>
-            )}
+            </div>
+          )}
+          {!isLoading && !error && totalCount === 0 && (
+            <div className="users__layout-usersList-loader">No users found.</div>
+          )}
 
-            {!isLoading && error && (
-              <div className="users__layout-usersList-loader">
-                <div>
-                  <p>Unable to load users. Please try again.</p>
-                  <Button
-                    onClick={refetch}
-                  />
-                </div>
-              </div>
-            )}
-            {!isLoading && !error && totalCount === 0 && (
-              <div className="users__layout-usersList-loader">No users found.</div>
-            )}
-
-            {!isLoading && !error && totalCount > 0 && (
-              <>
-                <UsersList users={displayedUsers} />
-                {shouldShowPagination && (
-                  <Pagination
-                    page={page}
-                    totalPages={totalPages}
-                    className="users__layout-usersList-pagination"
-                    searchQuery={searchParamValue || undefined}
-                  />
-                )}
-              </>
-            )}
-          </div>
+          {!isLoading && !error && totalCount > 0 && (
+            <>
+              <UsersList users={displayedUsers} />
+              {shouldShowPagination && (
+                <Pagination
+                  page={page}
+                  totalPages={totalPages}
+                  className="users__layout-usersList-pagination"
+                  searchQuery={searchParamValue || undefined}
+                />
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -5,8 +5,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 import { useGetPostQuery } from '@/services/api';
 
-import Navbar from '@/components/Navbar';
-import UserBar from '@/components/UserBar';
 import Button from '@/components/Button';
 import PostDetailCard from '@/components/PostDetailCard';
 
@@ -100,13 +98,8 @@ function PostDetail() {
 
   return (
     <div className="post__detail">
-      <Navbar />
-
-      <div className="post__detail-layout">
-        <UserBar className="post__detail-layout-sidebar" />
-        <div className="post__detail-layout-sidebar-content">
-          {renderMainContent()}
-        </div>
+      <div className="post__detail-layout-sidebar-content">
+        {renderMainContent()}
       </div>
     </div>
   );
