@@ -15,6 +15,8 @@ import { notify } from '@/components/Toaster/notify';
 
 import './styles.scss';
 
+const MAX_COMMENT_LENGTH = 300;
+
 type Props = {
   isOpen: boolean;
   closeModal: VoidFunction;
@@ -23,7 +25,6 @@ type Props = {
 };
 
 const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
-  const MAX_COMMENT_LENGTH = 300;
 
   const {
     register,

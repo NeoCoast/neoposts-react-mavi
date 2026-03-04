@@ -1,10 +1,9 @@
-import { ReactNode, FormEventHandler, MouseEventHandler } from 'react';
+import type { ReactNode, FormEventHandler, MouseEventHandler } from 'react';
 import Modal from 'react-modal';
 
 import Button from '@/components/Button';
 
 import './styles.scss';
-
 
 export type BaseModalProps = {
   isOpen: boolean;
