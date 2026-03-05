@@ -7,8 +7,6 @@ import { SerializedError } from '@reduxjs/toolkit';
 import { useGetUserQuery } from '@/services/api';
 import { ROUTES } from '@/constants/routes';
 
-import Navbar from '@/components/Navbar';
-import UserBar from '@/components/UserBar';
 import ProfileInfo from '@/components/ProfileInfo';
 import Button from '@/components/Button';
 
@@ -53,56 +51,47 @@ const UserProfile = () => {
 
   return (
     <div className="user-profile">
-      <Navbar />
-
-      <div className="user-profile__layout">
-        <UserBar className="user-profile__layout-sidebar" />
-
-        <div className="user-profile__layout-userInfo">
-          {isLoading && (
-            <div className="user-profile__layout-userInfo-loader">
-              <Oval
-                visible
-                height="80"
-                width="80"
-                color="#0F31AA"
-                secondaryColor="#1445D8"
-                ariaLabel="oval-loading"
-              />
-            </div>
-          )}
-
-          {!isLoading && error && (
-            <div className="user-profile__layout-userInfo-error">
-              <p>{errorMessage}</p>
-              <Button
-                variant="primary"
-                onClick={() => navigate(backTarget)}
-              >
-                Back to Users
-              </Button>
-
-            </div>
-          )}
-
-          {!isLoading && !error && data && (
-            <ProfileInfo
-              name={data.name}
-              email={data.email}
-              postsCount={data.posts?.length ?? 0}
-              followingCount={data.followees?.length ?? 0}
-              followersCount={data.followers?.length ?? 0}
-              posts={data.posts ?? []}
-              following={data.followees ?? []}
-              followers={data.followers ?? []}
-              followed={data.followed}
-              isOwn={false}
-              userId={data.id}
-              onBack={() => navigate(backTarget)}
-              onRetry={refetch}
+      <div className="user-profile__layout-userInfo">
+        {isLoading && (
+          <div className="user-profile__layout-userInfo-loader">
+            <Oval
+              visible
+              height="80"
+              width="80"
+              color="#0F31AA"
+              secondaryColor="#1445D8"
+              ariaLabel="oval-loading"
             />
-          )}
-        </div>
+          </div>
+        )}
+
+        {!isLoading && error && (
+          <div className="user-profile__layout-userInfo-error">
+            <p>{errorMessage}</p>
+            <Button
+              variant="primary"
+              onClick={() => navigate(backTarget)}
+            >
+              Back to Users
+            </Button>
+
+          </div>
+        )}
+
+        {!isLoading && !error && data && (
+          <ProfileInfo
+            name={data.name}
+            email={data.email}
+            posts={data.posts ?? []}
+            following={data.followees ?? []}
+            followers={data.followers ?? []}
+            followed={data.followed}
+            isOwn={false}
+            userId={data.id}
+            onBack={() => navigate(backTarget)}
+            onRetry={refetch}
+          />
+        )}
       </div>
     </div>
   );
