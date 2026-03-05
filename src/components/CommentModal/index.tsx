@@ -1,21 +1,16 @@
 import { useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import cn from 'classnames';
 
 import { PostComment } from '@/ts/interfaces';
 import { createCommentSchema } from '@/utils/validationSchemas';
-import { useCreateCommentMutation } from '@/services/api';
-import { ROUTES } from '@/constants/routes';
+import { MAX_COMMENT_LENGTH } from '@/constants/limits';
 
 import BaseModal from '@/components/BaseModal';
-import TextArea from '@/components/TextArea';
-import { notify } from '@/components/Toaster/notify';
+import useCommentModal from '@/components/CommentModal/useCommentModal';
+import CommentForm from '@/components/CommentModal/CommentForm';
 
 import './styles.scss';
-
-const MAX_COMMENT_LENGTH = 300;
 
 type Props = {
   isOpen: boolean;
@@ -38,8 +33,7 @@ const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
     defaultValues: { content: '' },
   });
 
-  const navigate = useNavigate();
-  const [createComment, { isLoading }] = useCreateCommentMutation();
+  const { submitComment, isLoading } = useCommentModal({ postId, onSuccess, closeModal });
 
   const commentValue = watch('content') || '';
   const commentLength = commentValue.length;
@@ -57,19 +51,7 @@ const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
   };
 
   const onSubmit = async (formData: { content: string }) => {
-    try {
-      const result = await createComment({
-        postId,
-        content: formData.content.trim(),
-      }).unwrap();
-
-      notify.success('Comment posted');
-      onSuccess?.(result);
-      handleClose();
-      navigate(ROUTES.POST.replace(':id', String(postId)));
-    } catch {
-      notify.error('Failed to post comment. Please try again.');
-    }
+    await submitComment(formData.content.trim(), () => reset());
   };
 
   return (
@@ -82,33 +64,12 @@ const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
       isSubmitLoading={isCommentLoading}
       isSubmitDisabled={isCommentSubmitDisabled}
     >
-      <div className="comment-modal__content">
-        <TextArea
-          inputName="content"
-          register={register}
-          className="comment-modal__textarea"
-          placeholder="Write your comment"
-          required
-        />
-
-        <div className="comment-modal__meta">
-          <div
-            className={cn('comment-modal__counter', {
-              'comment-modal__counter--error': isCommentTooLong,
-            })}
-          >
-            {commentLength}/{MAX_COMMENT_LENGTH}
-          </div>
-
-          {(errors?.content || isCommentTooLong) && (
-            <div className="comment-modal__error">
-              {isCommentTooLong
-                ? `Comment cannot exceed ${MAX_COMMENT_LENGTH} characters.`
-                : (errors?.content as { message?: string })?.message}
-            </div>
-          )}
-        </div>
-      </div>
+      <CommentForm
+        register={register}
+        errors={errors}
+        commentValue={commentValue}
+        isCommentTooLong={isCommentTooLong}
+      />
     </BaseModal>
   );
 };
