@@ -1,4 +1,5 @@
 import type { FieldErrors } from 'react-hook-form';
+import cn from 'classnames';
 
 import { TextProps } from '@/ts/interfaces';
 
@@ -7,7 +8,7 @@ import './styles.scss';
 const TextArea = ({
   inputName,
   register,
-  required = false,
+  required = true,
   placeholder = '',
   className = '',
   errors,
@@ -18,7 +19,12 @@ const TextArea = ({
   return (
     <div className="text-area-wrapper">
       <textarea
-        className={`text-area ${error ? 'text-area--error' : ''} ${className}`}
+        className={cn('text-area', className, {
+          'text-area--error': !!error,
+          [
+            `${className}--error`
+          ]: !!error && !!className,
+        })}
         id={inputName}
         {...(register?.(inputName) ?? {})}
         required={required}

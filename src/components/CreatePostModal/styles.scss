@@ -63,7 +63,12 @@
     color: $color-text;
     resize: vertical;
     background: $color-white;
+
+    &--error {
+      border: 1px solid $color-error;
+    }
   }
+
 
   @include tablet {
     &__header-top-photo {

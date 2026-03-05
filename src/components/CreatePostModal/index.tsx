@@ -115,6 +115,7 @@ const CreatePostModal = ({ isOpen, closeModal }: CreateModalProps) => {
           register={register}
           className="modal__main-content-textarea"
           required
+          errors={errors}
           placeholder="Share something with your team!"
         />
       </div>
