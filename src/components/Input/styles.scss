@@ -1,6 +1,7 @@
  .input {
    &__form {
-     width: 435px;
+     width: 100%;
+     max-width: 435px;
      height: 50px;
      background-color: transparent;
      border: none;

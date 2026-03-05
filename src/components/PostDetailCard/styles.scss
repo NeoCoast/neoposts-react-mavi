@@ -10,12 +10,13 @@
   gap: 24px;
 
   @include tablet {
-    border-radius: 22px;
     padding: 28px;
+    border-radius: 0;
   }
 
   @include mobile {
     padding: 22px 18px;
+    border-radius: 0;
   }
 
   &-back {
