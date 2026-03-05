@@ -4,6 +4,13 @@
   &__layout-userInfo {
     margin-top: 50px;
 
+    &-loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 40px;
+    }
+
     &-error {
       color: $color-error;
       font-size: 18px;

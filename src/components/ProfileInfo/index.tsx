@@ -21,9 +21,6 @@ import './styles.scss';
 type MyProfileInfoProps = {
   name: string;
   email: string;
-  postsCount: number;
-  followingCount: number;
-  followersCount: number;
   posts: PostListItem[];
   following: UserData[];
   followers: UserData[];
@@ -37,9 +34,6 @@ type MyProfileInfoProps = {
 const ProfileInfo = ({
   name,
   email,
-  postsCount,
-  followingCount,
-  followersCount,
   posts = [],
   following = [],
   followers = [],
@@ -173,17 +167,17 @@ const ProfileInfo = ({
       >
         <TabList className="my-profile__card-stats">
           <Tab className="my-profile__card-stats-item" selectedClassName="active">
-            <span className="value">{postsCount}</span>
+            <span className="value">{postsState.length}</span>
             <span className="label">Posts</span>
           </Tab>
 
           <Tab className="my-profile__card-stats-item" selectedClassName="active">
-            <span className="value">{followingCount}</span>
+            <span className="value">{following.length}</span>
             <span className="label">Following</span>
           </Tab>
 
           <Tab className="my-profile__card-stats-item" selectedClassName="active">
-            <span className="value">{followersCount}</span>
+            <span className="value">{followers.length}</span>
             <span className="label">Followers</span>
           </Tab>
         </TabList>
@@ -202,7 +196,7 @@ const ProfileInfo = ({
                 hasMore={false}
                 showContent
                 loadedCount={postsState.length}
-                totalCount={postsCount}
+                totalCount={postsState.length}
                 onRetry={onRetry}
                 canLike={isFollowedState}
                 canComment={isFollowedState}

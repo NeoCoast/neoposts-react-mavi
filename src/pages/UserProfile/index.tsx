@@ -82,9 +82,6 @@ const UserProfile = () => {
           <ProfileInfo
             name={data.name}
             email={data.email}
-            postsCount={data.posts?.length ?? 0}
-            followingCount={data.followees?.length ?? 0}
-            followersCount={data.followers?.length ?? 0}
             posts={data.posts ?? []}
             following={data.followees ?? []}
             followers={data.followers ?? []}
