@@ -113,7 +113,7 @@ const Users = () => {
             value={search}
             onChange={handleSearchChange}
             onClear={handleClearSearch}
-            placeholder="Search"
+            placeholder="Search by name or email"
             ariaLabel="Search users"
             inputName="searchUsers"
             wrapperClass="users__layout-usersList-search"

@@ -26,4 +26,15 @@
     border: solid 1px $color-text-subtle;
     padding: 10px;
   }
+
+  &--error {
+    border: solid 1px $color-error;
+  }
+
+  &__error-message {
+    color: $color-error;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 5px;
+  }
 }
