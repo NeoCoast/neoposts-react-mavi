@@ -1,6 +1,14 @@
 .my-profile {
   &__layout-profileInfo {
-    margin-top: 50px;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    padding: 32px;
+
+    @include tablet {
+      width: 100%;
+      padding: 0;
+    }
   }
 
   &__loader,

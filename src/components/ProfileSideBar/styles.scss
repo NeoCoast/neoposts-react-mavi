@@ -3,6 +3,7 @@
     position: sticky;
     top: calc(64px + 12px);
     align-self: start;
+    justify-self: end;
     max-width: 250px;
     margin-top: -20px;
 
@@ -125,6 +126,7 @@
           border: none;
           cursor: pointer;
           font-size: 24px;
+          white-space: nowrap;
         }
 
         &--actions-only {
@@ -148,8 +150,7 @@
       }
 
       &--actions-only {
-        margin-top: 50px;
-        margin-left: 20px;
+        margin-top: 30px;
         background: transparent;
         border-radius: 0;
         box-shadow: none;

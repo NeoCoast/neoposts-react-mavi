@@ -12,17 +12,6 @@
   box-sizing: border-box;
   background-color: $color-navbar;
 
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 12px;
-    background: $color-navbar;
-    pointer-events: none;
-  }
-
   @include tablet {
     padding: 0 12px;
     height: 64px;
