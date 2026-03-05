@@ -32,15 +32,6 @@ const CommentComponent = ({ comment }: CommentComponentProps) => {
         <p className="post__detail-list-comment-content">
           {comment.comment}
         </p>
-        <div className="post__detail-list-comment-actions">
-          <Button
-            variant="icon"
-            className="post__detail-list-comment-actions-like"
-          >
-            <IoIosHeartEmpty />
-            {comment.likesCount}
-          </Button>
-        </div>
       </div>
     </article>
   );

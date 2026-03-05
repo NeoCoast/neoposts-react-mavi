@@ -22,33 +22,6 @@
     font-weight: 600;
   }
 
-  &-actions {
-    display: flex;
-    gap: 12px;
-    width: auto;
-    margin-top: 0;
-    justify-content: flex-end;
-    position: absolute;
-    right: 18px;
-    bottom: 18px;
-
-    &-like {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      border: none;
-      background: transparent;
-      color: $color-primary;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 0;
-
-      svg {
-        font-size: 1.1rem;
-      }
-    }
-  }
-
   @include laptop {
     padding: 16px;
     gap: 12px;
