@@ -8,7 +8,7 @@ import './styles.scss';
 const TextArea = ({
   inputName,
   register,
-  required = true,
+  required = false,
   placeholder = '',
   className = '',
   errors,
@@ -21,9 +21,7 @@ const TextArea = ({
       <textarea
         className={cn('text-area', className, {
           'text-area--error': !!error,
-          [
-            `${className}--error`
-          ]: !!error && !!className,
+          [`${className}--error`]: !!error && !!className,
         })}
         id={inputName}
         {...(register?.(inputName) ?? {})}
@@ -36,4 +34,5 @@ const TextArea = ({
     </div>
   );
 };
+
 export default TextArea;
