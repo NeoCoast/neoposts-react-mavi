@@ -1,15 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
-import cn from 'classnames';
-import { BiSolidComment } from 'react-icons/bi';
-
-import { useLikePostMutation, useUnlikePostMutation } from '@/services/api';
 import type { PostFooterProps } from '@/ts/interfaces';
 
-import Button from '@/components/Button';
 import LikeButton from '@/components/LikeButton';
-import Tooltip from '@/components/Tooltip';
-import { notify } from '@/components/Toaster/notify';
 import CommentModal from '@/components/CommentModal';
+import usePostFooterState from '@/components/PostFooter/usePostFooterState';
+import PostCommentAction from '@/components/PostFooter/PostCommentAction';
 
 import './styles.scss';
 
@@ -24,59 +18,26 @@ const PostFooter = ({
   canComment,
   onCommentCreated,
 }: PostFooterProps) => {
-  const [likePost, { isLoading: isLiking }] = useLikePostMutation();
-  const [unlikePost, { isLoading: isUnliking }] = useUnlikePostMutation();
-  const isLoading = isLiking || isUnliking;
-
-  const [isLiked, setIsLiked] = useState(liked);
-  const [likesCountLocal, setLikesCountLocal] = useState(likesCount ?? 0);
-  const [isCommentOpen, setIsCommentOpen] = useState(false);
-  const [commentsCountLocal, setCommentsCountLocal] = useState(commentsCount ?? 0);
-  const [likedLocal, setLikedLocal] = useState<boolean>(liked ?? false);
-
-  const parsedDate = new Date(publishedAt);
-  const isValidDate = !Number.isNaN(parsedDate.getTime());
-  const formattedDate = isValidDate ? parsedDate.toLocaleString() : publishedAt;
-  const displayDate = label ?? formattedDate;
-
-  useEffect(() => {
-    setIsLiked(liked);
-  }, [liked]);
-
-  useEffect(() => {
-    setLikesCountLocal(likesCount ?? 0);
-  }, [likesCount]);
-
-  useEffect(() => {
-    setCommentsCountLocal(commentsCount ?? 0);
-  }, [commentsCount]);
-
-  useEffect(() => {
-    setLikedLocal(liked ?? false);
-  }, [liked]);
-
-  const handleLikeClick = useCallback(async () => {
-    if (!canLike || isLoading) return;
-
-    const prevCount = likesCountLocal;
-    const nextLiked = !likedLocal;
-    const nextCount = nextLiked ? prevCount + 1 : Math.max(0, prevCount - 1);
-
-    setLikedLocal(nextLiked);
-    setLikesCountLocal(nextCount);
-
-    try {
-      if (nextLiked) {
-        await likePost(Number(postId));
-      } else {
-        await unlikePost(Number(postId));
-      }
-    } catch (err) {
-      setLikedLocal(likedLocal);
-      setLikesCountLocal(prevCount);
-      notify.error('An error occurred while updating your like. Please try again.');
-    }
-  }, [canLike, isLoading, likedLocal, likesCountLocal, likePost, unlikePost, postId]);
+  const {
+    isLoading,
+    displayDate,
+    likedLocal,
+    likesCountLocal,
+    commentsCountLocal,
+    isCommentOpen,
+    handleLikeClick,
+    handleCommentButtonClick,
+    closeCommentModal,
+    incrementComments,
+  } = usePostFooterState({
+    postId,
+    liked,
+    likesCount,
+    commentsCount,
+    publishedAt,
+    label,
+    canLike,
+  });
 
   return (
     <footer className="post__footer">
@@ -97,49 +58,19 @@ const PostFooter = ({
           }}
         />
 
-        {!canComment ? (
-          <Tooltip content="You need to follow the user to comment their posts">
-            <Button
-              variant="icon"
-              className={cn('post__footer-icons-comment', { 'disabled-comment': !canComment })}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (!canComment) return;
-                setIsCommentOpen(true);
-                (e.currentTarget)?.blur();
-              }}
-              disabled={!canComment}
-            >
-              <BiSolidComment />
-              <span className="post__footer-count">{commentsCountLocal}</span>
-            </Button>
-          </Tooltip>
-        ) : (
-          <Button
-            variant="icon"
-            className={cn('post__footer-icons-comment', { 'disabled-comment': !canComment })}
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              if (!canComment) return;
-              setIsCommentOpen(true);
-              (e.currentTarget)?.blur();
-            }}
-            disabled={!canComment}
-          >
-            <BiSolidComment />
-            <span className="post__footer-count">{commentsCountLocal}</span>
-          </Button>
-        )}
+        <PostCommentAction
+          canComment={canComment}
+          commentsCount={commentsCountLocal}
+          onClick={(e) => handleCommentButtonClick(e, canComment)}
+        />
       </div>
       {isCommentOpen && (
         <CommentModal
           isOpen={isCommentOpen}
-          closeModal={() => setIsCommentOpen(false)}
+          closeModal={closeCommentModal}
           postId={postId}
           onSuccess={(comment) => {
-            setCommentsCountLocal((c) => c + 1);
+            incrementComments();
             onCommentCreated?.(comment);
           }}
         />
