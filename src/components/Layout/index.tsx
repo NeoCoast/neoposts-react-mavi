@@ -1,5 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
+import Navbar from '@/components/Navbar';
+import SidebarLayout from '@/components/SidebarLayout';
+
 interface LayoutProps {
   redirectPath: string;
 }
@@ -13,7 +16,14 @@ const Layout = ({ redirectPath }: LayoutProps) => {
     return <Navigate to={redirectPath} replace />;
   }
 
-  return <Outlet />;
+  return (
+    <>
+      <Navbar />
+      <SidebarLayout>
+        <Outlet />
+      </SidebarLayout>
+    </>
+  );
 };
 
 export default Layout;

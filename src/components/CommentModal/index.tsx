@@ -1,22 +1,16 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import Modal from 'react-modal';
-import cn from 'classnames';
 
-import { useCreateCommentMutation } from '@/services/api';
 import { PostComment } from '@/ts/interfaces';
 import { createCommentSchema } from '@/utils/validationSchemas';
-import { ROUTES } from '@/constants/routes';
+import { MAX_COMMENT_LENGTH } from '@/constants/limits';
 
-import { notify } from '@/components/Toaster/notify';
-import Button from '@/components/Button';
-import TextArea from '@/components/TextArea';
+import BaseModal from '@/components/BaseModal';
+import useCommentModal from '@/components/CommentModal/useCommentModal';
+import CommentForm from '@/components/CommentModal/CommentForm';
 
 import './styles.scss';
-
-Modal.setAppElement('#root');
 
 type Props = {
   isOpen: boolean;
@@ -25,11 +19,7 @@ type Props = {
   onSuccess?: (comment: PostComment) => void;
 };
 
-const MAX_LENGTH = 300;
-
 const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   const {
     register,
@@ -43,107 +33,44 @@ const CommentModal = ({ isOpen, closeModal, postId, onSuccess }: Props) => {
     defaultValues: { content: '' },
   });
 
-  const [createComment, { isLoading: apiLoading }] = useCreateCommentMutation();
+  const { submitComment, isLoading } = useCommentModal({ postId, onSuccess, closeModal });
 
-  const commentLength = (watch('content') || '').length;
-  const isTooLong = commentLength > MAX_LENGTH;
-  const contentValue = watch('content') || '';
-  const isLoading = isSubmitting || apiLoading;
+  const commentValue = watch('content') || '';
+  const commentLength = commentValue.length;
+  const isCommentTooLong = commentLength > MAX_COMMENT_LENGTH;
+  const isCommentLoading = isSubmitting || isLoading;
 
-  useEffect(() => {
-    if (!isOpen) {
-      reset();
-    }
-  }, [isOpen, reset]);
-
-  const onSubmit = async (data: { content: string }) => {
-    try {
-      const result = await createComment({ postId, content: data.content.trim() }).unwrap();
-
-      notify.success('Comment posted');
-
-      if (onSuccess) onSuccess(result);
-
-      reset();
-      closeModal();
-
-      navigate(ROUTES.POST.replace(':id', String(postId)));
-    } catch (err) {
-      notify.error('Failed to post comment. Please try again.');
-    }
-  };
+  const isCommentSubmitDisabled = useMemo(
+    () => isCommentLoading || commentValue.trim().length === 0 || isCommentTooLong,
+    [isCommentLoading, commentValue, isCommentTooLong]
+  );
 
   const handleClose = () => {
     reset();
     closeModal();
-    setTimeout(() => {
-      navigate(pathname, { replace: true });
-    }, 0);
   };
 
-  const handleDisableSubmit = () => {
-    return isLoading || contentValue.trim().length === 0 || commentLength > MAX_LENGTH;
+  const onSubmit = async (formData: { content: string }) => {
+    await submitComment(formData.content.trim(), () => reset());
   };
 
   return (
-    <Modal
+    <BaseModal
       isOpen={isOpen}
-      onRequestClose={handleClose}
+      closeModal={handleClose}
       contentLabel="Add comment"
-      className="comment-modal"
-      overlayClassName="comment-modal__background"
+      submitLabel="Comment"
+      onSubmit={handleSubmit(onSubmit)}
+      isSubmitLoading={isCommentLoading}
+      isSubmitDisabled={isCommentSubmitDisabled}
     >
-      <div className="comment-modal__header">
-        <h1 className="comment-modal__header-title">Create comment</h1>
-        <Button
-          variant="icon"
-          className="comment-modal__header-title-close"
-          onClick={handleClose}
-          aria-label="Close"
-        >
-          &times;
-        </Button>
-      </div>
-
-      <form
-        className="comment-modal__main"
-        onSubmit={handleSubmit(onSubmit)}
-        onMouseDown={(e) => e.stopPropagation()}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <TextArea
-          inputName="content"
-          register={register}
-          className="comment-modal__main-textarea"
-          placeholder="Write your comment"
-          required
-        />
-
-        <div className="comment-modal__main-meta">
-          <div className={cn('comment-modal__main-meta-counter', { 'comment-modal__main-meta-counter-error': isTooLong })}>{commentLength}/{MAX_LENGTH}</div>
-          {(errors?.content || isTooLong) && (
-            <div className="comment-modal__main-meta-counter-error">
-              {isTooLong ? `Comment cannot exceed ${MAX_LENGTH} characters.` : (errors?.content as any)?.message}
-            </div>
-          )}
-        </div>
-
-        <div className="comment-modal__main-actions">
-          <Button variant="secondary" onClick={handleClose} disabled={isLoading}>
-            Cancel
-          </Button>
-
-          <Button
-            type="submit"
-            variant="primary"
-            loading={isLoading}
-            disabled={handleDisableSubmit()}
-          >
-            Comment
-          </Button>
-        </div>
-      </form>
-    </Modal >
+      <CommentForm
+        register={register}
+        errors={errors}
+        commentValue={commentValue}
+        isCommentTooLong={isCommentTooLong}
+      />
+    </BaseModal>
   );
 };
 

@@ -1,19 +1,13 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
-import { FaPlus } from 'react-icons/fa';
 
 import { useGetMeQuery } from '@/services/api';
-import { AppDispatch } from '@/services/store';
 
 import { ROUTES } from '@/constants/routes';
-import { openCreatePostModal } from '@/utils/uiSlice';
 
-import Navbar from '@/components/Navbar';
 import ProfileInfo from '@/components/ProfileInfo';
 import Button from '@/components/Button';
-import LogOut from '@/components/LogOut';
 
 import './styles.scss';
 
@@ -23,7 +17,6 @@ const Profile = () => {
   });
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const tab = searchParams.get('tab');
@@ -36,8 +29,6 @@ const Profile = () => {
 
   return (
     <div className="my-profile">
-      <Navbar />
-
       {isLoading && (
         <div className="my-profile__loader">
           <Oval
@@ -63,25 +54,10 @@ const Profile = () => {
       )}
 
       {!isLoading && !error && data && (
-        <div className="my-profile__content">
-          <div className="my-profile__content-buttons">
-            <Button
-              className="my-profile__content-buttons-newPost"
-              onClick={() => {
-                dispatch(openCreatePostModal());
-              }}
-            >
-              <FaPlus className="my-profile__content-buttons-newPost-content-icon" />
-              New Post
-            </Button>
-            <LogOut />
-          </div>
+        <div className="my-profile__layout-profileInfo">
           <ProfileInfo
             name={`${data.name}`}
             email={data.email}
-            postsCount={data.posts?.length ?? 0}
-            followingCount={data.followees?.length ?? 0}
-            followersCount={data.followers?.length ?? 0}
             posts={data.posts ?? []}
             following={data.followees ?? []}
             followers={data.followers ?? []}

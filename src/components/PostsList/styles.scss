@@ -12,6 +12,17 @@
   flex-direction: column;
   gap: 30px;
 
+  @include tablet {
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    padding: 20px;
+  }
+
+  @include mobile {
+    padding: 16px;
+  }
+
   &-infiniteScroll {
     color: $title-color;
 

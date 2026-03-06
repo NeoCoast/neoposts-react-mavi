@@ -3,6 +3,7 @@
     position: sticky;
     top: calc(64px + 12px);
     align-self: start;
+    justify-self: end;
     max-width: 250px;
     margin-top: -20px;
 
@@ -125,7 +126,36 @@
           border: none;
           cursor: pointer;
           font-size: 24px;
+          white-space: nowrap;
         }
+
+        &--actions-only {
+          border-top: 0;
+          padding: 0;
+
+          .btn-logout {
+            width: 200px;
+            height: 40px;
+            font-size: 16px;
+            color: $color-primary;
+            border: 2px solid $color-primary;
+
+            &:hover {
+              background-color: $color-secondary-hover;
+              color: $color-white;
+              border-color: $color-secondary-hover;
+            }
+          }
+        }
+      }
+
+      &--actions-only {
+        margin-top: 30px;
+        background: transparent;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 0;
+        gap: 8px;
       }
     }
 
